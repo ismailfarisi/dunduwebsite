@@ -675,6 +675,126 @@ export function itemsUnder(max: number, limit = 3): Item[] {
     .slice(0, limit);
 }
 
+function pick(...ids: string[]): Item[] {
+  return ids
+    .map((id) => allItems.find((i) => i.id === id))
+    .filter((i): i is Item => Boolean(i));
+}
+
+/** Read off the bands themselves, so the menu can't drift from the doors. */
+const budgetLinks = budgetBands.map((b) => `Under AED ${b.toLocaleString("en-AE")}`);
+
+export type MegaMenu = {
+  columns: { title: string; links: string[] }[];
+  /** three real listings, so the panel shows the department instead of naming it */
+  items?: Item[];
+  cta: string;
+};
+
+/**
+ * The panel behind each nav link, keyed by that link's label.
+ *
+ * A nav item that only navigates makes the shopper guess what's behind it; the
+ * panel answers with the department's own vocabulary and three listings that
+ * are actually in it. Every product here is `pick`ed out of the catalogue by
+ * id, so a panel can never advertise something the site doesn't sell — and a
+ * column that has no listings behind it (Beauty's skincare, say) shows the
+ * links and simply omits the products rather than borrowing someone else's.
+ *
+ * "All Categories" has no entry: it opens the twelve category circles, which
+ * are already data (quickLinks) and already have art.
+ */
+export const megaMenus: Record<string, MegaMenu> = {
+  Deals: {
+    columns: [
+      { title: "Today", links: ["Flash Deals", "Deal of the Day", "Clearance"] },
+      { title: "By budget", links: budgetLinks },
+    ],
+    items: pick("f1", "f2", "f8"),
+    cta: "Shop all deals",
+  },
+  "Back to School": {
+    columns: [
+      { title: "The list", links: ["Laptops", "Backpacks", "Watches", "Footwear"] },
+      { title: "Everyday", links: ["T-shirts & tops", "Jackets", "Under AED 100"] },
+    ],
+    items: pick("x2", "s1", "s2"),
+    cta: "Shop the list",
+  },
+  "New Arrivals": {
+    columns: [
+      { title: "Just landed", links: ["This week", "Fragrance", "Mobiles", "Fashion"] },
+      { title: "Coming soon", links: ["Pre-order", "Back in stock"] },
+    ],
+    items: pick("n1", "n2", "n4"),
+    cta: "See everything new",
+  },
+  "Best Sellers": {
+    columns: [
+      { title: "Top rated", links: ["Mobiles", "TV & Audio", "Home & Kitchen"] },
+      { title: "Most bought", links: ["This month", "All time"] },
+    ],
+    items: pick("b1", "b2", "b4"),
+    cta: "Shop best sellers",
+  },
+  Mobiles: {
+    columns: [
+      { title: "By brand", links: ["Apple", "Samsung", "HONOR", "Xiaomi"] },
+      { title: "By type", links: ["Smartphones", "Foldables", "Renewed phones"] },
+    ],
+    items: pick("b2", "b1", "f1"),
+    cta: "Shop all mobiles",
+  },
+  Electronics: {
+    columns: [
+      { title: "TV & Audio", links: ["4K & QLED TVs", "Smart TVs", "65 inch & above"] },
+      { title: "Laptops & PCs", links: ["Gaming laptops", "Everyday laptops"] },
+    ],
+    items: pick("f2", "b3", "x2"),
+    cta: "Shop electronics",
+  },
+  Perfumes: {
+    columns: [
+      { title: "For her", links: ["Floral", "Oriental", "Eau de parfum"] },
+      { title: "For him", links: ["Woody", "Aromatic", "Gift sets"] },
+    ],
+    items: pick("n1", "n2", "n4"),
+    cta: "Shop all perfumes",
+  },
+  Beauty: {
+    columns: [
+      { title: "Fragrance", links: ["Women's perfume", "Men's perfume", "Unisex"] },
+      { title: "More beauty", links: ["Skincare", "Hair care", "Bath & body"] },
+    ],
+    items: pick("n3", "f8"),
+    cta: "Shop beauty",
+  },
+  Fashion: {
+    columns: [
+      { title: "Men's", links: ["Jackets", "T-shirts", "Watches"] },
+      { title: "Women's", links: ["Jackets", "Tops", "T-shirts"] },
+      { title: "Shoes & bags", links: ["Trainers", "Backpacks"] },
+    ],
+    items: pick("w1", "m1", "s2"),
+    cta: "Shop fashion",
+  },
+  "Home & Kitchen": {
+    columns: [
+      { title: "Cookware", links: ["Cookware sets", "Cast iron", "Pans & pots"] },
+      { title: "Appliances", links: ["Microwaves", "Blenders", "Small appliances"] },
+    ],
+    items: pick("f3", "k1", "f7"),
+    cta: "Shop home & kitchen",
+  },
+  More: {
+    columns: [
+      { title: "Departments", links: ["Gaming", "Sports & Cycling", "Toys & Games", "Pre-Owned"] },
+      { title: "Help", links: ["Track Order", "Returns & Refunds", "Help Center"] },
+    ],
+    cta: "See all departments",
+  },
+};
+
 export const trendingSearches = [
   "iphone renewed",
   "65 inch tv",

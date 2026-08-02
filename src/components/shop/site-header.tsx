@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/icon";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { MegaPanel } from "@/components/shop/mega-panel";
 import { Topbar } from "@/components/shop/topbar";
 import { Wordmark } from "@/components/shop/wordmark";
 import { useHideOnScroll } from "@/hooks/use-hide-on-scroll";
@@ -145,9 +146,15 @@ export function SiteHeader() {
   const [focused, setFocused] = useState(false);
   const [sheet, setSheet] = useState(false);
   const [menu, setMenu] = useState(false);
+  /** label of the open category panel, or null */
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const boxRef = useRef<HTMLDivElement>(null);
   const sheetInput = useRef<HTMLInputElement>(null);
   const visible = useHideOnScroll();
+
+  // click reopens what hover already opened, so it has to close it too —
+  // otherwise a click on the item you are pointing at does nothing
+  const toggle = (label: string) => setOpenMenu((cur) => (cur === label ? null : label));
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -155,6 +162,7 @@ export function SiteHeader() {
         setFocused(false);
         setSheet(false);
         setMenu(false);
+        setOpenMenu(null);
       }
       if (e.key === "/" && document.activeElement?.tagName !== "INPUT") {
         e.preventDefault();
@@ -281,21 +289,41 @@ export function SiteHeader() {
           </nav>
         </div>
 
-        {/* category nav — desktop */}
-        <div className="hidden border-y border-border lg:block">
+        {/* category nav — desktop. `relative` so the panel can hang off the
+            whole bar: it cannot live inside the scrolling rail below, which
+            would clip it and scroll it sideways with the links. */}
+        <div
+          className="relative hidden border-y border-border lg:block"
+          onMouseLeave={() => setOpenMenu(null)}
+        >
           <div className="mx-auto flex h-11 w-full max-w-[1320px] items-center gap-1 px-4">
-            <button className="flex shrink-0 items-center gap-2 pr-5 text-[13.5px] font-semibold text-fg">
+            <button
+              type="button"
+              onMouseEnter={() => setOpenMenu("All Categories")}
+              onFocus={() => setOpenMenu("All Categories")}
+              onClick={() => toggle("All Categories")}
+              aria-expanded={openMenu === "All Categories"}
+              aria-haspopup="true"
+              className={`flex shrink-0 items-center gap-2 rounded-md py-1.5 pl-2 pr-5 text-[13.5px] font-semibold text-fg transition-colors ${
+                openMenu === "All Categories" ? "bg-surface-2" : ""
+              }`}
+            >
               <Icon name="Menu" className="size-[18px]" />
               All Categories
             </button>
             <div className="rail flex flex-1 items-center gap-1 overflow-x-auto">
               {navLinks.map((l) => (
-                <a
+                <button
                   key={l.label}
-                  href="#"
+                  type="button"
+                  onMouseEnter={() => setOpenMenu(l.label)}
+                  onFocus={() => setOpenMenu(l.label)}
+                  onClick={() => toggle(l.label)}
+                  aria-expanded={openMenu === l.label}
+                  aria-haspopup="true"
                   className={`relative shrink-0 whitespace-nowrap rounded-md px-3 py-1.5 text-[13.5px] transition-colors hover:bg-surface-2 ${
                     l.hot ? "font-bold text-brand" : "font-medium text-fg-muted hover:text-fg"
-                  }`}
+                  } ${openMenu === l.label ? "bg-surface-2" : ""}`}
                 >
                   {l.label}
                   {l.hot && (
@@ -303,10 +331,18 @@ export function SiteHeader() {
                       Hot
                     </span>
                   )}
-                </a>
+                </button>
               ))}
             </div>
           </div>
+
+          {openMenu && (
+            <div className="absolute inset-x-0 top-full z-40 border-b border-border bg-surface shadow-pop">
+              <div className="mx-auto w-full max-w-[1320px] px-4 py-5">
+                <MegaPanel label={openMenu} />
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
