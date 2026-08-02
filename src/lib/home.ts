@@ -90,6 +90,17 @@ export const heroSlides = [
     itemId: "f3",
   },
   {
+    id: "h5",
+    eyebrow: "New in fashion",
+    line1: "Menswear.",
+    line2: "Womenswear.",
+    sub: "Jackets, shirts and tees for both — plus the trainers and the bag.",
+    cta: "Shop Fashion",
+    img: "/products/womens-moto-jacket.jpg",
+    alt: "Lock and Love faux leather moto jacket",
+    itemId: "w1",
+  },
+  {
     id: "h3",
     eyebrow: "Certified refurbished",
     line1: "Like new.",
