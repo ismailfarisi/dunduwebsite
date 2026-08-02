@@ -55,6 +55,7 @@ export const topbarRight = [
 
 export const navLinks = [
   { label: "Deals", hot: true },
+  { label: "Back to School" },
   { label: "New Arrivals" },
   { label: "Best Sellers" },
   { label: "Mobiles" },
@@ -203,6 +204,18 @@ const geepasMicrowave: Item = {
   sold: 150,
 };
 
+const casioEnticer: Item = {
+  id: "f5",
+  title: "Casio Enticer Analog Mens Watch, Black Dial — MTP-1374D-1AVDF",
+  brand: "Casio",
+  img: "/products/casio-enticer.webp",
+  price: 169,
+  was: 279,
+  rating: 4.4,
+  reviews: 15,
+  express: true,
+};
+
 /** Only in Home & Kitchen and the bundle — it was promo-tile art until now. */
 const prestigeCastIron: Item = {
   id: "k1",
@@ -230,17 +243,7 @@ export const flashDeals: Item[] = [
   },
   farberwareCookware,
   xiaomiBlender,
-  {
-    id: "f5",
-    title: "Casio Enticer Analog Mens Watch, Black Dial — MTP-1374D-1AVDF",
-    brand: "Casio",
-    img: "/products/casio-enticer.webp",
-    price: 169,
-    was: 279,
-    rating: 4.4,
-    reviews: 15,
-    express: true,
-  },
+  casioEnticer,
   delcasaCookware,
   geepasMicrowave,
   {
@@ -454,6 +457,40 @@ export const refurbished = {
   ],
 };
 
+/** The only laptop in the catalogue, so it anchors Back to School. */
+const asusTufGaming: Item = {
+  id: "x2",
+  title: "ASUS TUF Gaming A15 15.6in 144Hz, Ryzen 7, 16GB, RTX 3050",
+  brand: "ASUS",
+  img: "/products/asus-tuf-gaming.webp",
+  price: 764,
+  express: true,
+  lowStock: 5,
+};
+
+/**
+ * Seasonal, and the reason it isn't another discount rail is the label above
+ * each card: every pick says what it's *for* — lectures, the commute, the exam
+ * hall — so the row reads as a list to work through rather than six unrelated
+ * markdowns that happen to share a banner.
+ *
+ * Every pick is a listing that already exists elsewhere in the catalogue. The
+ * ones a student actually buys aren't all discounted (the laptop isn't), which
+ * is why the header claims a best-case percentage rather than a basket total.
+ */
+export const backToSchool = {
+  title: "The whole list, before term starts",
+  sub: "A laptop for lectures, a phone that survives the commute, and the three things that make a first kitchen work — picked out of stock, not assembled for a banner.",
+  picks: [
+    { need: "For lectures", icon: "Laptop", item: asusTufGaming },
+    { need: "For the commute", icon: "Smartphone", item: iphone15ProMax },
+    { need: "For exam halls", icon: "Clock", item: casioEnticer },
+    { need: "For the dorm", icon: "Microwave", item: geepasMicrowave },
+    { need: "For 8am starts", icon: "Coffee", item: xiaomiBlender },
+    { need: "For first cooks", icon: "CookingPot", item: prestigeCastIron },
+  ],
+};
+
 /** Catalogue-only listings: they exist for search and the budget doors. */
 const strays: Item[] = [
   {
@@ -465,15 +502,7 @@ const strays: Item[] = [
     was: 139,
     sold: 350,
   },
-  {
-    id: "x2",
-    title: "ASUS TUF Gaming A15 15.6in 144Hz, Ryzen 7, 16GB, RTX 3050",
-    brand: "ASUS",
-    img: "/products/asus-tuf-gaming.webp",
-    price: 764,
-    express: true,
-    lowStock: 5,
-  },
+  asusTufGaming,
   {
     id: "x3",
     title: "Seiko Prospex Solar Quartz 42.8mm, Blue Dial, 200m",

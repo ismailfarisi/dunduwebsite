@@ -1,3 +1,4 @@
+import { BackToSchool } from "@/components/shop/back-to-school";
 import { Brands } from "@/components/shop/brands";
 import { BudgetDoors } from "@/components/shop/budget-doors";
 import { Bundle } from "@/components/shop/bundle";
@@ -29,13 +30,17 @@ export default function Home() {
           the element size to its max and overflow narrow viewports. */}
       <main id="main" className="mx-auto w-full max-w-[1320px] px-4 pb-4 pt-3">
         {/* Order is the merchandising. Each section answers a different
-            question — what's urgent, what's cheap, what's new, what's proven,
-            what's safe to buy renewed, what goes with it — so the page reads
-            as a sequence rather than as the same rail eight times. */}
+            question — what's urgent, what's cheap, what's in season, what's
+            new, what's proven, what's safe to buy renewed, what goes with it —
+            so the page reads as a sequence rather than as the same rail eight
+            times. Back to School sits high because a season expires: it is the
+            one section that is worth less every week it stays below the
+            fold. */}
         <Hero />
         <QuickCircles />
         <FlashDeals />
         <BudgetDoors />
+        <BackToSchool />
         <PromoTiles />
 
         <div className="mt-3 grid gap-3 lg:grid-cols-2">
