@@ -54,7 +54,10 @@ export function Hero() {
           }}
         />
 
-        <div className="relative flex min-h-[260px] items-center gap-3 px-5 py-7 pr-11 sm:min-h-[300px] sm:gap-6 sm:px-14 sm:pr-16 lg:min-h-[340px]">
+        {/* At `lg` the row height comes from Deal of the Day beside it, not
+            from these minimums — they only bind once the banner is on its own
+            row below `lg`. */}
+        <div className="relative flex min-h-[230px] items-center gap-3 px-5 py-6 pr-11 sm:min-h-[270px] sm:gap-6 sm:px-14 sm:pr-16 lg:min-h-[300px]">
           <div key={s.id} className="hero-copy min-w-0 flex-1">
             <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
               {s.eyebrow}

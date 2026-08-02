@@ -68,7 +68,10 @@ export function DealOfDay() {
       {/* side by side on mobile where height is the scarce thing, stacked in
           the desktop rail where width is */}
       <div className="flex gap-3 p-3 lg:block">
-        <div className="relative aspect-square w-[38%] shrink-0 overflow-hidden rounded-lg bg-white lg:aspect-[5/4] lg:w-full">
+        {/* 16/10 rather than 5/4 in the desktop rail: this panel sets the
+            height of the hero row, and 5/4 spent ~50px of banner on empty
+            white either side of a phone shot */}
+        <div className="relative aspect-square w-[38%] shrink-0 overflow-hidden rounded-lg bg-white lg:aspect-[16/10] lg:w-full">
           {/* above the fold on every breakpoint, and large enough that it wins
               LCP off the hero — so it loads eagerly rather than lazily */}
           <Image
