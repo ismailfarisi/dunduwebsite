@@ -238,6 +238,28 @@ body {
   scroll-snap-align: start;
 }
 
+/* Hero slide change: without it the swap is a jump cut, and on a banner that
+   rotates every six seconds a jump cut reads as a broken image. Both are killed
+   by the reduced-motion block below. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes hero-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.93);
+  }
+}
+.hero-copy {
+  animation: hero-rise 450ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.hero-art {
+  animation: hero-pop 520ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
 /* visible focus everywhere, without the default double ring */
 :where(a, button, input, select, [tabindex]):focus-visible {
   outline: 2px solid var(--brand);

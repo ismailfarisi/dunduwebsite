@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/icon";
 import { DealOfDay } from "@/components/shop/deal-of-day";
-import { heroSlides, usps } from "@/lib/home";
+import { allItems, heroSlides, usps } from "@/lib/home";
+
+function money(n: number) {
+  return n.toLocaleString("en-AE", { maximumFractionDigits: 2 });
+}
 
 export function Hero() {
   const [i, setI] = useState(0);
@@ -18,8 +22,11 @@ export function Hero() {
   }, [paused]);
 
   const s = heroSlides[i];
-  const go = (d: 1 | -1) =>
-    setI((v) => (v + d + heroSlides.length) % heroSlides.length);
+  const go = (d: 1 | -1) => setI((v) => (v + d + heroSlides.length) % heroSlides.length);
+
+  // the listing the slide is showing, so the banner can quote a real price
+  const item = s.itemId ? allItems.find((it) => it.id === s.itemId) : undefined;
+  const off = item?.was ? Math.round(((item.was - item.price) / item.was) * 100) : 0;
 
   return (
     <section className="grid gap-3 lg:grid-cols-[1fr_310px]">
@@ -31,51 +38,89 @@ export function Hero() {
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
       >
+        {/* Three layers rather than one: a cool highlight top-right behind the
+            product, brand green rising from the bottom-left under the copy, and
+            a lime bloom where the two meet. A single flat wash reads as an
+            unloaded image. */}
         <div
           aria-hidden
           className="absolute inset-0 -z-10"
           style={{
-            backgroundImage:
-              "radial-gradient(70% 90% at 78% 45%, rgba(255,255,255,.16) 0%, transparent 62%), radial-gradient(50% 70% at 20% 110%, rgba(213,232,79,.14) 0%, transparent 60%)",
+            backgroundImage: [
+              "radial-gradient(75% 95% at 80% 26%, rgba(255,255,255,.20) 0%, transparent 58%)",
+              "radial-gradient(58% 78% at 2% 102%, rgba(95,154,31,.26) 0%, transparent 58%)",
+              "radial-gradient(40% 55% at 58% 100%, rgba(213,232,79,.14) 0%, transparent 62%)",
+            ].join(","),
           }}
         />
 
-        {/* Catalogue shots are on white, so on the dark panel they sit inside a
-            light tile rather than floating as fake cut-outs. */}
-        <div
-          aria-hidden
-          className="absolute inset-y-6 right-6 hidden w-[38%] max-w-[300px] overflow-hidden rounded-2xl bg-white md:block"
-        >
-          <Image
-            key={s.img}
-            src={s.img}
-            alt=""
-            fill
-            sizes="300px"
-            priority
-            className="object-contain p-6"
-          />
-        </div>
+        <div className="relative flex min-h-[260px] items-center gap-3 px-5 py-7 pr-11 sm:min-h-[300px] sm:gap-6 sm:px-14 sm:pr-16 lg:min-h-[340px]">
+          <div key={s.id} className="hero-copy min-w-0 flex-1">
+            <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
+              {s.eyebrow}
+            </span>
+            <h1 className="mt-3 text-[24px] font-extrabold leading-[1.06] tracking-tight text-ink-fg sm:text-[42px]">
+              {s.line1}
+              <br />
+              {s.line2}
+            </h1>
+            <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-ink-fg-muted sm:text-[14.5px]">
+              {s.sub}
+            </p>
 
-        {/* px clears the edge arrows so the copy is never sat on */}
-        <div className="relative flex min-h-[260px] flex-col justify-center px-6 py-8 sm:min-h-[300px] sm:px-14 md:max-w-[58%] lg:min-h-[340px]">
-          <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
-            {s.eyebrow}
-          </span>
-          <h1 className="mt-3 text-[32px] font-extrabold leading-[1.06] tracking-tight text-ink-fg sm:text-[42px]">
-            {s.line1}
-            <br />
-            {s.line2}
-          </h1>
-          <p className="mt-3 max-w-sm text-[13.5px] leading-relaxed text-ink-fg-muted sm:text-[14.5px]">
-            {s.sub}
-          </p>
-          <a
-            href="#"
-            className="mt-6 w-fit rounded-full bg-accent px-7 py-3 text-[14px] font-bold text-accent-fg transition-colors hover:bg-accent-hover"
+            {/* the hook: a price out of the catalogue beats an adjective */}
+            {item && (
+              <p className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span className="text-[12px] text-ink-fg-muted">From</span>
+                <span className="text-[20px] font-extrabold leading-none text-ink-fg tnum sm:text-[23px]">
+                  AED {money(item.price)}
+                </span>
+                {off > 0 && (
+                  <span className="rounded-full bg-sale px-2 py-0.5 text-[11px] font-bold text-sale-fg tnum">
+                    -{off}%
+                  </span>
+                )}
+              </p>
+            )}
+
+            <a
+              href="#"
+              className="mt-5 inline-block w-fit rounded-full bg-accent px-6 py-2.5 text-[13.5px] font-bold text-accent-fg transition-transform hover:bg-accent-hover hover:-translate-y-0.5 sm:mt-6 sm:px-7 sm:py-3 sm:text-[14px]"
+            >
+              {s.cta}
+            </a>
+          </div>
+
+          {/* A disc, not the white slab this used to be.
+              Catalogue shots are cut out on white, so the tile behind them has
+              to be white too — but a hard-edged rectangle of it reads as a
+              placeholder that failed to load. A circle with a lime bloom behind
+              it reads as a spotlight, and it lets the product sit ~40% larger
+              in the same space. Mobile gets one too: the banner used to be a
+              wall of text with the product hidden below `md`. */}
+          <div
+            aria-hidden
+            className="relative flex aspect-square w-[32%] max-w-[118px] shrink-0 items-center justify-center self-center sm:w-[36%] sm:max-w-[210px] lg:max-w-[268px]"
           >
-            {s.cta}
-          </a>
+            <span
+              className="absolute inset-[-26%] rounded-full blur-2xl"
+              style={{
+                backgroundImage:
+                  "radial-gradient(closest-side, rgba(213,232,79,.55) 30%, rgba(213,232,79,.22) 62%, transparent 78%)",
+              }}
+            />
+            <span className="relative size-full overflow-hidden rounded-full bg-white shadow-[0_18px_50px_rgba(0,0,0,.45)] ring-1 ring-white/25">
+              <Image
+                key={s.img}
+                src={s.img}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 132px, (max-width: 1024px) 210px, 268px"
+                preload
+                className="hero-art object-contain p-[13%]"
+              />
+            </span>
+          </div>
         </div>
 
         <button
@@ -93,15 +138,15 @@ export function Hero() {
           <Icon name="ChevronRight" className="size-4" />
         </button>
 
-        <div className="absolute bottom-5 left-6 flex gap-2 sm:left-14">
+        <div className="absolute bottom-4 left-5 flex gap-2 sm:bottom-5 sm:left-14">
           {heroSlides.map((sl, idx) => (
             <button
               key={sl.id}
               onClick={() => setI(idx)}
               aria-label={`Go to slide ${idx + 1}: ${sl.line1}`}
               aria-current={idx === i}
-              className={`size-2 rounded-full transition-colors ${
-                idx === i ? "bg-accent" : "bg-white/35 hover:bg-white/60"
+              className={`h-2 rounded-full transition-all ${
+                idx === i ? "w-5 bg-accent" : "w-2 bg-white/35 hover:bg-white/60"
               }`}
             />
           ))}

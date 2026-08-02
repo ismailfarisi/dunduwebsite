@@ -91,8 +91,11 @@ export function PromoTiles() {
                 </span>
               </div>
 
+              {/* a disc, matching the hero: the catalogue shots are cut out on
+                  white, and a hard-edged white rectangle of it reads as an
+                  image that failed to load rather than as a product */}
               <div
-                className={`relative mr-3 shrink-0 overflow-hidden rounded-lg bg-white/90 sm:mr-4 ${
+                className={`relative mr-3 shrink-0 overflow-hidden rounded-full bg-white shadow-[0_10px_28px_rgba(0,0,0,.16)] ring-1 ring-black/5 sm:mr-4 ${
                   lead ? "size-[112px] sm:size-[150px]" : "size-[82px] sm:size-[88px]"
                 }`}
               >
@@ -101,7 +104,7 @@ export function PromoTiles() {
                   alt={t.alt}
                   fill
                   sizes={lead ? "150px" : "88px"}
-                  className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                  className="object-contain p-[13%] transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </a>

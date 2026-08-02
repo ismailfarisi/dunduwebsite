@@ -67,6 +67,12 @@ export const navLinks = [
   { label: "More" },
 ];
 
+/**
+ * `itemId` is the listing the slide is actually showing, so the banner can
+ * price itself off the catalogue instead of shouting an adjective. A slide
+ * whose art isn't a listing (the foldable is the Deal of the Day, not a
+ * catalogue row) simply carries no id and the banner drops the price line.
+ */
 export const heroSlides = [
   {
     id: "h1",
@@ -77,6 +83,7 @@ export const heroSlides = [
     cta: "Shop Now",
     img: "/products/galaxy-s26-ultra.webp",
     alt: "Samsung Galaxy S26 Ultra",
+    itemId: "b2",
   },
   {
     id: "h2",
@@ -87,6 +94,7 @@ export const heroSlides = [
     cta: "See Offers",
     img: "/products/farberware-cookware.webp",
     alt: "Farberware 20-piece cookware set",
+    itemId: "f3",
   },
   {
     id: "h3",
@@ -97,6 +105,7 @@ export const heroSlides = [
     cta: "Shop Pre-Owned",
     img: "/products/iphone-15-pro-max.webp",
     alt: "Apple iPhone 15 Pro Max, renewed",
+    itemId: "b1",
   },
   {
     id: "h4",
