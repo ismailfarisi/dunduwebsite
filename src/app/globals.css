@@ -1,0 +1,258 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   OurShopee — design tokens
+   Green wordmark + lime CTA + near-black hero and prices.
+   Chrome stays neutral so product imagery carries the page.
+   --------------------------------------------------------------- */
+
+:root {
+  /* surfaces */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f5f6f8;
+  --surface-3: #eaebee;
+  --border: #e7e8ec;
+  --border-strong: #d3d5da;
+
+  /* text */
+  --fg: #14161a;
+  --fg-muted: #5c6169;
+  --fg-subtle: #8b9099;
+
+  /* brand — the green in the wordmark, also links and "view all" */
+  --brand: #5f9a1f;
+  --brand-hover: #4e8117;
+  --brand-fg: #ffffff;
+  --brand-soft: #eef7e2;
+  --brand-soft-fg: #3d6a10;
+
+  /* accent — the lime CTA pill */
+  --accent: #d5e84f;
+  --accent-hover: #c8dd3a;
+  --accent-fg: #1b2400;
+
+  /* ink — hero panels, dark promo tiles, footer */
+  --ink: #101215;
+  --ink-2: #1c1f24;
+  --ink-fg: #f4f5f6;
+  --ink-fg-muted: #a2a7ae;
+
+  /* semantic */
+  --sale: #d92d20;
+  --sale-fg: #ffffff;
+  --sale-soft: #fdecea;
+  --success: #16794c;
+  --success-soft: #e6f4ec;
+  --star: #f5a623;
+
+  /* promo tiles. Tokens rather than `dark:` utilities on the component: the
+     dark variant keys off the OS preference, the tokens key off data-theme,
+     and a light page on a dark-OS machine rendered the tiles dark. */
+  --tile-rose: #fce7ef;
+  --tile-rose-fg: #7a1f45;
+  --tile-warm: #f6ecdd;
+  --tile-warm-fg: #6b4a1c;
+
+  /* elevation */
+  --shadow-sm: 0 1px 2px rgb(20 22 26 / 0.05), 0 1px 3px rgb(20 22 26 / 0.04);
+  --shadow-md: 0 4px 12px rgb(20 22 26 / 0.08);
+  --shadow-lg: 0 14px 32px rgb(20 22 26 / 0.14);
+
+  --radius: 0.625rem;
+}
+
+/* Dark values are applied by the OS preference unless an explicit
+   data-theme="light" overrides it; data-theme="dark" always wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0f12;
+    --surface: #15181c;
+    --surface-2: #1c2026;
+    --surface-3: #262b32;
+    --border: #262b32;
+    --border-strong: #363c45;
+
+    --fg: #f1f2f4;
+    --fg-muted: #a3a9b2;
+    --fg-subtle: #767d87;
+
+    --brand: #a3d65c;
+    --brand-hover: #b5e373;
+    --brand-fg: #12200a;
+    --brand-soft: #1e2a14;
+    --brand-soft-fg: #bfe38a;
+
+    --accent: #d5e84f;
+    --accent-hover: #e0f065;
+    --accent-fg: #1b2400;
+
+    --ink: #1c2026;
+    --ink-2: #262b32;
+    --ink-fg: #f1f2f4;
+    --ink-fg-muted: #a3a9b2;
+
+    --sale: #ff6b5e;
+    /* the discount badge is a solid --sale fill; on the light salmon that dark
+       mode needs, white text drops under 3:1 — so the foreground flips too */
+    --sale-fg: #2b0a06;
+    --sale-soft: #331512;
+    --success: #4fd1a0;
+    --success-soft: #0f2620;
+    --star: #f5b942;
+
+    --tile-rose: #2b1620;
+    --tile-rose-fg: #fbdce8;
+    --tile-warm: #2a2118;
+    --tile-warm-fg: #f3e5cd;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+    --shadow-md: 0 4px 12px rgb(0 0 0 / 0.55);
+    --shadow-lg: 0 14px 32px rgb(0 0 0 / 0.6);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0d0f12;
+  --surface: #15181c;
+  --surface-2: #1c2026;
+  --surface-3: #262b32;
+  --border: #262b32;
+  --border-strong: #363c45;
+
+  --fg: #f1f2f4;
+  --fg-muted: #a3a9b2;
+  --fg-subtle: #767d87;
+
+  --brand: #a3d65c;
+  --brand-hover: #b5e373;
+  --brand-fg: #12200a;
+  --brand-soft: #1e2a14;
+  --brand-soft-fg: #bfe38a;
+
+  --accent: #d5e84f;
+  --accent-hover: #e0f065;
+  --accent-fg: #1b2400;
+
+  --ink: #1c2026;
+  --ink-2: #262b32;
+  --ink-fg: #f1f2f4;
+  --ink-fg-muted: #a3a9b2;
+
+  --sale: #ff6b5e;
+  --sale-fg: #2b0a06;
+  --sale-soft: #331512;
+  --success: #4fd1a0;
+  --success-soft: #0f2620;
+  --star: #f5b942;
+
+  --tile-rose: #2b1620;
+  --tile-rose-fg: #fbdce8;
+  --tile-warm: #2a2118;
+  --tile-warm-fg: #f3e5cd;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.5);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.55);
+  --shadow-lg: 0 14px 32px rgb(0 0 0 / 0.6);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-soft-fg: var(--brand-soft-fg);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-fg: var(--ink-fg);
+  --color-ink-fg-muted: var(--ink-fg-muted);
+
+  --color-sale: var(--sale);
+  --color-sale-fg: var(--sale-fg);
+  --color-sale-soft: var(--sale-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-star: var(--star);
+
+  --color-tile-rose: var(--tile-rose);
+  --color-tile-rose-fg: var(--tile-rose-fg);
+  --color-tile-warm: var(--tile-warm);
+  --color-tile-warm-fg: var(--tile-warm-fg);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: var(--shadow-sm);
+  --shadow-card-hover: var(--shadow-md);
+  --shadow-pop: var(--shadow-lg);
+
+  --radius-card: var(--radius);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* numerals line up in price columns */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* horizontal rails: scroll-snap, hidden scrollbar, keyboard reachable */
+.rail {
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail > * {
+  scroll-snap-align: start;
+}
+
+/* visible focus everywhere, without the default double ring */
+:where(a, button, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

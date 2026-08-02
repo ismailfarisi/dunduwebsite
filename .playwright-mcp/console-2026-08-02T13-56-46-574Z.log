@@ -1,0 +1,14 @@
+[    8700ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://www.noon.com/akam/13/5dabf468:0
+[   11614ms] [ERROR] Failed to load resource: the server responded with a status of 400 () @ https://www.noon.com/_vs/st/mp-identity-api/customer/get:0
+[   13766ms] Error: Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at Bi (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:31200)
+    at Vi (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:32205)
+    at zc (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:85690)
+    at Fu (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:116398)
+    at Mu (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:115671)
+    at ju (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:115583)
+    at Au (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:115445)
+    at gu (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:111049)
+    at cd (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:77:122914)
+    at MessagePort.re (https://z.nooncdn.com/s/app/2026/com/69209fb09bab35d6fa6f8a7cdfa00597c3424cf7/bigalog/assets/index-BuooVKrK.js:70:56331)
+[   14109ms] [ERROR] Failed to load resource: the server responded with a status of 429 () @ https://sentry.noon.team/api/3196/envelope/?sentry_version=7&sentry_key=7b7a99a633ce48be2de6269da900186c&sentry_client=sentry.javascript.browser%2F8.55.2:0
