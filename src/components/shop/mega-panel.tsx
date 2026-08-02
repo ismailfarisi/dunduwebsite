@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { megaMenus, quickLinks, type Item } from "@/lib/home";
 
@@ -17,7 +18,10 @@ function MiniItem({ item }: { item: Item }) {
   const off = item.was ? Math.round(((item.was - item.price) / item.was) * 100) : 0;
 
   return (
-    <a href="#" className="group flex min-w-0 flex-col rounded-lg p-2 hover:bg-surface-2">
+    <Link
+      href={`/product/${item.id}`}
+      className="group flex min-w-0 flex-col rounded-lg p-2 hover:bg-surface-2"
+    >
       <span className="relative mb-2 aspect-square w-full overflow-hidden rounded-md bg-white">
         <Image
           src={item.img}
@@ -32,7 +36,7 @@ function MiniItem({ item }: { item: Item }) {
         <span className="text-[12.5px] font-bold text-fg tnum">AED {money(item.price)}</span>
         {off > 0 && <span className="text-[11px] font-bold text-sale tnum">-{off}%</span>}
       </span>
-    </a>
+    </Link>
   );
 }
 

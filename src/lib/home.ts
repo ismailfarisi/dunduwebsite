@@ -693,6 +693,59 @@ function pick(...ids: string[]): Item[] {
 /** Read off the bands themselves, so the menu can't drift from the doors. */
 const budgetLinks = budgetBands.map((b) => `Under AED ${b.toLocaleString("en-AE")}`);
 
+export function itemById(id: string): Item | undefined {
+  return allItems.find((i) => i.id === id);
+}
+
+/**
+ * Which department a listing belongs to, worked out from the sections it is
+ * actually merchandised in rather than from a `category` field nobody
+ * maintains. Order matters: the first match wins, so a renewed phone reads as
+ * Mobiles rather than as Best Sellers.
+ */
+const departments: { label: string; items: Item[] }[] = [
+  { label: "Fashion", items: fashion.groups.flatMap((g) => g.items) },
+  { label: "Home & Kitchen", items: homeKitchen },
+  { label: "Back to School", items: backToSchool.picks.map((p) => p.item) },
+  { label: "New Arrivals", items: newArrivals },
+  { label: "Best Sellers", items: bestSellers },
+  { label: "Deals", items: flashDeals },
+];
+
+export function departmentOf(item: Item): string {
+  return departments.find((d) => d.items.some((i) => i.id === item.id))?.label ?? "All Products";
+}
+
+/**
+ * What to show under a listing: same brand first — the strongest signal we
+ * have — then the rest of its department, then nothing. No filler: a row that
+ * pads itself out with a microwave under a t-shirt is worse than a short row.
+ */
+export function relatedTo(item: Item, limit = 5): Item[] {
+  const dept = departments.find((d) => d.items.some((i) => i.id === item.id))?.items ?? [];
+  const ranked = [
+    ...allItems.filter((i) => i.id !== item.id && i.brand && i.brand === item.brand),
+    ...dept.filter((i) => i.id !== item.id),
+  ];
+  return [...new Map(ranked.map((i) => [i.id, i])).values()].slice(0, limit);
+}
+
+/**
+ * The listing's own title, split back into the specs it was written from.
+ *
+ * ourshopee titles are comma-separated spec lists ("12GB / 256GB 5G Titanium
+ * Black"), which is the only structured product data this demo has — so the
+ * detail page reads them out rather than inventing a description. The first
+ * fragment is dropped: it is the product name, which is already the heading.
+ */
+export function highlightsOf(item: Item): string[] {
+  return item.title
+    .split(/,|—/)
+    .slice(1)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 1 && s.length < 48);
+}
+
 export type MegaMenu = {
   columns: { title: string; links: string[] }[];
   /** three real listings, so the panel shows the department instead of naming it */

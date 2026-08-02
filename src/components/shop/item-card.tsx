@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { FREE_DELIVERY_MIN, TABBY_MIN, type Item } from "@/lib/home";
 
@@ -129,9 +130,12 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
           className="mt-0.5 line-clamp-2 text-[12.5px] font-medium leading-snug text-fg"
           title={item.title}
         >
-          <a href="#" className="after:absolute after:inset-0 after:content-['']">
+          <Link
+            href={`/product/${item.id}`}
+            className="after:absolute after:inset-0 after:content-['']"
+          >
             {item.title}
-          </a>
+          </Link>
         </h3>
       </div>
 

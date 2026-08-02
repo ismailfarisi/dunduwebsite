@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MegaPanel } from "@/components/shop/mega-panel";
@@ -34,8 +35,8 @@ function Hit({ item }: { item: Item }) {
   const off = item.was ? Math.round(((item.was - item.price) / item.was) * 100) : 0;
 
   return (
-    <a
-      href="#"
+    <Link
+      href={`/product/${item.id}`}
       className="flex items-center gap-3 rounded-lg p-2 hover:bg-surface-2"
       // mousedown fires before the input's blur closes this
       onMouseDown={(e) => e.preventDefault()}
@@ -55,7 +56,7 @@ function Hit({ item }: { item: Item }) {
           {off > 0 && <span className="text-[11px] font-bold text-sale tnum">-{off}%</span>}
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 

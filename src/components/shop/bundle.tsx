@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Icon } from "@/components/icon";
 import { bundle } from "@/lib/home";
 
@@ -40,7 +41,7 @@ export function Bundle() {
               {i > 0 && (
                 <Icon name="Plus" className="size-4 shrink-0 text-fg-subtle" strokeWidth={2.5} />
               )}
-              <a href="#" className="min-w-0 text-center">
+              <Link href={`/product/${it.id}`} className="min-w-0 text-center">
                 <span className="relative block aspect-square w-[86px] overflow-hidden rounded-lg bg-white ring-1 ring-border sm:w-[104px]">
                   <Image
                     src={it.img}
@@ -56,7 +57,7 @@ export function Bundle() {
                 <span className="block text-[12.5px] font-bold text-fg tnum">
                   AED {money(it.price)}
                 </span>
-              </a>
+              </Link>
             </div>
           ))}
         </div>
