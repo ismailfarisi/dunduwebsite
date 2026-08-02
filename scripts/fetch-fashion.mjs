@@ -20,6 +20,15 @@ import { join } from "node:path";
 const FAKE_STORE =
   "https://raw.githubusercontent.com/keikaavousi/fake-store-api/master/public/img";
 
+/**
+ * The hero's fashion slide needs people, not garments: a flat cutout of a
+ * black jacket is a listing, and a banner has to sell the department. These
+ * two are model photography from Magento's open sample data set
+ * (magento/magento2-sample-data, shot on white like everything else here).
+ */
+const MAGENTO =
+  "https://raw.githubusercontent.com/magento/magento2-sample-data/2.4-develop/pub/media/catalog/product";
+
 // slug -> source filename
 const PICKS = {
   "mens-cotton-jacket": "71li-ujtlUL._AC_UX679_.jpg",
@@ -27,6 +36,12 @@ const PICKS = {
   "womens-moto-jacket": "81XH0e8fefL._AC_UY879_.jpg",
   "womens-boat-neck-top": "71z3kpMAYsL._AC_UY879_.jpg",
   "womens-vneck-tee": "51eg55uWmdL._AC_UX679_.jpg",
+};
+
+// slug -> path under the Magento media tree
+const MODELS = {
+  "fashion-model-men": "m/s/ms01-blue_main.jpg",
+  "fashion-model-women": "w/s/ws03-red_main.jpg",
 };
 
 function sniff(buf) {
@@ -42,9 +57,14 @@ function sniff(buf) {
 const outDir = join(process.cwd(), "public", "products");
 await mkdir(outDir, { recursive: true });
 
+const sources = [
+  ...Object.entries(PICKS).map(([slug, file]) => [slug, `${FAKE_STORE}/${file}`]),
+  ...Object.entries(MODELS).map(([slug, path]) => [slug, `${MAGENTO}/${path}`]),
+];
+
 let ok = 0;
-for (const [slug, file] of Object.entries(PICKS)) {
-  const res = await fetch(`${FAKE_STORE}/${file}`);
+for (const [slug, url] of sources) {
+  const res = await fetch(url);
   if (!res.ok) {
     console.error(`! ${res.status} ${slug} — skipping`);
     continue;
@@ -62,4 +82,4 @@ for (const [slug, file] of Object.entries(PICKS)) {
   ok++;
 }
 
-console.log(`\n${ok}/${Object.keys(PICKS).length} saved to public/products/`);
+console.log(`\n${ok}/${sources.length} saved to public/products/`);

@@ -54,13 +54,15 @@ export function Hero() {
           }}
         />
 
-        {/* At `lg` the row height comes from Deal of the Day beside it, not
-            from these minimums — they only bind once the banner is on its own
-            row below `lg`. */}
-        {/* pb clears the dots. They are absolutely positioned, and once the
+        {/* The minimum is the tallest slide, measured, not a round number.
+            Slides differ by a line of copy — 321px to 363px at desktop — and
+            without a floor the whole page below the hero moved every six
+            seconds as the carousel advanced.
+
+            pb clears the dots. They are absolutely positioned, and once the
             banner got short enough the vertically centred copy reached them —
             the CTA and the dots were overlapping. */}
-        <div className="relative flex min-h-[230px] items-center gap-3 px-5 pb-10 pt-6 pr-11 sm:min-h-[270px] sm:gap-6 sm:px-14 sm:pb-11 sm:pr-16 lg:min-h-[300px]">
+        <div className="relative flex min-h-[352px] items-center gap-3 px-5 pb-10 pt-6 pr-11 sm:min-h-[363px] sm:gap-6 sm:px-14 sm:pb-11 sm:pr-16">
           <div key={s.id} className="hero-copy min-w-0 flex-1">
             <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
               {s.eyebrow}
@@ -103,10 +105,19 @@ export function Hero() {
               placeholder that failed to load. A circle with a lime bloom behind
               it reads as a spotlight, and it lets the product sit ~40% larger
               in the same space. Mobile gets one too: the banner used to be a
-              wall of text with the product hidden below `md`. */}
+              wall of text with the product hidden below `md`.
+
+              Two discs when the slide carries portraits: model photography is
+              cropped to the subject (`object-cover object-top`) rather than
+              fitted whole, because a full-length figure inside a circle is a
+              person you can't see. */}
           <div
             aria-hidden
-            className="relative flex aspect-square w-[32%] max-w-[118px] shrink-0 items-center justify-center self-center sm:w-[36%] sm:max-w-[200px] lg:max-w-[228px]"
+            className={`relative flex shrink-0 items-center justify-center self-center ${
+              s.portraits
+                ? "aspect-[8/5] w-[46%] max-w-[168px] sm:max-w-[290px] lg:max-w-[350px]"
+                : "aspect-square w-[32%] max-w-[118px] sm:w-[36%] sm:max-w-[200px] lg:max-w-[228px]"
+            }`}
           >
             <span
               className="absolute inset-[-26%] rounded-full blur-2xl"
@@ -115,17 +126,38 @@ export function Hero() {
                   "radial-gradient(closest-side, rgba(213,232,79,.55) 30%, rgba(213,232,79,.22) 62%, transparent 78%)",
               }}
             />
-            <span className="relative size-full overflow-hidden rounded-full bg-white shadow-[0_18px_50px_rgba(0,0,0,.45)] ring-1 ring-white/25">
-              <Image
-                key={s.img}
-                src={s.img}
-                alt=""
-                fill
-                sizes="(max-width: 640px) 132px, (max-width: 1024px) 210px, 268px"
-                preload
-                className="hero-art object-contain p-[13%]"
-              />
-            </span>
+
+            {s.portraits ? (
+              s.portraits.map((src, idx) => (
+                <span
+                  key={src}
+                  className={`hero-art absolute aspect-square -translate-y-1/2 overflow-hidden rounded-full bg-white shadow-[0_18px_50px_rgba(0,0,0,.45)] ring-1 ring-white/25 ${
+                    idx === 0 ? "left-0 top-[44%] h-[74%]" : "right-0 top-1/2 z-10 h-full"
+                  }`}
+                >
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 120px, (max-width: 1024px) 200px, 250px"
+                    preload
+                    className="object-cover object-top"
+                  />
+                </span>
+              ))
+            ) : (
+              <span className="relative size-full overflow-hidden rounded-full bg-white shadow-[0_18px_50px_rgba(0,0,0,.45)] ring-1 ring-white/25">
+                <Image
+                  key={s.img}
+                  src={s.img}
+                  alt=""
+                  fill
+                  sizes="(max-width: 640px) 132px, (max-width: 1024px) 210px, 268px"
+                  preload
+                  className="hero-art object-contain p-[13%]"
+                />
+              </span>
+            )}
           </div>
         </div>
 

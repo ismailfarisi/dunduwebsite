@@ -96,9 +96,17 @@ export const heroSlides = [
     line2: "Womenswear.",
     sub: "Jackets, shirts and tees for both — plus the trainers and the bag.",
     cta: "Shop Fashion",
-    img: "/products/womens-moto-jacket.jpg",
-    alt: "Lock and Love faux leather moto jacket",
-    itemId: "w1",
+    img: "/products/fashion-model-women.jpg",
+    alt: "Models wearing a navy t-shirt and a red top",
+    /**
+     * Clothing is the one department a cutout can't sell — a flat black jacket
+     * on white is a listing, not a look. `portraits` swaps the slide's single
+     * product disc for two overlapping ones, cropped to the models, which is
+     * also the only way one slide can say menswear *and* womenswear at once.
+     */
+    portraits: ["/products/fashion-model-men.jpg", "/products/fashion-model-women.jpg"],
+    /** the department's floor price, which is what "From" means on a category slide */
+    itemId: "w3",
   },
   {
     id: "h3",
