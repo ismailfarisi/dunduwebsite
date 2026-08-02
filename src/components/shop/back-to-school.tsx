@@ -6,12 +6,12 @@ import { backToSchool } from "@/lib/home";
  * The seasonal section, framed as a checklist rather than a rail.
  *
  * Everything else on this page groups by category or by discount; a school year
- * is bought by *occasion* — lectures, the commute, the exam hall, the first
- * kitchen — so the label above each card carries the section and the products
- * only have to be good. Without it this is six unrelated markdowns under a
- * banner, which is the failure mode of every seasonal row.
+ * is bought by *occasion* — lectures, the walk in, the exam hall, PE — so the
+ * label above each card carries the section and the products only have to be
+ * good. Without it this is five unrelated markdowns under a banner, which is
+ * the failure mode of every seasonal row.
  *
- * The header claims a best-case percentage, not a basket total: these are six
+ * The header claims a best-case percentage, not a basket total: these are five
  * separate decisions, and one of them (the laptop) isn't discounted at all.
  */
 export function BackToSchool() {
@@ -60,9 +60,9 @@ export function BackToSchool() {
           {backToSchool.sub}
         </p>
 
-        {/* rail on mobile, grid above it — six across at 1320px leaves ~200px a
-            card, which clears the ~175px the instalment line needs */}
-        <div className="rail -mx-3 mt-4 flex gap-2.5 overflow-x-auto px-3 pb-1 scroll-pl-3 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 lg:grid-cols-6">
+        {/* rail on mobile, grid above it — five across at 1320px leaves ~250px
+            a card, well clear of the ~175px the instalment line needs */}
+        <div className="rail -mx-3 mt-4 flex gap-2.5 overflow-x-auto px-3 pb-1 scroll-pl-3 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 lg:grid-cols-5">
           {backToSchool.picks.map((p) => (
             <div
               key={p.item.id}

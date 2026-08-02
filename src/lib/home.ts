@@ -469,25 +469,69 @@ const asusTufGaming: Item = {
 };
 
 /**
+ * Bag, footwear and clothing — three categories the ourshopee catalogue simply
+ * doesn't carry, so the photography comes from public GitHub repositories
+ * instead (see scripts/fetch-school.mjs for the exact sources). The products in
+ * the shots are real; the prices are demo values, because unlike the ourshopee
+ * listings neither source publishes one. Titles describe what is visibly in the
+ * frame rather than naming a model number nobody can check.
+ */
+const foldsackBackpack: Item = {
+  id: "s1",
+  title: "Fjällräven Foldsack No. 1 Backpack, 16L, Fits 15in Laptop",
+  brand: "Fjällräven",
+  img: "/products/foldsack-backpack.jpg",
+  price: 399,
+  was: 465,
+  rating: 4.6,
+  reviews: 120,
+  express: true,
+};
+
+const trailTrainers: Item = {
+  id: "s2",
+  title: "Adidas Trail Trainers, Breathable Mesh Upper, Blue & Black",
+  brand: "Adidas",
+  img: "/products/trail-trainers.png",
+  price: 229,
+  was: 329,
+  express: true,
+  lowStock: 8,
+};
+
+const raglanTee: Item = {
+  id: "s3",
+  title: "H2H Raglan Henley Slim Fit T-Shirt, Grey & Black",
+  brand: "H2H",
+  img: "/products/raglan-henley-tee.jpg",
+  price: 69,
+  was: 99,
+  sold: 400,
+};
+
+/**
  * Seasonal, and the reason it isn't another discount rail is the label above
- * each card: every pick says what it's *for* — lectures, the commute, the exam
- * hall — so the row reads as a list to work through rather than six unrelated
+ * each card: every pick says what it's *for* — lectures, the walk in, the exam
+ * hall — so the row reads as a list to work through rather than five unrelated
  * markdowns that happen to share a banner.
  *
- * Every pick is a listing that already exists elsewhere in the catalogue. The
- * ones a student actually buys aren't all discounted (the laptop isn't), which
- * is why the header claims a best-case percentage rather than a basket total.
+ * One of each thing a term actually needs, which is also why it stops at five:
+ * a second laptop or a third top would turn a list back into a rail. The kit
+ * and the dorm kettle-and-cookware end of it already have their own section
+ * further down the page.
+ *
+ * The header claims a best-case percentage rather than a basket total — these
+ * are five separate decisions, and the laptop carries no markdown at all.
  */
 export const backToSchool = {
   title: "The whole list, before term starts",
-  sub: "A laptop for lectures, a phone that survives the commute, and the three things that make a first kitchen work — picked out of stock, not assembled for a banner.",
+  sub: "One of each: the laptop for lectures, the bag that has to survive a year of them, a watch for exam halls, trainers for PE and a shirt for the other five days.",
   picks: [
     { need: "For lectures", icon: "Laptop", item: asusTufGaming },
-    { need: "For the commute", icon: "Smartphone", item: iphone15ProMax },
+    { need: "For the walk in", icon: "Backpack", item: foldsackBackpack },
     { need: "For exam halls", icon: "Clock", item: casioEnticer },
-    { need: "For the dorm", icon: "Microwave", item: geepasMicrowave },
-    { need: "For 8am starts", icon: "Coffee", item: xiaomiBlender },
-    { need: "For first cooks", icon: "CookingPot", item: prestigeCastIron },
+    { need: "For PE", icon: "Footprints", item: trailTrainers },
+    { need: "For every day", icon: "Shirt", item: raglanTee },
   ],
 };
 
@@ -514,13 +558,23 @@ const strays: Item[] = [
   },
 ];
 
-/** Everything in the catalogue, deduplicated — SKUs sit in several sections. */
+/**
+ * Everything in the catalogue, deduplicated — SKUs sit in several sections.
+ *
+ * The school picks go in as themselves rather than as copies: a bag that only
+ * exists inside one section is invisible to search and to the price doors,
+ * which is exactly the stray-listing problem the rest of this file avoids.
+ */
 export const allItems: Item[] = [
   ...new Map(
-    [...flashDeals, ...newArrivals, ...bestSellers, ...homeKitchen, ...strays].map((i) => [
-      i.id,
-      i,
-    ]),
+    [
+      ...flashDeals,
+      ...newArrivals,
+      ...bestSellers,
+      ...homeKitchen,
+      ...backToSchool.picks.map((p) => p.item),
+      ...strays,
+    ].map((i) => [i.id, i]),
   ).values(),
 ];
 
