@@ -67,11 +67,12 @@ export function DealOfDay() {
 
       {/* side by side on mobile where height is the scarce thing, stacked in
           the desktop rail where width is */}
-      <div className="flex gap-3 p-3 lg:block">
-        {/* 16/10 rather than 5/4 in the desktop rail: this panel sets the
-            height of the hero row, and 5/4 spent ~50px of banner on empty
-            white either side of a phone shot */}
-        <div className="relative aspect-square w-[38%] shrink-0 overflow-hidden rounded-lg bg-white lg:aspect-[16/10] lg:w-full">
+      <div className="flex gap-3 p-3 lg:block lg:p-2.5">
+        {/* 16/9 rather than 5/4 in the desktop rail: this panel sets the height
+            of the hero row — and through it, whether the category circles clear
+            the fold — while 5/4 spent ~80px of that on empty white either side
+            of a phone shot. */}
+        <div className="relative aspect-square w-[38%] shrink-0 overflow-hidden rounded-lg bg-white lg:aspect-[16/9] lg:w-full">
           {/* above the fold on every breakpoint, and large enough that it wins
               LCP off the hero — so it loads eagerly rather than lazily */}
           <Image
@@ -87,7 +88,7 @@ export function DealOfDay() {
           </span>
         </div>
 
-        <div className="min-w-0 flex-1 lg:mt-3">
+        <div className="min-w-0 flex-1 lg:mt-2.5">
           <span className="block text-[10px] font-bold uppercase tracking-[0.1em] text-fg-subtle">
             {d.brand}
           </span>
@@ -95,7 +96,7 @@ export function DealOfDay() {
             <a href="#">{d.title}</a>
           </h3>
 
-          <div className="mt-2 flex flex-wrap items-baseline gap-x-2">
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2">
             <span className="text-[20px] font-extrabold leading-none text-fg tnum">
               AED {money(d.price)}
             </span>
@@ -109,20 +110,20 @@ export function DealOfDay() {
 
           {/* the attach story — the only bundled listing in the catalogue, so
               it does the work a generic "great value" line can't */}
-          <p className="mt-2 flex items-start gap-1.5 text-[11.5px] leading-tight text-success">
+          <p className="mt-1.5 flex items-start gap-1.5 text-[11.5px] leading-tight text-success">
             <Icon name="Sparkles" className="mt-px size-3.5 shrink-0" />
             {d.includes}
           </p>
 
           {d.price >= TABBY_MIN && (
-            <p className="mt-2 text-[11px] text-fg-muted tnum">
+            <p className="mt-1.5 text-[11px] text-fg-muted tnum">
               or 4 × AED {money(Math.round(d.price / 4))} with{" "}
               <span className="font-bold text-fg">tabby</span>
             </p>
           )}
 
           {/* scarcity you can check: units, not a bar with no number on it */}
-          <div className="mt-3">
+          <div className="mt-2">
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-surface-3">
               <div className="h-full rounded-full bg-sale" style={{ width: `${pct}%` }} />
             </div>
@@ -134,7 +135,7 @@ export function DealOfDay() {
 
           <button
             type="button"
-            className="mt-3 w-full rounded-lg bg-accent py-2.5 text-[13.5px] font-bold text-accent-fg transition-colors hover:bg-accent-hover"
+            className="mt-2.5 w-full rounded-lg bg-accent py-2 text-[13.5px] font-bold text-accent-fg transition-colors hover:bg-accent-hover"
           >
             Add to cart
           </button>
