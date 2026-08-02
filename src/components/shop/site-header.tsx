@@ -347,23 +347,45 @@ export function SiteHeader() {
         </div>
       </header>
 
-      {/* mobile: quick category strip that scrolls away with the page */}
+      {/* mobile: quick category strip that scrolls away with the page. The
+          chips open the same panels as the desktop nav bar — tapped rather
+          than hovered, and dropped below the strip rather than over it,
+          because a panel that covers the row you tapped hides where you are. */}
       <div className="border-b border-border bg-surface lg:hidden">
         <div className="rail flex gap-1 overflow-x-auto px-3 py-2 scroll-pl-3">
           {navLinks.map((l) => (
-            <a
+            <button
               key={l.label}
-              href="#"
-              className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] ${
-                l.hot
-                  ? "bg-brand-soft font-bold text-brand-soft-fg"
-                  : "bg-surface-2 font-medium text-fg-muted"
+              type="button"
+              onClick={() => toggle(l.label)}
+              aria-expanded={openMenu === l.label}
+              aria-haspopup="true"
+              className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-[13px] transition-colors ${
+                openMenu === l.label
+                  ? "bg-brand font-bold text-brand-fg"
+                  : l.hot
+                    ? "bg-brand-soft font-bold text-brand-soft-fg"
+                    : "bg-surface-2 font-medium text-fg-muted"
               }`}
             >
               {l.label}
-            </a>
+            </button>
           ))}
         </div>
+
+        {openMenu && (
+          <div className="border-t border-border px-3 pb-4 pt-3">
+            <MegaPanel label={openMenu} />
+            <button
+              type="button"
+              onClick={() => setOpenMenu(null)}
+              className="mt-3 flex items-center gap-1 text-[12.5px] font-semibold text-fg-muted"
+            >
+              <Icon name="ChevronDown" className="size-3.5 rotate-180" />
+              Close
+            </button>
+          </div>
+        )}
       </div>
 
       {/* full-screen search — mobile */}

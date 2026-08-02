@@ -50,7 +50,7 @@ function MiniItem({ item }: { item: Item }) {
 export function MegaPanel({ label }: { label: string }) {
   if (label === "All Categories") {
     return (
-      <div className="grid grid-cols-3 gap-x-4 gap-y-1 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1 sm:grid-cols-3 xl:grid-cols-4">
         {quickLinks.map((c) => (
           <a
             key={c.label}
@@ -71,11 +71,11 @@ export function MegaPanel({ label }: { label: string }) {
   if (!menu) return null;
 
   return (
-    <div className="flex gap-8">
+    <div className="flex flex-col gap-5 lg:flex-row lg:gap-8">
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex gap-6">
+        <div className="flex flex-wrap gap-x-6 gap-y-4">
           {menu.columns.map((col) => (
-            <div key={col.title} className="w-[168px] shrink-0">
+            <div key={col.title} className="w-[45%] shrink-0 sm:w-[168px]">
               <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-fg-subtle">
                 {col.title}
               </p>
@@ -109,10 +109,10 @@ export function MegaPanel({ label }: { label: string }) {
       {/* the listings sit right, against the border, so every panel has the
           same silhouette however many link columns it carries */}
       {menu.items && menu.items.length > 0 && (
-        <div className="shrink-0 border-l border-border pl-6">
-          <div className="flex gap-2">
+        <div className="shrink-0 border-t border-border pt-4 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+          <div className="rail flex gap-2 overflow-x-auto lg:overflow-visible">
             {menu.items.map((it) => (
-              <div key={it.id} className="w-[124px]">
+              <div key={it.id} className="w-[112px] shrink-0 sm:w-[124px]">
                 <MiniItem item={it} />
               </div>
             ))}

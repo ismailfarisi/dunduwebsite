@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { quickLinks } from "@/lib/home";
 
-function Circle({ label, img, className = "" }: { label: string; img: string; className?: string }) {
+function Circle({ label, img }: { label: string; img: string }) {
   return (
     <a
       href="#"
-      className={`group flex shrink-0 flex-col items-center gap-2 px-1 text-center ${className}`}
+      className="group flex w-[92px] shrink-0 flex-col items-center gap-2 px-1 text-center sm:w-[112px]"
     >
       {/* circle stays light in both themes — the source art is shot on white */}
       <span className="relative size-[62px] overflow-hidden rounded-full bg-white ring-1 ring-border transition-all group-hover:ring-brand sm:size-[68px]">
@@ -29,33 +29,26 @@ function Row({ hidden = false }: { hidden?: boolean }) {
   return (
     <div aria-hidden={hidden} className="flex shrink-0 items-start">
       {quickLinks.map((c) => (
-        <Circle key={c.label} label={c.label} img={c.img} className="w-[112px]" />
+        <Circle key={c.label} label={c.label} img={c.img} />
       ))}
     </div>
   );
 }
 
 /**
- * The circular category row under the hero.
+ * The circular category row under the hero, drifting right to left.
  *
- * Two layouts, because the right answer differs by input. Below `lg` it stays
- * a swipe rail: taking manual control of the primary category row away from a
- * touch screen to animate it would be a bad trade. From `lg` up it drifts
- * right to left — same two-copy track as the top strip, paused on hover so a
- * category you are aiming at holds still.
+ * It runs at every width now. On a phone that costs the swipe — a transform
+ * animation and a scroll container can't share one element — but a 70s lap
+ * moves about four pixels a second, so nothing is hard to tap, and every
+ * category comes past on its own rather than waiting to be found.
  */
 export function QuickCircles() {
   return (
     <section className="mt-3 rounded-xl border border-border bg-surface py-4 sm:py-5">
       <h2 className="sr-only">Shop by category</h2>
 
-      <div className="rail flex gap-1 overflow-x-auto px-3 scroll-pl-3 sm:px-4 sm:scroll-pl-4 lg:hidden">
-        {quickLinks.map((c) => (
-          <Circle key={c.label} label={c.label} img={c.img} className="w-[86px]" />
-        ))}
-      </div>
-
-      <div className="marquee hidden px-2 lg:block">
+      <div className="marquee px-2">
         <div className="marquee-track marquee-left marquee-slow flex w-max items-start">
           <Row />
           <Row hidden />
