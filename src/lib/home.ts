@@ -91,10 +91,10 @@ export const heroSlides = [
   },
   {
     id: "h5",
-    eyebrow: "New in fashion",
+    eyebrow: "Summer fashion",
     line1: "Menswear.",
     line2: "Womenswear.",
-    sub: "Jackets, shirts and tees for both — plus the trainers and the bag.",
+    sub: "Short sleeves for both, in cotton and jersey — plus the trainers and the bag.",
     cta: "Shop Fashion",
     img: "/products/fashion-model-women.jpg",
     alt: "Models wearing a navy t-shirt and a red top",
@@ -539,12 +539,12 @@ const raglanTee: Item = {
  * photographs; where a garment's label can't be read, it carries no brand
  * rather than a guessed one.
  */
-const mensCottonJacket: Item = {
+const mensSummerTee: Item = {
   id: "m1",
-  title: "Cotton Field Jacket, Stand Collar, Zip Front, Khaki",
-  img: "/products/mens-cotton-jacket.jpg",
-  price: 199,
-  was: 299,
+  title: "Short Sleeve Performance Tee, Breathable Mesh Knit, Rose",
+  img: "/products/mens-summer-tee.jpg",
+  price: 55,
+  was: 89,
   express: true,
   sold: 210,
 };
@@ -559,13 +559,12 @@ const mensVneckTee: Item = {
   sold: 320,
 };
 
-const womensMotoJacket: Item = {
+const womensSummerTee: Item = {
   id: "w1",
-  title: "Lock and Love Faux Leather Moto Jacket, Removable Hood, Black",
-  brand: "Lock and Love",
-  img: "/products/womens-moto-jacket.jpg",
-  price: 249,
-  was: 379,
+  title: "Short Sleeve Scoop Neck Tee, Stretch Jersey, Black",
+  img: "/products/womens-summer-tee.jpg",
+  price: 49,
+  was: 75,
   express: true,
   lowStock: 7,
 };
@@ -591,7 +590,7 @@ const womensVneckTee: Item = {
 };
 
 /**
- * One section, two wardrobes.
+ * One section, two wardrobes, in season.
  *
  * Menswear and womenswear as two separate rails would be two more rails; side
  * by side under one heading they're a comparison, and the page keeps the shape
@@ -603,11 +602,11 @@ const womensVneckTee: Item = {
  * padded to fill the grid.
  */
 export const fashion = {
-  title: "Menswear & womenswear, new in",
-  sub: "The category the site never carried, opened with six pieces — a jacket, a shirt and a tee for each side.",
+  title: "Summer weight, both wardrobes",
+  sub: "Six pieces for a UAE August — short sleeves first, and nothing heavier than jersey behind them.",
   groups: [
-    { label: "Men's", items: [mensCottonJacket, mensVneckTee, raglanTee] },
-    { label: "Women's", items: [womensMotoJacket, womensBoatNeckTop, womensVneckTee] },
+    { label: "Men's", items: [mensSummerTee, raglanTee, mensVneckTee] },
+    { label: "Women's", items: [womensSummerTee, womensBoatNeckTop, womensVneckTee] },
   ],
 };
 
@@ -790,7 +789,7 @@ export const megaMenus: Record<string, MegaMenu> = {
   "Back to School": {
     columns: [
       { title: "The list", links: ["Laptops", "Backpacks", "Watches", "Footwear"] },
-      { title: "Everyday", links: ["T-shirts & tops", "Jackets", "Under AED 100"] },
+      { title: "Everyday", links: ["T-shirts & tops", "Trainers", "Under AED 100"] },
     ],
     items: pick("x2", "s1", "s2"),
     cta: "Shop the list",
@@ -845,8 +844,8 @@ export const megaMenus: Record<string, MegaMenu> = {
   },
   Fashion: {
     columns: [
-      { title: "Men's", links: ["Jackets", "T-shirts", "Watches"] },
-      { title: "Women's", links: ["Jackets", "Tops", "T-shirts"] },
+      { title: "Men's", links: ["T-shirts", "Short sleeve", "Watches"] },
+      { title: "Women's", links: ["Tops", "T-shirts", "Under AED 100"] },
       { title: "Shoes & bags", links: ["Trainers", "Backpacks"] },
     ],
     items: pick("w1", "m1", "s2"),

@@ -31,17 +31,24 @@ const MAGENTO =
 
 // slug -> source filename
 const PICKS = {
-  "mens-cotton-jacket": "71li-ujtlUL._AC_UX679_.jpg",
   "mens-vneck-tee": "71YXzeOuslL._AC_UY879_.jpg",
-  "womens-moto-jacket": "81XH0e8fefL._AC_UY879_.jpg",
   "womens-boat-neck-top": "71z3kpMAYsL._AC_UY879_.jpg",
   "womens-vneck-tee": "51eg55uWmdL._AC_UX679_.jpg",
 };
 
-// slug -> path under the Magento media tree
+/**
+ * slug -> path under the Magento media tree.
+ *
+ * The two jackets this section opened with are gone: it is August in the UAE.
+ * Their replacements are short-sleeved, and they are model shots for the same
+ * reason the banner is — a garment reads as summer on a person faster than it
+ * does laid flat.
+ */
 const MODELS = {
   "fashion-model-men": "m/s/ms01-blue_main.jpg",
   "fashion-model-women": "w/s/ws03-red_main.jpg",
+  "mens-summer-tee": "m/s/ms04-red_main.jpg",
+  "womens-summer-tee": "w/s/ws05-black_main.jpg",
 };
 
 function sniff(buf) {
