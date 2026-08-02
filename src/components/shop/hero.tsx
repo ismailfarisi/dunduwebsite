@@ -57,7 +57,10 @@ export function Hero() {
         {/* At `lg` the row height comes from Deal of the Day beside it, not
             from these minimums — they only bind once the banner is on its own
             row below `lg`. */}
-        <div className="relative flex min-h-[230px] items-center gap-3 px-5 py-6 pr-11 sm:min-h-[270px] sm:gap-6 sm:px-14 sm:pr-16 lg:min-h-[300px]">
+        {/* pb clears the dots. They are absolutely positioned, and once the
+            banner got short enough the vertically centred copy reached them —
+            the CTA and the dots were overlapping. */}
+        <div className="relative flex min-h-[230px] items-center gap-3 px-5 pb-10 pt-6 pr-11 sm:min-h-[270px] sm:gap-6 sm:px-14 sm:pb-11 sm:pr-16 lg:min-h-[300px]">
           <div key={s.id} className="hero-copy min-w-0 flex-1">
             <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
               {s.eyebrow}
@@ -103,7 +106,7 @@ export function Hero() {
               wall of text with the product hidden below `md`. */}
           <div
             aria-hidden
-            className="relative flex aspect-square w-[32%] max-w-[118px] shrink-0 items-center justify-center self-center sm:w-[36%] sm:max-w-[210px] lg:max-w-[268px]"
+            className="relative flex aspect-square w-[32%] max-w-[118px] shrink-0 items-center justify-center self-center sm:w-[36%] sm:max-w-[200px] lg:max-w-[228px]"
           >
             <span
               className="absolute inset-[-26%] rounded-full blur-2xl"

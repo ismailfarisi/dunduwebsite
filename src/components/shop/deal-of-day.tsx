@@ -56,7 +56,7 @@ export function DealOfDay() {
   const pct = Math.round((claimed / d.unitsTotal) * 100);
 
   return (
-    <aside className="overflow-hidden rounded-xl border border-border bg-surface">
+    <aside className="flex flex-col overflow-hidden rounded-xl border border-border bg-surface">
       <header className="flex items-center justify-between gap-2 bg-ink px-3 py-2">
         <h2 className="flex items-center gap-1.5 text-[12px] font-extrabold uppercase tracking-wide text-ink-fg">
           <Icon name="Flame" className="size-4 fill-accent text-accent" strokeWidth={0} />
@@ -65,52 +65,64 @@ export function DealOfDay() {
         <ToMidnight />
       </header>
 
-      {/* side by side on mobile where height is the scarce thing, stacked in
-          the desktop rail where width is */}
-      <div className="flex gap-3 p-3 lg:block lg:p-2.5">
-        {/* 16/9 rather than 5/4 in the desktop rail: this panel sets the height
-            of the hero row — and through it, whether the category circles clear
-            the fold — while 5/4 spent ~80px of that on empty white either side
-            of a phone shot. */}
-        <div className="relative aspect-square w-[38%] shrink-0 overflow-hidden rounded-lg bg-white lg:aspect-[16/9] lg:w-full">
-          {/* above the fold on every breakpoint, and large enough that it wins
-              LCP off the hero — so it loads eagerly rather than lazily */}
-          <Image
-            src={d.img}
-            alt={d.title}
-            fill
-            sizes="(max-width: 1024px) 40vw, 290px"
-            priority
-            className="object-contain p-2"
-          />
-          <span className="absolute left-1.5 top-1.5 rounded-md bg-sale px-1.5 py-0.5 text-[11.5px] font-extrabold leading-tight text-sale-fg tnum">
-            -{off}%
-          </span>
-        </div>
-
-        <div className="min-w-0 flex-1 lg:mt-2.5">
-          <span className="block text-[10px] font-bold uppercase tracking-[0.1em] text-fg-subtle">
-            {d.brand}
-          </span>
-          <h3 className="mt-0.5 line-clamp-2 text-[13px] font-semibold leading-snug text-fg">
-            <a href="#">{d.title}</a>
-          </h3>
-
-          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2">
-            <span className="text-[20px] font-extrabold leading-none text-fg tnum">
-              AED {money(d.price)}
-            </span>
-            <span className="text-[12px] text-fg-subtle line-through tnum">
-              AED {money(d.was)}
+      {/* Side by side at every width now, not stacked in the desktop rail.
+          This panel is the taller half of the hero row, so it decides where
+          the category circles land — and a full-width 16/9 shot of a phone was
+          spending ~110px of that on white space beside it. Beside the identity
+          block instead, the same image costs nothing: the brand, title and
+          price were never as tall as it was. */}
+      <div className="flex flex-1 flex-col p-3 lg:p-2.5">
+        {/* flex-1 + stretch: the panel is stretched to the banner's height, and
+            the leftover is better spent making the product bigger than left as
+            a dead band between the price and the progress bar */}
+        <div className="flex gap-3 lg:flex-1">
+          {/* max-w: 38% of a tablet-width panel is a 305px square, which made
+              this card taller than the banner it sits under */}
+          <div className="relative aspect-square w-[38%] max-w-[150px] shrink-0 overflow-hidden rounded-lg bg-white lg:aspect-auto lg:w-[124px] lg:max-w-none lg:self-stretch">
+            {/* above the fold on every breakpoint, and large enough that it wins
+                LCP off the hero — so it loads eagerly rather than lazily */}
+            <Image
+              src={d.img}
+              alt={d.title}
+              fill
+              sizes="(max-width: 1024px) 40vw, 124px"
+              priority
+              className="object-contain p-2"
+            />
+            <span className="absolute left-1.5 top-1.5 rounded-md bg-sale px-1.5 py-0.5 text-[11.5px] font-extrabold leading-tight text-sale-fg tnum">
+              -{off}%
             </span>
           </div>
-          <p className="mt-1 text-[11.5px] font-bold text-sale tnum">
-            Save AED {money(d.was - d.price)}
-          </p>
 
+          <div className="min-w-0 flex-1">
+            <span className="block text-[10px] font-bold uppercase tracking-[0.1em] text-fg-subtle">
+              {d.brand}
+            </span>
+            <h3 className="mt-0.5 line-clamp-2 text-[13px] font-semibold leading-snug text-fg">
+              <a href="#">{d.title}</a>
+            </h3>
+
+            <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2">
+              <span className="text-[20px] font-extrabold leading-none text-fg tnum">
+                AED {money(d.price)}
+              </span>
+              <span className="text-[12px] text-fg-subtle line-through tnum">
+                AED {money(d.was)}
+              </span>
+            </div>
+            <p className="mt-1 text-[11.5px] font-bold text-sale tnum">
+              Save AED {money(d.was - d.price)}
+            </p>
+          </div>
+        </div>
+
+        {/* full width under both, where the progress bar has room to be read.
+            The row above takes the slack, so this block sits on the floor of
+            the panel without a gap opening above it. */}
+        <div className="pt-2">
           {/* the attach story — the only bundled listing in the catalogue, so
               it does the work a generic "great value" line can't */}
-          <p className="mt-1.5 flex items-start gap-1.5 text-[11.5px] leading-tight text-success">
+          <p className="flex items-start gap-1.5 text-[11.5px] leading-tight text-success">
             <Icon name="Sparkles" className="mt-px size-3.5 shrink-0" />
             {d.includes}
           </p>
