@@ -272,6 +272,14 @@ body {
     transform: translateX(0);
   }
 }
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 .marquee {
   overflow: hidden;
   -webkit-mask-image: linear-gradient(
@@ -285,6 +293,15 @@ body {
 }
 .marquee-track {
   animation: marquee-right 45s linear infinite;
+}
+/* direction and pace are modifiers: the strip runs right, the category row
+   runs left, and a row of 68px circles needs longer per lap than a line of
+   text to read as a drift rather than a conveyor */
+.marquee-track.marquee-left {
+  animation-name: marquee-left;
+}
+.marquee-track.marquee-slow {
+  animation-duration: 70s;
 }
 /* a point that catches the eye can be read, and clicked-through links stay
    reachable while the pointer is on them */
