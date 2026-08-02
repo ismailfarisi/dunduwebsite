@@ -41,13 +41,6 @@ export const TABBY_MIN = 100;
 
 export const topbarLeft = { label: "Delivering to", value: "UAE", flag: "🇦🇪" };
 
-export const topbarCenter = [
-  { icon: "Truck", label: `Free Delivery on orders AED ${FREE_DELIVERY_MIN}+` },
-  { icon: "Banknote", label: "Cash on Delivery" },
-  { icon: "RotateCcw", label: "Easy Returns" },
-  { icon: "Smartphone", label: "Download App" },
-];
-
 export const topbarRight = [
   { icon: "MapPin", label: "Track Order" },
   { icon: "CircleHelp", label: "Help Center" },
@@ -896,6 +889,25 @@ export const trustPoints = [
   { icon: "Star", title: "4.6/5 Customer Rating", sub: "Based on 50K+ reviews" },
   { icon: "RotateCcw", title: "7 Days Easy Returns", sub: "No questions asked" },
   { icon: "ShieldCheck", title: "Secure Checkout", sub: "100% payment protection" },
+];
+
+/**
+ * What travels across the top strip.
+ *
+ * The utility promises and the proof points, in one loop. The strip used to
+ * say "Easy Returns" while the row above the footer said "7 Days Easy
+ * Returns"; this keeps the specific version and drops the vague one, so the
+ * two places agree. `trustPoints` still has its own row down there, where it
+ * is read at decision time rather than glanced at.
+ *
+ * `sub` renders muted after the title, so a point reads as a claim and its
+ * evidence rather than as a slogan.
+ */
+export const topbarStrip: { icon: string; title: string; sub?: string }[] = [
+  { icon: "Truck", title: `Free Delivery on orders AED ${FREE_DELIVERY_MIN}+` },
+  ...trustPoints.map((t) => ({ icon: t.icon, title: t.title, sub: t.sub })),
+  { icon: "Banknote", title: "Cash on Delivery", sub: "Pay when it arrives" },
+  { icon: "Smartphone", title: "Download the App", sub: "iOS & Android" },
 ];
 
 export const socials = [
