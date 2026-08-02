@@ -475,6 +475,10 @@ const asusTufGaming: Item = {
  * the shots are real; the prices are demo values, because unlike the ourshopee
  * listings neither source publishes one. Titles describe what is visibly in the
  * frame rather than naming a model number nobody can check.
+ *
+ * No `rating` on any of them, per the rule at the top of this file: a star
+ * rating is a claim about other buyers, and there is no source listing to take
+ * one from. `sold` is a demo signal in the same sense as everywhere else.
  */
 const foldsackBackpack: Item = {
   id: "s1",
@@ -483,9 +487,8 @@ const foldsackBackpack: Item = {
   img: "/products/foldsack-backpack.jpg",
   price: 399,
   was: 465,
-  rating: 4.6,
-  reviews: 120,
   express: true,
+  sold: 260,
 };
 
 const trailTrainers: Item = {
@@ -507,6 +510,84 @@ const raglanTee: Item = {
   price: 69,
   was: 99,
   sold: 400,
+};
+
+/**
+ * Menswear and womenswear, same sourcing and the same demo-price caveat as the
+ * three above (scripts/fetch-fashion.mjs). Brands are the labels legible in the
+ * photographs; where a garment's label can't be read, it carries no brand
+ * rather than a guessed one.
+ */
+const mensCottonJacket: Item = {
+  id: "m1",
+  title: "Cotton Field Jacket, Stand Collar, Zip Front, Khaki",
+  img: "/products/mens-cotton-jacket.jpg",
+  price: 199,
+  was: 299,
+  express: true,
+  sold: 210,
+};
+
+const mensVneckTee: Item = {
+  id: "m2",
+  title: "H2H Long Sleeve V-Neck T-Shirt, Slim Fit, Denim Blue",
+  brand: "H2H",
+  img: "/products/mens-vneck-tee.jpg",
+  price: 89,
+  was: 129,
+  sold: 320,
+};
+
+const womensMotoJacket: Item = {
+  id: "w1",
+  title: "Lock and Love Faux Leather Moto Jacket, Removable Hood, Black",
+  brand: "Lock and Love",
+  img: "/products/womens-moto-jacket.jpg",
+  price: 249,
+  was: 379,
+  express: true,
+  lowStock: 7,
+};
+
+const womensBoatNeckTop: Item = {
+  id: "w2",
+  title: "Made By Johnny Dolman Sleeve Boat Neck Top, Ruched Sides, White",
+  brand: "Made By Johnny",
+  img: "/products/womens-boat-neck-top.jpg",
+  price: 59,
+  was: 89,
+  sold: 450,
+};
+
+const womensVneckTee: Item = {
+  id: "w3",
+  title: "Opna Short Sleeve V-Neck Tee, Moisture Wicking, Red",
+  brand: "Opna",
+  img: "/products/womens-vneck-tee.jpg",
+  price: 45,
+  was: 69,
+  sold: 380,
+};
+
+/**
+ * One section, two wardrobes.
+ *
+ * Menswear and womenswear as two separate rails would be two more rails; side
+ * by side under one heading they're a comparison, and the page keeps the shape
+ * it already uses for New Arrivals / Best Sellers — except the split here is
+ * who it's for, which is the first question anyone shopping clothes answers.
+ *
+ * Three a side rather than four: this is the page's introduction to a category
+ * it has never carried, and a short row that's all wearable beats a long one
+ * padded to fill the grid.
+ */
+export const fashion = {
+  title: "Menswear & womenswear, new in",
+  sub: "The category the site never carried, opened with six pieces — a jacket, a shirt and a tee for each side.",
+  groups: [
+    { label: "Men's", items: [mensCottonJacket, mensVneckTee, raglanTee] },
+    { label: "Women's", items: [womensMotoJacket, womensBoatNeckTop, womensVneckTee] },
+  ],
 };
 
 /**
@@ -573,6 +654,7 @@ export const allItems: Item[] = [
       ...bestSellers,
       ...homeKitchen,
       ...backToSchool.picks.map((p) => p.item),
+      ...fashion.groups.flatMap((g) => g.items),
       ...strays,
     ].map((i) => [i.id, i]),
   ).values(),

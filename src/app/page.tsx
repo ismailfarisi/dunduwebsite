@@ -3,6 +3,7 @@ import { Brands } from "@/components/shop/brands";
 import { BudgetDoors } from "@/components/shop/budget-doors";
 import { Bundle } from "@/components/shop/bundle";
 import { ColumnSection } from "@/components/shop/column-section";
+import { Fashion } from "@/components/shop/fashion";
 import { FlashDeals } from "@/components/shop/flash-deals";
 import { Hero } from "@/components/shop/hero";
 import { PromoTiles } from "@/components/shop/promo-tiles";
@@ -49,6 +50,7 @@ export default function Home() {
         </div>
 
         <Refurbished />
+        <Fashion />
         <RailSection
           eyebrow="Home & Kitchen"
           title="Everything for the kitchen"

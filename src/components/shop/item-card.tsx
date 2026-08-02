@@ -118,11 +118,12 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
           </span>
         )}
 
-        {item.brand && (
-          <span className="block truncate text-[10px] font-bold uppercase tracking-[0.1em] text-fg-subtle">
-            {item.brand}
-          </span>
-        )}
+        {/* reserved, not conditional: a garment whose label can't be read
+            carries no brand, and dropping the row would start its title a line
+            above every other title in the row */}
+        <span className="block truncate text-[10px] font-bold uppercase tracking-[0.1em] text-fg-subtle">
+          {item.brand ?? " "}
+        </span>
 
         <h3
           className="mt-0.5 line-clamp-2 text-[12.5px] font-medium leading-snug text-fg"

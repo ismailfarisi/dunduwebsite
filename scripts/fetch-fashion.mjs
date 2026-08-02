@@ -1,0 +1,65 @@
+/**
+ * One-off: the menswear and womenswear shots, saved to public/products/.
+ *
+ * Same reason as fetch-school.mjs — the ourshopee catalogue behind the rest of
+ * this demo carries no clothing at all, so the photography comes from a public
+ * GitHub repository instead:
+ *
+ *   keikaavousi/fake-store-api (public/img/) — the product photography behind
+ *   fakestoreapi.com's demo catalogue
+ *
+ * Real photographs of real garments. The prices in lib/home.ts that go with
+ * them are demo values, because the source publishes none; the titles describe
+ * the garment in the frame and the brand on its visible label.
+ *
+ *   node scripts/fetch-fashion.mjs
+ */
+import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+
+const FAKE_STORE =
+  "https://raw.githubusercontent.com/keikaavousi/fake-store-api/master/public/img";
+
+// slug -> source filename
+const PICKS = {
+  "mens-cotton-jacket": "71li-ujtlUL._AC_UX679_.jpg",
+  "mens-vneck-tee": "71YXzeOuslL._AC_UY879_.jpg",
+  "womens-moto-jacket": "81XH0e8fefL._AC_UY879_.jpg",
+  "womens-boat-neck-top": "71z3kpMAYsL._AC_UY879_.jpg",
+  "womens-vneck-tee": "51eg55uWmdL._AC_UX679_.jpg",
+};
+
+function sniff(buf) {
+  if (buf.length < 12) return null;
+  if (buf.toString("ascii", 0, 4) === "RIFF" && buf.toString("ascii", 8, 12) === "WEBP")
+    return "webp";
+  if (buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff) return "jpg";
+  if (buf.toString("ascii", 1, 4) === "PNG") return "png";
+  if (buf.toString("ascii", 4, 12) === "ftypavif") return "avif";
+  return null;
+}
+
+const outDir = join(process.cwd(), "public", "products");
+await mkdir(outDir, { recursive: true });
+
+let ok = 0;
+for (const [slug, file] of Object.entries(PICKS)) {
+  const res = await fetch(`${FAKE_STORE}/${file}`);
+  if (!res.ok) {
+    console.error(`! ${res.status} ${slug} — skipping`);
+    continue;
+  }
+
+  const buf = Buffer.from(await res.arrayBuffer());
+  const ext = sniff(buf);
+  if (!ext) {
+    console.error(`! ${slug} — unrecognised image data, skipping`);
+    continue;
+  }
+
+  await writeFile(join(outDir, `${slug}.${ext}`), buf);
+  console.log(`✓ ${slug}.${ext} (${(buf.length / 1024).toFixed(0)} kB)`);
+  ok++;
+}
+
+console.log(`\n${ok}/${Object.keys(PICKS).length} saved to public/products/`);
