@@ -603,6 +603,81 @@ const womensVneckTee: Item = {
 };
 
 /**
+ * Footwear. Photography from adrianhajdin/nike_landing_page — see
+ * scripts/fetch-footwear.mjs — and the same demo-price caveat as the rest of
+ * the clothing.
+ *
+ * Brands are claimed only where the mark is legible in the frame: the swoosh,
+ * the N, the K-Swiss wordmark, the three stripes. The knit runner carries no
+ * visible mark, so it carries no brand rather than a guessed one.
+ */
+const nikeAf1: Item = {
+  id: "sh1",
+  title: "Nike Air Force 1 '07 Premium, Canvas & Corduroy, Tan",
+  brand: "Nike",
+  img: "/products/shoe-af1-carhartt.png",
+  price: 549,
+  was: 699,
+  express: true,
+  lowStock: 5,
+};
+
+const nikeLegend: Item = {
+  id: "sh2",
+  title: "Nike Legend Essential Training Shoe, Black & Gum",
+  brand: "Nike",
+  img: "/products/shoe-legend-essential.png",
+  price: 279,
+  was: 359,
+  express: true,
+  sold: 240,
+};
+
+const newBalance247: Item = {
+  id: "sh3",
+  title: "New Balance 247 Nubuck & Mesh Trainer, Olive",
+  brand: "New Balance",
+  img: "/products/shoe-nb-247.png",
+  price: 329,
+  was: 429,
+  sold: 180,
+};
+
+const kswissTrainer: Item = {
+  id: "sh4",
+  title: "K-Swiss Chunky Court Trainer, White, Teal & Orange",
+  brand: "K-Swiss",
+  img: "/products/shoe-kswiss.png",
+  price: 249,
+  was: 319,
+  express: true,
+  sold: 150,
+};
+
+const knitRunner: Item = {
+  id: "sh5",
+  title: "Knit Runner, Primeknit Upper, Gradient Sole, Purple",
+  img: "/products/shoe-knit-runner.png",
+  price: 189,
+  was: 259,
+  sold: 320,
+  lowStock: 11,
+};
+
+/**
+ * A department the site sold exactly one of — the school trainers — while
+ * Fashion sat next to it with six garments. Six pairs, one rail.
+ */
+export const footwear: Item[] = [
+  nikeAf1,
+  trailTrainers,
+  newBalance247,
+  nikeLegend,
+  kswissTrainer,
+  knitRunner,
+];
+
+/**
  * One section, two wardrobes, in season.
  *
  * Menswear and womenswear as two separate rails would be two more rails; side
@@ -688,6 +763,7 @@ export const allItems: Item[] = [
       ...homeKitchen,
       ...backToSchool.picks.map((p) => p.item),
       ...fashion.groups.flatMap((g) => g.items),
+      ...footwear,
       ...strays,
     ].map((i) => [i.id, i]),
   ).values(),
@@ -728,6 +804,7 @@ export function itemById(id: string): Item | undefined {
  * Mobiles rather than as Best Sellers.
  */
 const departments: { label: string; items: Item[] }[] = [
+  { label: "Footwear", items: footwear },
   { label: "Fashion", items: fashion.groups.flatMap((g) => g.items) },
   { label: "Home & Kitchen", items: homeKitchen },
   { label: "Back to School", items: backToSchool.picks.map((p) => p.item) },

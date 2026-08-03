@@ -13,7 +13,7 @@ import { Refurbished } from "@/components/shop/refurbished";
 import { SiteFooter } from "@/components/shop/site-footer";
 import { SiteHeader } from "@/components/shop/site-header";
 import { TrustRow } from "@/components/shop/trust-row";
-import { bestSellers, homeKitchen, newArrivals } from "@/lib/home";
+import { bestSellers, footwear, homeKitchen, newArrivals } from "@/lib/home";
 
 export default function Home() {
   return (
@@ -54,6 +54,12 @@ export default function Home() {
             longest stretch of product cards on the page — the two columns
             above it run 1,100px — before the dark renewed panel restarts. */}
         <Brands />
+
+        {/* Footwear sits beside the brand row at the halfway mark, where the
+            page turns from electronics to things you wear: it was a department
+            with exactly one listing in it — the school trainers — while Fashion
+            next door had six. */}
+        <RailSection eyebrow="Footwear" title="Trainers, six ways" items={footwear} />
 
         <Refurbished />
         <Fashion />
