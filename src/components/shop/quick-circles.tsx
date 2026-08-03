@@ -45,7 +45,7 @@ function Row({ hidden = false }: { hidden?: boolean }) {
  */
 export function QuickCircles() {
   return (
-    <section className="mt-3 rounded-xl bg-surface py-4 shadow-card sm:py-5">
+    <section className="mt-3 rounded-xl bg-surface py-4 sm:py-5">
       <h2 className="sr-only">Shop by category</h2>
 
       <div className="marquee px-2">

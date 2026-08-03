@@ -15,7 +15,7 @@ import { fashion } from "@/lib/home";
  */
 export function Fashion() {
   return (
-    <section className="mt-3 rounded-xl bg-surface p-3 shadow-card sm:p-4">
+    <section className="mt-3 rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-end justify-between gap-3">
         <div className="min-w-0">
           <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-brand">

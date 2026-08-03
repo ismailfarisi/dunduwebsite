@@ -48,7 +48,7 @@ export function FlashDeals() {
   const { ref, atStart, atEnd, sync, nudge } = useRailScroll();
 
   return (
-    <section className="relative mt-3 rounded-xl bg-surface p-3 shadow-card sm:p-4">
+    <section className="relative mt-3 rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <h2 className="flex items-center gap-1.5 text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
           <Icon name="Zap" className="size-[18px] fill-fg text-fg" strokeWidth={0} />

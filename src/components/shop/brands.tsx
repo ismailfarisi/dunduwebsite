@@ -57,7 +57,7 @@ function Row({ hidden = false }: { hidden?: boolean }) {
  */
 export function Brands() {
   return (
-    <section className="mt-3 rounded-xl bg-surface p-3 shadow-card sm:p-4">
+    <section className="mt-3 rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
           Shop Top Brands

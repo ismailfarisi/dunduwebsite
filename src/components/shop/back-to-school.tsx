@@ -24,7 +24,7 @@ export function BackToSchool() {
   );
 
   return (
-    <section className="mt-3 overflow-hidden rounded-xl bg-surface shadow-card">
+    <section className="mt-3 overflow-hidden rounded-xl bg-surface">
       {/* A soft-brand band rather than a solid one: the eyebrow is 11px, and
           white on --brand sits at 3.4:1. The tokens keep it legible in both
           themes without a second set of values. */}

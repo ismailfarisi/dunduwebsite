@@ -24,7 +24,7 @@ export function ProductTabs({ tabs }: { tabs: Tab[] }) {
        sticky bar's scrollport, and `top` would then push the bar *down* the
        card instead of pinning it to the viewport. The bar rounds its own top
        corners instead. */
-    <section className="mt-3 rounded-xl bg-surface shadow-card">
+    <section className="mt-3 rounded-xl bg-surface">
       <div
         role="tablist"
         aria-label="Product information"

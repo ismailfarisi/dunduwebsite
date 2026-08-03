@@ -162,7 +162,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div className="grid gap-3 lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)]">
           <Gallery item={item} />
 
-          <div className="rounded-xl bg-surface p-3 shadow-card sm:p-5">
+          <div className="rounded-xl bg-surface p-3 sm:p-5">
             {item.brand && (
               <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-fg-subtle">
                 {item.brand}
