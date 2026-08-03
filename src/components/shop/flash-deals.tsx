@@ -57,7 +57,7 @@ export function FlashDeals() {
         <Countdown />
         <a
           href="#"
-          className="ml-auto flex items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
+          className="tap ml-auto flex items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
         >
           View All Deals
           <Icon name="ChevronRight" className="size-3.5" />

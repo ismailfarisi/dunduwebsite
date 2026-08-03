@@ -27,7 +27,7 @@ export function Fashion() {
         </div>
         <a
           href="#"
-          className="flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
+          className="tap flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
         >
           View All
           <Icon name="ChevronRight" className="size-3.5" />
@@ -47,7 +47,7 @@ export function Fashion() {
               </h3>
               <a
                 href="#"
-                className="flex shrink-0 items-center gap-0.5 text-[12.5px] font-semibold text-fg-muted hover:text-brand"
+                className="tap flex shrink-0 items-center gap-0.5 text-[12.5px] font-semibold text-fg-muted hover:text-brand"
               >
                 Shop {g.label.toLowerCase()}
                 <Icon name="ChevronRight" className="size-3.5" />

@@ -58,7 +58,7 @@ export function BackToSchool() {
           </span>
           <a
             href="#"
-            className="flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand-soft-fg hover:underline"
+            className="tap flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand-soft-fg hover:underline"
           >
             Shop the list
             <Icon name="ChevronRight" className="size-3.5" />

@@ -446,6 +446,25 @@ body {
   animation-play-state: paused;
 }
 
+/* Tap targets.
+   A "View all" is 13px type in a 20px box and a footer link is 18px, against a
+   24px minimum and a thumb nearer 44. Padding them to that would push every
+   section header apart on a laptop for the sake of a pointer that isn't there,
+   so on coarse pointers only the hit area becomes an ::after that reaches out
+   past the text without occupying any layout. Only for links that stand alone
+   on their row — where targets sit in rows, the row itself has to open up
+   instead, or the expanded areas overlap and the lower one takes the tap. */
+@media (pointer: coarse) {
+  .tap {
+    position: relative;
+  }
+  .tap::after {
+    content: "";
+    position: absolute;
+    inset: -12px -10px;
+  }
+}
+
 /* visible focus everywhere, without the default double ring */
 :where(a, button, input, select, [tabindex]):focus-visible {
   outline: 2px solid var(--brand);

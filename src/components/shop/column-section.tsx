@@ -22,7 +22,7 @@ export function ColumnSection({ title, items }: { title: string; items: Item[] }
         </h2>
         <a
           href="#"
-          className="flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
+          className="tap flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
         >
           View All
           <Icon name="ChevronRight" className="size-3.5" />

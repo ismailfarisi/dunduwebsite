@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <nav aria-label="Breadcrumb" className="mb-3">
           <ol className="flex flex-wrap items-center gap-1 text-[12.5px] text-fg-muted">
             <li>
-              <Link href="/" className="hover:text-brand">
+              <Link href="/" className="-my-1.5 py-1.5 hover:text-brand">
                 Home
               </Link>
             </li>

@@ -60,7 +60,7 @@ export function Rail({
         <div className="flex shrink-0 items-center gap-2">
           <a
             href={href}
-            className="text-[13px] font-semibold text-brand hover:underline"
+            className="tap text-[13px] font-semibold text-brand hover:underline"
           >
             View all
           </a>

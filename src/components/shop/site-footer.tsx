@@ -97,7 +97,10 @@ export function SiteFooter() {
             className="flex flex-wrap gap-x-5 gap-y-2 text-[12px] text-chrome-fg-muted"
           >
             {footerLinks.map((l) => (
-              <a key={l} href="#" className="transition-colors hover:text-chrome-fg">
+              /* py, not the .tap reach-out: these wrap into rows 26px apart,
+                 and a hit area that reached 44px would have the lower row
+                 taking taps meant for the one above it */
+              <a key={l} href="#" className="py-1 transition-colors hover:text-chrome-fg">
                 {l}
               </a>
             ))}

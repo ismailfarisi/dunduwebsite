@@ -29,7 +29,7 @@ export function BudgetDoors() {
         </div>
         <a
           href="#"
-          className="flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
+          className="tap flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"
         >
           All deals
           <Icon name="ChevronRight" className="size-3.5" />
