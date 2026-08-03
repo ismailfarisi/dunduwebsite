@@ -1166,14 +1166,45 @@ export const trendingSearches = [
   "samsung galaxy",
 ];
 
-/** Every word has to land somewhere in the brand, title or condition. */
+/**
+ * What people type is not what the catalogue is titled.
+ *
+ * A UAE shopper searching for a refrigerator types "fridge", and every one of
+ * these titles says "Refrigerator" — so the search returned nothing for the
+ * department that had just been added to the banner. The same gap sits under
+ * "ac", "tv", "mobile" and "laptop": the retail word and the listing word are
+ * different words. Each entry widens one typed term into the words the titles
+ * actually use; a term matches if any of them lands.
+ */
+const SYNONYMS: Record<string, string[]> = {
+  fridge: ["fridge", "refrigerator"],
+  fridges: ["fridge", "refrigerator"],
+  refrigerator: ["refrigerator", "fridge"],
+  freezer: ["freezer"],
+  ac: ["air conditioner", "ac,"],
+  aircon: ["air conditioner"],
+  "a/c": ["air conditioner"],
+  tv: ["tv", "television"],
+  television: ["tv", "television"],
+  mobile: ["smartphone", "iphone", "galaxy", "5g"],
+  phone: ["smartphone", "iphone", "galaxy", "5g"],
+  laptop: ["laptop", "gaming a15", "notebook"],
+  perfume: ["edp", "edt", "eau de parfum", "fragrance"],
+  fragrance: ["edp", "edt", "eau de parfum", "fragrance"],
+  shoes: ["shoe", "trainer", "sneaker"],
+  trainers: ["trainer", "shoe"],
+  watch: ["watch"],
+  cooler: ["air conditioner", "freezer"],
+};
+
+/** Every typed word has to land somewhere in the brand, title or condition. */
 export function searchItems(q: string, limit = 4): Item[] {
   const words = q.toLowerCase().split(/\s+/).filter(Boolean);
   if (!words.length) return [];
   return allItems
     .filter((it) => {
       const hay = `${it.brand ?? ""} ${it.title} ${it.condition ?? ""}`.toLowerCase();
-      return words.every((w) => hay.includes(w));
+      return words.every((w) => (SYNONYMS[w] ?? [w]).some((alt) => hay.includes(alt)));
     })
     .slice(0, limit);
 }
