@@ -136,29 +136,37 @@ export function Hero() {
 
             Mobile stacks to the floor of the frame and reserves pb for the
             dots; from `sm` the copy takes the open right-hand half of the
-            photograph, and pr clears the next arrow. */}
-        <div className="relative flex min-h-[352px] flex-col justify-end px-4 pb-11 pt-6 sm:min-h-[363px] sm:flex-row sm:items-center sm:justify-end sm:px-10 sm:pb-14 sm:pr-14 sm:pt-8">
+            photograph, and pr clears the next arrow.
+
+            Three type sizes, not two. The panel is not one width above `sm`:
+            it is 608–992px in the single-column band, then *narrows* to 670 at
+            `lg`, where the 310px Deal of the Day panel arrives beside it, and
+            only reaches 926 at `xl`. A 40px headline set at `sm` and left
+            alone wrapped to four lines in that 298px `lg` column and took the
+            banner to 474px tall — which is 111px of the page below it moving
+            down on exactly the laptop widths most people are on. */}
+        <div className="relative flex min-h-[352px] flex-col justify-end px-4 pb-11 pt-6 sm:min-h-[363px] sm:flex-row sm:items-center sm:justify-end sm:px-7 sm:pb-12 sm:pr-12 sm:pt-7 xl:px-10 xl:pb-14 xl:pr-14 xl:pt-8">
           <div
             key={s.id}
-            className="hero-copy w-full sm:w-[54%] lg:w-[52%]"
+            className="hero-copy w-full sm:w-[60%] xl:w-[54%]"
             style={{ "--dir": dir } as React.CSSProperties}
           >
             <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
               {s.eyebrow}
             </span>
-            <h1 className="mt-2.5 text-[26px] font-extrabold leading-[1.06] tracking-tight text-ink-fg sm:mt-3 sm:text-[40px]">
+            <h1 className="mt-2.5 text-[26px] font-extrabold leading-[1.06] tracking-tight text-ink-fg sm:mt-3 sm:text-[31px] xl:text-[40px]">
               {s.line1}
               <br />
               {s.line2}
             </h1>
-            <p className="mt-2.5 line-clamp-2 text-[13px] leading-relaxed text-ink-fg-muted sm:mt-3 sm:text-[14.5px]">
+            <p className="mt-2.5 line-clamp-2 text-[13px] leading-relaxed text-ink-fg-muted sm:mt-3 sm:text-[13.5px] xl:text-[14.5px]">
               {s.sub}
             </p>
 
             {/* One row: the listing the slide is quoting, and the way in.
                 Stacked they cost 68px of a 363px banner, which the headline
                 needs more. Wraps rather than shrinks on a narrow phone. */}
-            <div className="mt-4 flex flex-wrap items-center gap-2.5 sm:mt-5 sm:gap-3">
+            <div className="mt-4 flex flex-wrap items-center gap-2.5 sm:gap-3 xl:mt-5">
               {item && (
                 <Link
                   href={`/product/${item.id}`}
@@ -166,7 +174,7 @@ export function Hero() {
                      their own background, and the shadow only muddied them */
                   className="group flex items-center gap-2.5 rounded-full bg-white/12 py-1 pl-1 pr-3.5 ring-1 ring-white/20 backdrop-blur transition-colors [text-shadow:none] hover:bg-white/20"
                 >
-                  <span className="relative size-9 shrink-0 overflow-hidden rounded-full bg-white sm:size-10">
+                  <span className="relative size-9 shrink-0 overflow-hidden rounded-full bg-white xl:size-10">
                     <Image
                       src={s.img}
                       alt={s.alt}
@@ -179,7 +187,7 @@ export function Hero() {
                     <span className="block text-[9.5px] font-bold uppercase tracking-[0.12em] text-ink-fg-muted">
                       From
                     </span>
-                    <span className="block text-[14.5px] font-extrabold leading-tight text-ink-fg tnum sm:text-[15.5px]">
+                    <span className="block text-[14.5px] font-extrabold leading-tight text-ink-fg tnum xl:text-[15.5px]">
                       AED {money(item.price)}
                     </span>
                   </span>
@@ -193,7 +201,7 @@ export function Hero() {
 
               <a
                 href="#"
-                className="hero-shine relative inline-block w-fit overflow-hidden rounded-full bg-accent px-5 py-2.5 text-[13.5px] font-bold text-accent-fg transition-transform [text-shadow:none] hover:-translate-y-0.5 hover:bg-accent-hover sm:px-6 sm:text-[14px]"
+                className="hero-shine relative inline-block w-fit overflow-hidden rounded-full bg-accent px-5 py-2.5 text-[13.5px] font-bold text-accent-fg transition-transform [text-shadow:none] hover:-translate-y-0.5 hover:bg-accent-hover xl:px-6 xl:text-[14px]"
               >
                 {s.cta}
               </a>
@@ -222,7 +230,7 @@ export function Hero() {
             panel, under the copy — over on the left it would be white dots on
             a bright sky. The active dot runs the slide's own clock, so the
             banner shows how long you have rather than changing under you. */}
-        <div className="absolute bottom-4 left-4 flex gap-2 sm:bottom-6 sm:left-auto sm:right-10">
+        <div className="absolute bottom-4 left-4 flex gap-2 sm:bottom-5 sm:left-auto sm:right-7 xl:bottom-6 xl:right-10">
           {heroSlides.map((sl, idx) => (
             <button
               key={sl.id}
