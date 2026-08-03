@@ -17,20 +17,21 @@ const SLIDE_MS = 6000;
 const N = heroSlides.length;
 
 /**
- * The banner is a photograph.
+ * The banner sells a department, so the department is what you see.
  *
- * It used to be a cutout product floating on a purple gradient, which is what
- * a template looks like — the shot could have been any shot and the panel
- * behind it said nothing. Now a real summer photograph fills the frame, a
- * scrim darkens the side the words are on, and the words sit on top of it.
- * The product hasn't left; it's a chip beside the price, where it says which
- * listing the slide is quoting without competing with the picture.
+ * Its lead listing is the subject — shot large on a lit disc, on the side of
+ * the panel the eye lands on — and under it sit three more listings from the
+ * same aisle. That row is the difference between "here is a television" and
+ * "here is the television aisle": four real products, four real prices, all
+ * linked. The category is named in a pill above the headline rather than left
+ * to be inferred from a photograph.
  *
- * The scrim changes edge with the viewport, because the photography does. Every
- * shot in the set frames its subject in the left third, so on a wide panel the
- * copy takes the open right-hand side and the scrim runs right-to-left. A phone
- * crops that frame to about half its width and there is no "side" left, so the
- * scrim runs bottom-to-top and the copy sits on the floor of the banner.
+ * The photograph is still here, but it is the light in the room now, not the
+ * slide. Sharp, it put a woman on a beach behind a blender — a picture with
+ * nothing to do with what was being sold. Blurred back to colour and warmth it
+ * gives the panel real daylight instead of the flat gradient this started as,
+ * and it keeps the campaign: it is August in the UAE and every frame is that
+ * heat.
  */
 export function Hero() {
   const [i, setI] = useState(0);
@@ -71,9 +72,11 @@ export function Hero() {
     if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
   };
 
-  // the listing the slide is showing, so the banner can quote a real price
+  // the listing the slide leads with, so the banner prices itself off the
+  // catalogue, and the rest of its aisle underneath
   const item = s.itemId ? allItems.find((it) => it.id === s.itemId) : undefined;
   const off = item?.was ? Math.round(((item.was - item.price) / item.was) * 100) : 0;
+  const picks = s.picks.map((id) => allItems.find((it) => it.id === id)).filter((it) => it != null);
 
   /* Only the slide either side of this one is mounted. Six full-bleed
      photographs is about 440 KB, and five of them are behind the one you can
@@ -93,7 +96,11 @@ export function Hero() {
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        <div aria-hidden className="absolute inset-0 -z-10">
+        {/* The layer is 40px bigger than the panel on every side, not scaled: a
+            blurred `fill` image feathers into transparency at its own edges,
+            and the overscan has to survive the reduced-motion rule that clears
+            the pan's transform. */}
+        <div aria-hidden className="absolute inset-[-40px] -z-10">
           {heroSlides.map((sl, idx) =>
             near(idx) ? (
               <Image
@@ -102,10 +109,8 @@ export function Hero() {
                 alt=""
                 fill
                 sizes="(max-width: 1024px) 100vw, 1000px"
-                /* the one above the fold on every breakpoint, and the largest
-                   element on the page — it is the LCP candidate */
                 preload={idx === 0}
-                className={`object-cover transition-opacity duration-[900ms] ease-out ${
+                className={`object-cover blur-[18px] transition-opacity duration-[900ms] ease-out ${
                   idx === i ? "hero-pan opacity-100" : "opacity-0"
                 }`}
                 style={{ objectPosition: sl.pos }}
@@ -114,15 +119,11 @@ export function Hero() {
           )}
         </div>
 
-        {/* Two scrims, one per edge, swapped at `sm`. Both are built from --ink
-            so the banner keeps the same black in either theme, and both stop
-            short of the far edge — a scrim that reaches all the way across is
-            just a dark rectangle with a photo hiding under it. */}
+        {/* The veil the copy is read against. Heavier on the copy side, built
+            from --ink so the banner keeps the same dark in either theme. */}
         <div aria-hidden className="hero-scrim absolute inset-0 -z-10" />
 
-        {/* the slide's own colour, laid into the darkened panel the copy sits
-            on — enough to tie the photograph to the department without
-            tinting the photograph */}
+        {/* the department's colour, once, as the light behind its product */}
         <div
           aria-hidden
           key={s.id}
@@ -134,83 +135,127 @@ export function Hero() {
             without a floor the whole page below the hero moved every six
             seconds as the carousel advanced.
 
-            Mobile stacks to the floor of the frame and reserves pb for the
-            dots; from `sm` the copy takes the open right-hand half of the
-            photograph, and pr clears the next arrow.
-
             Three type sizes, not two. The panel is not one width above `sm`:
             it is 608–992px in the single-column band, then *narrows* to 670 at
             `lg`, where the 310px Deal of the Day panel arrives beside it, and
-            only reaches 926 at `xl`. A 40px headline set at `sm` and left
-            alone wrapped to four lines in that 298px `lg` column and took the
-            banner to 474px tall — which is 111px of the page below it moving
-            down on exactly the laptop widths most people are on. */}
-        <div className="relative flex min-h-[352px] flex-col justify-end px-4 pb-11 pt-6 sm:min-h-[363px] sm:flex-row sm:items-center sm:justify-end sm:px-7 sm:pb-12 sm:pr-12 sm:pt-7 xl:px-10 xl:pb-14 xl:pr-14 xl:pt-8">
+            only reaches 926 at `xl`.
+
+            The side padding clears the arrows rather than approximately
+            clearing them: they are 40px from each edge, and at `sm:px-7` on a
+            670px panel the previous arrow was sitting on the first letter of
+            the sub. A phone gets px-4, because there are no arrows on it. */}
+        <div className="relative flex min-h-[352px] items-center gap-3 px-4 pb-10 pt-6 sm:min-h-[363px] sm:gap-5 sm:px-12 sm:pb-11 sm:pt-7 xl:gap-7 xl:px-14">
           <div
             key={s.id}
-            className="hero-copy w-full sm:w-[60%] xl:w-[54%]"
+            className="hero-copy min-w-0 flex-1"
             style={{ "--dir": dir } as React.CSSProperties}
           >
-            <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
-              {s.eyebrow}
+            {/* named, not implied. An uppercase eyebrow reads as decoration;
+                a pill reads as the aisle you are standing in. */}
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/14 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-ink-fg ring-1 ring-white/25 backdrop-blur sm:px-3 sm:text-[11px]">
+              <span className="size-1.5 rounded-full bg-accent" />
+              {s.category}
             </span>
-            <h1 className="mt-2.5 text-[26px] font-extrabold leading-[1.06] tracking-tight text-ink-fg sm:mt-3 sm:text-[31px] xl:text-[40px]">
+            <h1 className="mt-2.5 text-[20px] font-extrabold leading-[1.06] tracking-tight text-ink-fg min-[400px]:text-[22px] sm:mt-3 sm:text-[30px] xl:text-[38px]">
               {s.line1}
               <br />
               {s.line2}
             </h1>
-            <p className="mt-2.5 line-clamp-2 text-[13px] leading-relaxed text-ink-fg-muted sm:mt-3 sm:text-[13.5px] xl:text-[14.5px]">
+            <p className="mt-2 line-clamp-2 max-w-md text-[12.5px] leading-relaxed text-ink-fg-muted sm:mt-2.5 sm:text-[13.5px] xl:text-[14.5px]">
               {s.sub}
             </p>
 
-            {/* One row: the listing the slide is quoting, and the way in.
-                Stacked they cost 68px of a 363px banner, which the headline
-                needs more. Wraps rather than shrinks on a narrow phone. */}
-            <div className="mt-4 flex flex-wrap items-center gap-2.5 sm:gap-3 xl:mt-5">
-              {item && (
-                <Link
-                  href={`/product/${item.id}`}
-                  /* no text-shadow inside the two solid chips — they carry
-                     their own background, and the shadow only muddied them */
-                  className="group flex items-center gap-2.5 rounded-full bg-white/12 py-1 pl-1 pr-3.5 ring-1 ring-white/20 backdrop-blur transition-colors [text-shadow:none] hover:bg-white/20"
-                >
-                  <span className="relative size-9 shrink-0 overflow-hidden rounded-full bg-white xl:size-10">
-                    <Image
-                      src={s.img}
-                      alt={s.alt}
-                      fill
-                      sizes="40px"
-                      className="object-contain p-1"
-                    />
+            {/* the hook: a price out of the catalogue beats an adjective */}
+            {item && (
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span className="text-[11.5px] text-ink-fg-muted">From</span>
+                <span className="text-[19px] font-extrabold leading-none text-ink-fg tnum xl:text-[22px]">
+                  AED {money(item.price)}
+                </span>
+                {off > 0 && (
+                  <span className="rounded-full bg-sale px-2 py-0.5 text-[11px] font-bold text-sale-fg tnum [text-shadow:none]">
+                    -{off}%
                   </span>
-                  <span className="min-w-0">
-                    <span className="block text-[9.5px] font-bold uppercase tracking-[0.12em] text-ink-fg-muted">
-                      From
-                    </span>
-                    <span className="block text-[14.5px] font-extrabold leading-tight text-ink-fg tnum xl:text-[15.5px]">
-                      AED {money(item.price)}
-                    </span>
-                  </span>
-                  {off > 0 && (
-                    <span className="shrink-0 rounded-full bg-sale px-1.5 py-0.5 text-[10.5px] font-bold text-sale-fg tnum">
-                      -{off}%
-                    </span>
-                  )}
-                </Link>
-              )}
+                )}
+              </p>
+            )}
 
-              <a
-                href="#"
-                className="hero-shine relative inline-block w-fit overflow-hidden rounded-full bg-accent px-5 py-2.5 text-[13.5px] font-bold text-accent-fg transition-transform [text-shadow:none] hover:-translate-y-0.5 hover:bg-accent-hover xl:px-6 xl:text-[14px]"
-              >
-                {s.cta}
-              </a>
+            <a
+              href="#"
+              className="hero-shine relative mt-3.5 inline-block w-fit overflow-hidden rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-accent-fg transition-transform [text-shadow:none] hover:-translate-y-0.5 hover:bg-accent-hover sm:mt-4 xl:px-6 xl:text-[14px]"
+            >
+              {s.cta}
+            </a>
+          </div>
+
+          {/* The department, stacked: its lead listing large, then the rest of
+              the aisle. Catalogue shots are cut out on white, so the tile
+              behind them has to be white too — a circle reads as a spotlight
+              where a hard-edged rectangle read as an image that failed to
+              load, and it lets the product sit larger in the same space.
+
+              The aisle row is on the phone too, at 32px — the department is
+              the thing this slide is selling on every screen.
+
+              What the column takes on a phone, the headline loses, and
+              "cooler than outside." is the longest line in the set. Held to
+              30vw the column leaves 204px at 360, which is where that line
+              fits on one at 20px; the extra 2px of type only arrives at 400,
+              where there is room for it. */}
+          <div className="flex shrink-0 flex-col items-center gap-2.5 self-center sm:gap-3">
+            <Link
+              href={item ? `/product/${item.id}` : "#"}
+              aria-label={item ? `View ${item.title}` : undefined}
+              className="hero-stage relative grid aspect-square w-[30vw] max-w-[126px] place-items-center sm:w-[34vw] sm:max-w-[200px] xl:max-w-[228px]"
+            >
+              <span
+                aria-hidden
+                className="absolute inset-[-24%] rounded-full blur-2xl"
+                style={{
+                  backgroundImage: `radial-gradient(closest-side, rgba(${s.tint},.6) 28%, rgba(${s.tint},.24) 60%, transparent 78%)`,
+                }}
+              />
+              <span className="relative size-full overflow-hidden rounded-full bg-white shadow-[0_18px_50px_rgba(0,0,0,.45)] ring-1 ring-white/30 transition-transform duration-300 hover:scale-[1.03]">
+                <Image
+                  key={s.img}
+                  src={s.img}
+                  alt={s.alt}
+                  fill
+                  sizes="(max-width: 640px) 140px, (max-width: 1280px) 200px, 240px"
+                  preload
+                  className={`hero-art ${
+                    /* model photography is cropped to the subject: a
+                       full-length figure fitted whole inside a circle is a
+                       person you can't see */
+                    s.img.includes("fashion-model")
+                      ? "object-cover object-top"
+                      : "object-contain p-[9%]"
+                  }`}
+                />
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-2">
+              {picks.map((p) => (
+                <Link
+                  key={p.id}
+                  href={`/product/${p.id}`}
+                  title={`${p.title} — AED ${money(p.price)}`}
+                  className="hero-art relative size-8 overflow-hidden rounded-full bg-white shadow-[0_8px_20px_rgba(0,0,0,.35)] ring-1 ring-white/30 transition-transform duration-200 hover:-translate-y-0.5 sm:size-11 xl:size-12"
+                >
+                  <Image
+                    src={p.img}
+                    alt={p.title}
+                    fill
+                    sizes="48px"
+                    className="object-contain p-1.5"
+                  />
+                </Link>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* dark rather than translucent white: the left half of the frame is
-            open sky in most of these shots, and a white button on it vanished */}
         <button
           onClick={() => go(-1)}
           aria-label="Previous slide"
@@ -226,11 +271,9 @@ export function Hero() {
           <Icon name="ChevronRight" className="size-4" />
         </button>
 
-        {/* bottom-left on a phone, where the scrim is; bottom-right on a wide
-            panel, under the copy — over on the left it would be white dots on
-            a bright sky. The active dot runs the slide's own clock, so the
-            banner shows how long you have rather than changing under you. */}
-        <div className="absolute bottom-4 left-4 flex gap-2 sm:bottom-5 sm:left-auto sm:right-7 xl:bottom-6 xl:right-10">
+        {/* the active dot runs the slide's own clock, so the banner shows how
+            long you have rather than changing under you */}
+        <div className="absolute bottom-4 left-4 flex gap-2 sm:bottom-5 sm:left-12 xl:left-14">
           {heroSlides.map((sl, idx) => (
             <button
               key={sl.id}
@@ -238,7 +281,7 @@ export function Hero() {
               aria-label={`Go to ${sl.category}`}
               aria-current={idx === i}
               className={`h-2 overflow-hidden rounded-full transition-all ${
-                idx === i ? "w-8 bg-black/35" : "w-2 bg-white/55 hover:bg-white"
+                idx === i ? "w-8 bg-black/40" : "w-2 bg-white/55 hover:bg-white"
               }`}
             >
               {idx === i && (

@@ -64,35 +64,29 @@ export const navLinks = [
 ];
 
 /**
- * Five slides, one per category, chosen for a UAE August rather than for
+ * Six slides, one per department, chosen for a UAE August rather than for
  * variety: the season is 45°C outside, which is why the banner leads with the
- * sale, then the two categories people buy to stay indoors comfortably, then
- * the phone and the wardrobe.
+ * sale, then the categories people buy to stay indoors comfortably, then the
+ * phone, the wardrobe and the fragrance.
  *
  * Gaming, Toys, Sports and Pre-Owned are strong categories but the catalogue
  * holds no listings behind three of them, and a slide that can't quote a real
  * price is a slide that shouts an adjective.
  *
- * `itemId` is the listing the slide is showing, so the banner prices itself
- * off the catalogue. `tint` is the bloom behind the product — each category
- * gets its own, so five slides don't read as one slide with new words.
- */
-/**
- * The banner runs one campaign across six departments: it is August in the UAE,
- * and every slide is set in that heat.
+ * A banner slide sells a department, so the department has to be what you see.
  *
- * `photo` is the slide — a real outdoor summer photograph filling the frame,
- * with the copy over a scrim on the right. Nobody in these frames is holding a
- * product, so the picture only ever claims the weather; the department, the
- * listing and the price it quotes all come from the catalogue below.
+ * `img` is the subject: the department's lead listing, shot large. `picks` are
+ * two or three more listings from the same department under it, which is what
+ * turns "here is a television" into "here is the television aisle" — and every
+ * one of them is a real id out of the catalogue below, priced and linked.
  *
- * `pos` is the crop. Every shot in the set puts its subject in the left third,
- * so the x value keeps that subject on screen once a phone crops the frame to
- * roughly half its width, and the y value picks the band a wide desktop panel
- * keeps. Provenance for the files is in scripts/fetch-banners.mjs.
- *
- * `img` is still the product cutout, now a chip beside the price rather than
- * the subject of the slide.
+ * `photo` is no longer the slide, it is the light in the room. A sharp
+ * photograph of a woman on a beach behind a blender was a picture that had
+ * nothing to do with what was being sold; blurred back to colour and warmth it
+ * gives the panel real daylight instead of a flat gradient, and keeps the
+ * campaign — it is August in the UAE, and every shot is that heat. `pos` is
+ * the crop that keeps the brightest part of the frame behind the product.
+ * Provenance for the files is in scripts/fetch-banners.mjs.
  */
 export const heroSlides = [
   {
@@ -108,6 +102,8 @@ export const heroSlides = [
     img: "/products/iphone-15-pro-max.webp",
     alt: "Apple iPhone 15 Pro Max, renewed",
     itemId: "b1",
+    /* a store-wide sale, so the row crosses departments on purpose */
+    picks: ["f2", "f3", "n4"],
     tint: "213,232,79",
   },
   {
@@ -124,6 +120,9 @@ export const heroSlides = [
     img: "/products/jvc-70-qled.webp",
     alt: "JVC 70 inch QLED 4K smart TV",
     itemId: "f2",
+    /* two, not three: the catalogue holds three televisions and no audio,
+       and a gaming laptop in the TV aisle is a row padding itself out */
+    picks: ["b4", "b3"],
     tint: "120,180,255",
   },
   {
@@ -139,6 +138,7 @@ export const heroSlides = [
     img: "/products/xiaomi-blender.webp",
     alt: "Xiaomi smart touch blender",
     itemId: "f4",
+    picks: ["f3", "f7", "k1"],
     tint: "125,232,190",
   },
   {
@@ -156,6 +156,7 @@ export const heroSlides = [
     alt: "Model wearing a red top",
     /** the department's floor price, which is what "From" means on a category slide */
     itemId: "w3",
+    picks: ["m2", "sh1", "s1"],
     tint: "255,150,190",
   },
   {
@@ -171,6 +172,7 @@ export const heroSlides = [
     img: "/products/lattafa-fakhar-gold.webp",
     alt: "Lattafa Fakhar Gold eau de parfum",
     itemId: "n4",
+    picks: ["n1", "f8", "x1"],
     tint: "247,190,120",
   },
   {
@@ -186,6 +188,8 @@ export const heroSlides = [
     img: "/products/galaxy-s26-ultra.webp",
     alt: "Samsung Galaxy S26 Ultra",
     itemId: "b2",
+    /* the other two phones in the catalogue — there is no tablet in it */
+    picks: ["b1", "f1"],
     tint: "183,155,247",
   },
 ];
