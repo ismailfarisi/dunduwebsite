@@ -45,7 +45,11 @@ export function PromoTiles() {
 
       {/* asymmetric on purpose: one tile that can carry a full-size product
           shot, two that support it. Four equal tiles read as wallpaper. */}
-      <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 scroll-pl-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
+      {/* Four across only from `xl`, for the same reason as the price doors:
+          at `lg` a supporting tile is 239px wide, and once the disc and the
+          padding are out that leaves 95px of text column — enough to break
+          "From AED 179" over two lines and the pill under it over two more. */}
+      <div className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-1 scroll-pl-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 xl:grid-cols-4">
         {promoTiles.map((t, i) => {
           const th = themes[t.theme];
           const lead = i === 0;
@@ -54,8 +58,12 @@ export function PromoTiles() {
             <a
               key={t.id}
               href="#"
-              className={`group relative flex w-[76vw] shrink-0 items-center overflow-hidden rounded-xl sm:w-auto ${th.box} ${
-                lead ? "sm:col-span-2" : ""
+              /* the lead card is wider than the two beside it on a phone as
+                 well as on the grid: it carries a 112px disc and the longest
+                 CTA in the row, and at the shared 76vw its pill was breaking
+                 "Shop electronics" over two lines */
+              className={`group relative flex shrink-0 items-center overflow-hidden rounded-xl sm:w-auto ${th.box} ${
+                lead ? "w-[85vw] sm:col-span-2" : "w-[72vw]"
               }`}
             >
               <div className="relative z-10 min-w-0 flex-1 p-4 sm:p-5">

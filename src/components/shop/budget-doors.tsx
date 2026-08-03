@@ -36,7 +36,13 @@ export function BudgetDoors() {
         </a>
       </div>
 
-      <div className="rail -mx-4 flex gap-2.5 overflow-x-auto px-4 pb-1 scroll-pl-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:overflow-visible sm:px-0 lg:grid-cols-4">
+      {/* Four across only from `xl`. At `lg` the Deal of the Day panel has
+          already taken 310px off the row above, and a quarter of what is left
+          is 211px inside the padding — where "AED 1,000" needs 136 and three
+          thumbnails need 104. The number is the one thing on this tile that
+          cannot be allowed to shrink, and it was: every door from 1024 to
+          1279 printed a truncated band, so the AED 100 door read "AED 10". */}
+      <div className="rail -mx-4 flex gap-2.5 overflow-x-auto px-4 pb-1 scroll-pl-4 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:overflow-visible sm:px-0 xl:grid-cols-4">
         {budgetBands.map((max, i) => {
           const picks = itemsUnder(max);
           const { count } = bandStats(max);
@@ -77,7 +83,10 @@ export function BudgetDoors() {
                   {picks.map((p, idx) => (
                     <span
                       key={p.id}
-                      className="relative size-10 overflow-hidden rounded-full bg-white shadow-card ring-2 ring-white transition-transform duration-300 group-hover:-translate-y-0.5 sm:size-12"
+                      /* size-11, not 12: at `xl` the four-across row leaves
+                         275px and the number wants 136 of it, which the
+                         larger disc left exactly nothing over */
+                      className="relative size-10 overflow-hidden rounded-full bg-white shadow-card ring-2 ring-white transition-transform duration-300 group-hover:-translate-y-0.5 sm:size-11"
                       style={{ zIndex: picks.length - idx }}
                     >
                       <Image src={p.img} alt="" fill sizes="48px" className="object-contain p-1" />
