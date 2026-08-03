@@ -347,6 +347,31 @@ body {
   animation-delay: 160ms;
 }
 
+/* The banner's background is drawn, not washed.
+   A flat field was dull and a gradient is what this replaced, so the panel is
+   a composition instead: a deep field of the department's colour, a dot grid
+   over it, a wedge in the corner and a lit disc for the products to stand on.
+   The dots fade out across the middle so they stay behind the copy and leave
+   the stage clean — that mask is the one soft edge in the set, and it is
+   hiding a pattern rather than being one. */
+.hero-dots {
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(105deg, #000 0 26%, rgb(0 0 0 / 0.25) 54%, transparent 72%);
+  mask-image: linear-gradient(105deg, #000 0 26%, rgb(0 0 0 / 0.25) 54%, transparent 72%);
+}
+
+/* The ring turns once a minute. Slow enough that you never catch it moving and
+   the banner is never quite still — the dashes are what make it readable at
+   that speed. Off under reduced motion with the marquees. */
+@keyframes hero-orbit {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+.hero-orbit {
+  animation: hero-orbit 60s linear infinite;
+}
+
 /* a gloss crossing the CTA every few seconds, which is the one element on the
    banner allowed to ask for a click */
 @keyframes hero-shine {
@@ -487,6 +512,7 @@ body {
      hero's dot fill is a one-shot, but at 0.01ms it would read as a dot that
      is always full, so it holds still at full instead. */
   .marquee-track,
+  .hero-orbit,
   .hero-shine::after {
     animation: none !important;
     transform: none !important;

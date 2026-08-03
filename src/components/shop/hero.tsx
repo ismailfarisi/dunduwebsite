@@ -24,13 +24,19 @@ const N = heroSlides.length;
  * only things on it are the aisle's lead listing at full size, the rest of
  * that aisle underneath, and what they cost.
  *
- * That flat light panel is what lets the products go bare. Catalogue shots are
- * cut out on white, which is why every earlier version of this banner had to
- * box them in white discs — a hard white rectangle on a dark panel reads as an
- * image that failed to load. `mix-blend-multiply` turns that white into the
- * panel colour instead, so a product sits directly on the banner with nothing
- * drawn around it, and gets the whole square that a circle was wasting the
- * corners of.
+ * The background is drawn rather than washed. A flat field was honest and dull
+ * and a gradient is the thing that replaced; this is a composition, struck
+ * entirely from the department's own colour: a deep field, a dot grid across
+ * it, and a lit disc for the products to stand on with a ring turning slowly
+ * around it. Every edge is hard, because a soft fade is a gradient by another
+ * name.
+ *
+ * The disc is not decoration. Catalogue shots are cut out on white, and
+ * `mix-blend-multiply` turns that white into whatever is behind it — so on the
+ * deep field a white blender would have gone the colour of the field and
+ * disappeared. Standing them on a near-white disc instead keeps every product
+ * crisp and lets the colour live around them, which is also the more
+ * interesting picture.
  *
  * The panel therefore stays light in both themes and carries its own text
  * colours — see --banner-* in globals.css.
@@ -85,12 +91,12 @@ export function Hero() {
       {/* banner — rendered on the server too, so it is never an empty box */}
       <div
         className="relative isolate -mx-4 overflow-hidden rounded-none transition-colors duration-700 sm:mx-0 sm:rounded-xl"
-        /* One flat step of the slide's colour — not a gradient, and not a
-           picture. `isolate` is also what the products blend against: it makes
-           this panel the isolation group, so `mix-blend-multiply` on a product
-           finds this background and nothing on the page under it. */
+        /* The field, at half strength — a colour you notice rather than the
+           tint of one. `isolate` is also what the products blend against: it
+           makes this panel the isolation group, so `mix-blend-multiply` on a
+           product finds these layers and nothing on the page under them. */
         style={{
-          backgroundColor: `color-mix(in srgb, rgb(${s.tint}) 26%, var(--banner-base))`,
+          backgroundColor: `color-mix(in srgb, rgb(${s.tint}) 50%, var(--banner-base))`,
         }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
@@ -99,6 +105,23 @@ export function Hero() {
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
+        {/* Texture, not a wash: a dot grid in the field's own colour, faded out
+            across the middle so it stays behind the copy and leaves the stage
+            alone. The wedge is one hard-edged shape in the corner, which is
+            what stops a large flat panel reading as an unloaded image. */}
+        <div
+          aria-hidden
+          className="hero-dots absolute inset-0 -z-10"
+          style={{
+            backgroundImage: `radial-gradient(circle, rgba(${s.tint},.75) 1.4px, transparent 1.5px)`,
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute -bottom-[38%] -left-[12%] -z-10 size-[62%] rotate-[18deg] rounded-[28%]"
+          style={{ backgroundColor: `rgba(${s.tint},.28)` }}
+        />
+
         {/* The minimum is the tallest slide, measured, not a round number —
             without a floor the whole page below the hero moved every six
             seconds as the carousel advanced.
@@ -166,7 +189,23 @@ export function Hero() {
               takes the headline loses, and "cooler than outside." is the
               longest line in the set — so the row is held to 112px there,
               which leaves the 204px that line needs at 20px. */}
-          <div className="flex shrink-0 flex-col items-center gap-2.5 self-center sm:w-[38%] sm:gap-3 xl:w-[36%]">
+          <div className="relative flex shrink-0 flex-col items-center gap-2.5 self-center sm:w-[38%] sm:gap-3 xl:w-[36%]">
+            {/* The lit disc, sized to clear the whole group — lead plus aisle
+                row — with about 20px to spare at every breakpoint, and never
+                taller than the 363px floor. */}
+            <span
+              aria-hidden
+              className="absolute left-1/2 top-1/2 -z-10 size-[212px] -translate-x-1/2 -translate-y-1/2 rounded-full sm:size-[300px] xl:size-[336px]"
+              style={{
+                backgroundColor: `color-mix(in srgb, rgb(${s.tint}) 7%, #fff)`,
+                boxShadow: "0 16px 44px rgb(0 0 0 / 0.10)",
+              }}
+            />
+            <span
+              aria-hidden
+              className="hero-orbit absolute left-1/2 top-1/2 -z-10 size-[238px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-dashed sm:size-[328px] xl:size-[362px]"
+              style={{ borderColor: `rgba(${s.tint},.75)` }}
+            />
             <Link
               href={item ? `/product/${item.id}` : "#"}
               aria-label={item ? `View ${item.title}` : undefined}
