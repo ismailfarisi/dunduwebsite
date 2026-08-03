@@ -181,7 +181,14 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
           )}
         </div>
 
-        <div className="mt-1.5 flex h-5 items-center gap-1.5 overflow-hidden">
+        {/* Wraps rather than slices. The row is a fixed height so price
+            baselines line up across a rail, and at 1024–1279 — where a card is
+            about 190px wide — the second signal ran past the end of it and got
+            cut mid-word: "Free deliver", "Only 7 left" with the 7 half gone.
+            With flex-wrap plus content-start, a signal that doesn't fit drops
+            to a second line that h-5 hides completely, so the card shows one
+            signal instead of one and a half. */}
+        <div className="mt-1.5 flex h-5 flex-wrap content-start items-center gap-1.5 overflow-hidden">
           {signals.slice(0, 2).map((s) => (
             <span key={s.key} className="contents">
               {s.node}
