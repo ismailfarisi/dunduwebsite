@@ -157,6 +157,20 @@ export function SiteHeader() {
   // otherwise a click on the item you are pointing at does nothing
   const toggle = (label: string) => setOpenMenu((cur) => (cur === label ? null : label));
 
+  /* Both of these cover the whole screen, and while one is up the page behind
+     it must not move: scrolling over the drawer's dimmed half took the page
+     600px down on a phone, so dismissing it left you somewhere you never
+     chose. Locking the body is also what stops the drawer's own scroll
+     chaining into the page when it reaches its end. */
+  useEffect(() => {
+    if (!menu && !sheet) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [menu, sheet]);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
