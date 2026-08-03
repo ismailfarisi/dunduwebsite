@@ -374,7 +374,9 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(calc(-50% - 70px), calc(-50% - 62px)) rotate(-8deg);
+  /* the phone's stage is a rounded panel, so the badge sits on its top-left
+     corner rather than on the arc of a circle that isn't there */
+  transform: translate(calc(-50% - 64px), calc(-50% - 78px)) rotate(-8deg);
 }
 @media (min-width: 40rem) {
   .hero-burst {

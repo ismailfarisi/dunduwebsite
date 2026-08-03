@@ -185,15 +185,21 @@ export function Hero() {
             {/* The lit disc, sized to clear the whole group — lead plus aisle
                 row — with about 20px to spare at every breakpoint, and never
                 taller than the 363px floor. */}
-            {/* the department's colour, as the halo the stage stands in */}
+            {/* The stage is a circle from `sm` and a rounded panel below it.
+                A circle wide enough to hold the group is wider than the column
+                it is centred on, and on a 390px phone that put 31px of it
+                under the sub — muted purple text on a near-white disc, which
+                is text you cannot read. The panel hugs the column instead, so
+                the copy keeps its full width. The halo and the ring only make
+                sense around a circle, so they wait for one. */}
             <span
               aria-hidden
-              className="absolute left-1/2 top-1/2 -z-10 size-[248px] -translate-x-1/2 -translate-y-1/2 rounded-full sm:size-[338px] xl:size-[372px]"
+              className="hidden sm:block absolute left-1/2 top-1/2 -z-10 size-[338px] -translate-x-1/2 -translate-y-1/2 rounded-full xl:size-[372px]"
               style={{ backgroundColor: `rgba(${s.tint},.22)` }}
             />
             <span
               aria-hidden
-              className="absolute left-1/2 top-1/2 -z-10 size-[212px] -translate-x-1/2 -translate-y-1/2 rounded-full sm:size-[300px] xl:size-[336px]"
+              className="absolute -inset-x-2 -inset-y-3 -z-10 rounded-[26px] sm:inset-auto sm:left-1/2 sm:top-1/2 sm:size-[300px] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-full xl:size-[336px]"
               style={{
                 backgroundColor: `color-mix(in srgb, rgb(${s.tint}) 7%, var(--banner-base))`,
                 boxShadow: "0 22px 60px rgb(0 0 0 / 0.45)",
@@ -201,7 +207,7 @@ export function Hero() {
             />
             <span
               aria-hidden
-              className="hero-orbit absolute left-1/2 top-1/2 -z-10 size-[262px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-dashed sm:size-[356px] xl:size-[392px]"
+              className="hero-orbit hidden sm:block absolute left-1/2 top-1/2 -z-10 size-[356px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-dashed xl:size-[392px]"
               style={{ borderColor: `rgba(${s.tint},.6)` }}
             />
             <Link
@@ -272,14 +278,14 @@ export function Hero() {
         <button
           onClick={() => go(-1)}
           aria-label="Previous slide"
-          className="absolute left-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-banner-fg transition-colors hover:bg-white/30 sm:grid"
+          className="absolute left-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/65 sm:grid"
         >
           <Icon name="ChevronLeft" className="size-4" />
         </button>
         <button
           onClick={() => go(1)}
           aria-label="Next slide"
-          className="absolute right-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-banner-fg transition-colors hover:bg-white/30 sm:grid"
+          className="absolute right-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-black/45 text-white ring-1 ring-white/20 backdrop-blur transition-colors hover:bg-black/65 sm:grid"
         >
           <Icon name="ChevronRight" className="size-4" />
         </button>
