@@ -237,7 +237,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               {assurances.map((a) => (
                 <li
                   key={a.title}
-                  className="flex items-center gap-2.5 rounded-lg border border-border p-2.5"
+                  className="flex items-center gap-2.5 rounded-lg bg-surface-2 p-2.5"
                 >
                   <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brand-soft">
                     <Icon name={a.icon} className="size-[17px] text-brand-soft-fg" />
@@ -375,7 +375,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               content: (
                 <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                   {delivery.map((d) => (
-                    <li key={d.title} className="rounded-xl border border-border p-3.5">
+                    <li key={d.title} className="rounded-xl bg-surface-2 p-3.5">
                       <span className="flex items-center gap-2">
                         <span className="grid size-8 shrink-0 place-items-center rounded-full bg-brand-soft">
                           <Icon name={d.icon} className="size-4 text-brand-soft-fg" />

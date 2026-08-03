@@ -16,6 +16,11 @@ function money(n: number) {
  * and whether anyone else bought it. The badge is the one element allowed to
  * shout — everything else stays quiet so the product photo leads.
  *
+ * The fill is `surface-2`, not `surface`: with the outline gone a card was the
+ * same colour as the section holding it, which in dark mode — where a shadow
+ * barely registers — left no card at all. One step of tone does the job the
+ * line used to.
+ *
  * Layout rule: every row below `mt-auto` is fixed-height and single-line, so
  * price baselines and Add-to-cart line up across a row whatever a given item
  * carries. Rows *above* it may vary — `mt-auto` absorbs the difference.
@@ -62,7 +67,7 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
   }
 
   return (
-    <article className="group relative flex h-full flex-col rounded-xl border border-border bg-surface p-2.5 transition-shadow duration-200 hover:shadow-card-hover sm:p-3">
+    <article className="group relative flex h-full flex-col rounded-xl bg-surface-2 p-2.5 shadow-card transition-shadow duration-200 hover:shadow-card-hover sm:p-3">
       <div className="relative">
         {/* fixed 1:1 box — the grid never reflows while images load */}
         <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white">
@@ -187,7 +192,9 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
         <button
           type="button"
           aria-label={`Add ${item.title} to cart`}
-          className="relative z-10 mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg bg-surface-2 py-2 text-[12.5px] font-bold text-fg transition-colors hover:bg-brand hover:text-brand-fg"
+          /* surface-3: the card itself is surface-2 now, and a button the same
+             colour as the card it sits in is a line of text */
+          className="relative z-10 mt-2 flex w-full items-center justify-center gap-1.5 rounded-lg bg-surface-3 py-2 text-[12.5px] font-bold text-fg transition-colors hover:bg-brand hover:text-brand-fg"
         >
           <Icon name="ShoppingCart" className="size-[15px]" />
           Add to cart

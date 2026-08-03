@@ -10,7 +10,7 @@ function Tile({ name, logo }: { name: string; logo?: string }) {
       title={name}
       /* tile stays light in both themes so the brand-coloured marks — several
          of which are near-black — never disappear */
-      className="group grid h-[70px] w-[112px] shrink-0 place-items-center rounded-lg border border-border bg-white px-4 transition-colors hover:border-border-strong"
+      className="group grid h-[70px] w-[112px] shrink-0 place-items-center rounded-lg bg-white px-4 shadow-card transition-shadow hover:shadow-card-hover"
     >
       {logo ? (
         <span className="relative h-9 w-full">

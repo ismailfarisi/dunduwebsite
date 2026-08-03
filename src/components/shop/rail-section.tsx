@@ -66,7 +66,7 @@ export function RailSection({
         onClick={() => nudge(-1)}
         disabled={atStart}
         aria-label={`Scroll ${title} left`}
-        className="absolute left-1 top-1/2 hidden size-8 translate-y-2 place-items-center rounded-full border border-border bg-surface text-fg-muted shadow-card transition-opacity hover:text-fg disabled:pointer-events-none disabled:opacity-0 sm:grid"
+        className="absolute left-1 top-1/2 hidden size-8 translate-y-2 place-items-center rounded-full bg-surface text-fg-muted shadow-card-hover transition-opacity hover:text-fg disabled:pointer-events-none disabled:opacity-0 sm:grid"
       >
         <Icon name="ChevronLeft" className="size-4" />
       </button>
@@ -74,7 +74,7 @@ export function RailSection({
         onClick={() => nudge(1)}
         disabled={atEnd}
         aria-label={`Scroll ${title} right`}
-        className="absolute right-1 top-1/2 hidden size-8 translate-y-2 place-items-center rounded-full border border-border bg-surface text-fg-muted shadow-card transition-opacity hover:text-fg disabled:pointer-events-none disabled:opacity-0 sm:grid"
+        className="absolute right-1 top-1/2 hidden size-8 translate-y-2 place-items-center rounded-full bg-surface text-fg-muted shadow-card-hover transition-opacity hover:text-fg disabled:pointer-events-none disabled:opacity-0 sm:grid"
       >
         <Icon name="ChevronRight" className="size-4" />
       </button>

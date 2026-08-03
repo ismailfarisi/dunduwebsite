@@ -20,7 +20,7 @@ export function BudgetDoors() {
             <a
               key={max}
               href="#"
-              className="group flex w-[62vw] shrink-0 items-center gap-3 rounded-xl border border-border bg-surface p-3 transition-shadow hover:shadow-card-hover sm:w-auto"
+              className="group flex w-[62vw] shrink-0 items-center gap-3 rounded-xl bg-surface-2 p-3 shadow-card transition-shadow hover:shadow-card-hover sm:w-auto"
             >
               <span className="min-w-0 flex-1">
                 <span className="block text-[11px] font-semibold uppercase tracking-wide text-fg-subtle">

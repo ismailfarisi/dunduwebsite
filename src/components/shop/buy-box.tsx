@@ -19,7 +19,7 @@ export function BuyBox({ item }: { item: Item }) {
     <div className="mt-5">
       <div className="flex items-center gap-3">
         <span className="text-[13px] font-semibold text-fg">Quantity</span>
-        <div className="flex items-center rounded-lg border border-border-strong">
+        <div className="flex items-center rounded-lg bg-surface-2">
           <button
             type="button"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
@@ -74,7 +74,7 @@ export function BuyBox({ item }: { item: Item }) {
           <button
             type="button"
             aria-label={`Save ${item.title} to wishlist`}
-            className="grid shrink-0 place-items-center rounded-lg border border-border-strong px-4 py-3 text-fg-muted transition-colors hover:text-sale sm:px-3.5"
+            className="grid shrink-0 place-items-center rounded-lg bg-surface-2 px-4 py-3 text-fg-muted transition-colors hover:text-sale sm:px-3.5"
           >
             <Icon name="Heart" className="size-[18px]" />
           </button>
