@@ -2,7 +2,7 @@
 
 /* ---------------------------------------------------------------
    OurShopee — design tokens
-   Green wordmark + lime CTA + near-black hero and prices.
+   Purple logo + lime CTA + near-black hero and prices.
    Chrome stays neutral so product imagery carries the page.
    --------------------------------------------------------------- */
 
@@ -20,12 +20,20 @@
   --fg-muted: #5c6169;
   --fg-subtle: #8b9099;
 
-  /* brand — the green in the wordmark, also links and "view all" */
-  --brand: #5f9a1f;
-  --brand-hover: #4e8117;
+  /* brand — the purple in the logo, also links and "view all".
+     #6127c9 carries 7.9:1 against white, so it works both as link text on a
+     light surface and as a solid button with white text on it. */
+  --brand: #6127c9;
+  --brand-hover: #4f1cab;
   --brand-fg: #ffffff;
-  --brand-soft: #eef7e2;
-  --brand-soft-fg: #3d6a10;
+  --brand-soft: #f0ebfc;
+  --brand-soft-fg: #4a17a0;
+
+  /* the logo lockup holds its own colours in both themes. `--brand` inverts
+     in dark — light purple, dark text — which is correct for links and buttons
+     and wrong for a mark: an inverted logo is a different logo. */
+  --logo: #6127c9;
+  --logo-fg: #ffffff;
 
   /* accent — the lime CTA pill */
   --accent: #d5e84f;
@@ -77,11 +85,16 @@
     --fg-muted: #a3a9b2;
     --fg-subtle: #767d87;
 
-    --brand: #a3d65c;
-    --brand-hover: #b5e373;
-    --brand-fg: #12200a;
-    --brand-soft: #1e2a14;
-    --brand-soft-fg: #bfe38a;
+    --brand: #b79bf7;
+    --brand-hover: #c9b3ff;
+    --brand-fg: #1b0838;
+    --brand-soft: #241640;
+    --brand-soft-fg: #d3befd;
+
+    /* lifted a step so the badge doesn't sink into the dark surface, still
+       the same mark: white on purple */
+    --logo: #7a45e8;
+    --logo-fg: #ffffff;
 
     --accent: #d5e84f;
     --accent-hover: #e0f065;
@@ -124,11 +137,14 @@
   --fg-muted: #a3a9b2;
   --fg-subtle: #767d87;
 
-  --brand: #a3d65c;
-  --brand-hover: #b5e373;
-  --brand-fg: #12200a;
-  --brand-soft: #1e2a14;
-  --brand-soft-fg: #bfe38a;
+  --brand: #b79bf7;
+  --brand-hover: #c9b3ff;
+  --brand-fg: #1b0838;
+  --brand-soft: #241640;
+  --brand-soft-fg: #d3befd;
+
+  --logo: #7a45e8;
+  --logo-fg: #ffffff;
 
   --accent: #d5e84f;
   --accent-hover: #e0f065;
@@ -173,6 +189,9 @@
   --color-brand-fg: var(--brand-fg);
   --color-brand-soft: var(--brand-soft);
   --color-brand-soft-fg: var(--brand-soft-fg);
+
+  --color-logo: var(--logo);
+  --color-logo-fg: var(--logo-fg);
 
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);

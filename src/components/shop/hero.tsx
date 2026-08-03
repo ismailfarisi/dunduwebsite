@@ -39,7 +39,7 @@ export function Hero() {
         onBlur={() => setPaused(false)}
       >
         {/* Three layers rather than one: a cool highlight top-right behind the
-            product, brand green rising from the bottom-left under the copy, and
+            product, brand purple rising from the bottom-left under the copy, and
             a lime bloom where the two meet. A single flat wash reads as an
             unloaded image. */}
         <div
@@ -48,7 +48,7 @@ export function Hero() {
           style={{
             backgroundImage: [
               "radial-gradient(75% 95% at 80% 26%, rgba(255,255,255,.20) 0%, transparent 58%)",
-              "radial-gradient(58% 78% at 2% 102%, rgba(95,154,31,.26) 0%, transparent 58%)",
+              "radial-gradient(58% 78% at 2% 102%, rgba(97,39,201,.42) 0%, transparent 58%)",
               "radial-gradient(40% 55% at 58% 100%, rgba(213,232,79,.14) 0%, transparent 62%)",
             ].join(","),
           }}
