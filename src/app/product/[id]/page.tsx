@@ -162,7 +162,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div className="grid gap-3 lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)]">
           <Gallery item={item} />
 
-          <div className="rounded-xl border border-border bg-surface p-3 sm:p-5">
+          <div className="rounded-xl bg-surface p-3 shadow-card sm:p-5">
             {item.brand && (
               <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-fg-subtle">
                 {item.brand}
@@ -285,7 +285,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                       About this item
                     </h2>
                     <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-fg-muted">
-                      {item.brand ? `${item.brand} ` : ""}
+                      {/* only prefix the brand when the title doesn't already
+                          open with it — otherwise "Nike Nike Air Force 1" */}
+                      {item.brand &&
+                      !item.title.toLowerCase().startsWith(item.brand.toLowerCase())
+                        ? `${item.brand} `
+                        : ""}
                       {item.title.split(/,|—/)[0].trim()}
                       {item.condition ? `, ${item.condition.toLowerCase()},` : ","} sold and
                       delivered by OurShopee across the UAE.{" "}

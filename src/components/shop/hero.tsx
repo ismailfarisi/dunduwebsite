@@ -196,7 +196,7 @@ export function Hero() {
       {/* The six USP rows that used to hold this rail said the same four things
           as the utility strip above and the trust row above the footer. The
           strip is desktop-only, so mobile keeps one 28px line of it. */}
-      <div className="flex items-center justify-between gap-2 rounded-xl border border-border bg-surface px-3 py-2 lg:hidden">
+      <div className="flex items-center justify-between gap-2 rounded-xl bg-surface px-3 py-2 shadow-card lg:hidden">
         {usps.slice(0, 3).map((u) => (
           <span
             key={u.title}
