@@ -48,7 +48,7 @@ export function BudgetDoors() {
             <a
               key={max}
               href="#"
-              className="group relative flex w-[64vw] shrink-0 flex-col justify-between overflow-hidden rounded-xl bg-surface-2 p-3.5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-card-hover sm:w-auto"
+              className="group relative flex w-[70vw] shrink-0 flex-col justify-between overflow-hidden rounded-xl bg-surface-2 p-3.5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-card-hover sm:w-auto"
               /* the tint is a gradient layer on the card itself, not a child:
                  an absolutely positioned overlay at -z-10 paints behind the
                  card's own background colour and disappears. color-mix keeps
@@ -63,7 +63,9 @@ export function BudgetDoors() {
                   <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-fg-subtle">
                     Under
                   </span>
-                  <span className="block text-[24px] font-extrabold leading-tight text-fg tnum sm:text-[26px]">
+                  {/* nowrap: a door 70vw wide minus three thumbnails leaves
+                      about 110px, and "AED 1,000" broke over two lines */}
+                  <span className="block whitespace-nowrap text-[22px] font-extrabold leading-tight text-fg tnum sm:text-[26px]">
                     AED {max.toLocaleString("en-AE")}
                   </span>
                 </span>
@@ -71,11 +73,11 @@ export function BudgetDoors() {
                 {/* the door shows what's behind it — bigger than before, and
                     stacked front-to-back so three shots read as three rather
                     than as one smudge */}
-                <span className="flex shrink-0 -space-x-3.5">
+                <span className="flex shrink-0 -space-x-3 sm:-space-x-3.5">
                   {picks.map((p, idx) => (
                     <span
                       key={p.id}
-                      className="relative size-12 overflow-hidden rounded-full bg-white shadow-card ring-2 ring-white transition-transform duration-300 group-hover:-translate-y-0.5"
+                      className="relative size-10 overflow-hidden rounded-full bg-white shadow-card ring-2 ring-white transition-transform duration-300 group-hover:-translate-y-0.5 sm:size-12"
                       style={{ zIndex: picks.length - idx }}
                     >
                       <Image src={p.img} alt="" fill sizes="48px" className="object-contain p-1" />
