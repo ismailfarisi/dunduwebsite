@@ -18,6 +18,9 @@ export type Item = {
   id: string;
   title: string;
   img: string;
+  /** extra views of the same product, main first — a thumbnail rail only
+      appears where there genuinely is more than one angle */
+  imgs?: string[];
   price: number;
   was?: number;
   rating?: number;
@@ -541,8 +544,13 @@ const raglanTee: Item = {
  */
 const mensSummerTee: Item = {
   id: "m1",
-  title: "Short Sleeve Performance Tee, Breathable Mesh Knit, Rose",
+  title: "Short Sleeve Performance Tee, Moisture Wicking, Grey",
   img: "/products/mens-summer-tee.jpg",
+  imgs: [
+    "/products/mens-summer-tee.jpg",
+    "/products/mens-summer-tee-back.jpg",
+    "/products/mens-summer-tee-detail.jpg",
+  ],
   price: 55,
   was: 89,
   express: true,
@@ -563,6 +571,11 @@ const womensSummerTee: Item = {
   id: "w1",
   title: "Short Sleeve Scoop Neck Tee, Stretch Jersey, Black",
   img: "/products/womens-summer-tee.jpg",
+  imgs: [
+    "/products/womens-summer-tee.jpg",
+    "/products/womens-summer-tee-back.jpg",
+    "/products/womens-summer-tee-detail.jpg",
+  ],
   price: 49,
   was: 75,
   express: true,

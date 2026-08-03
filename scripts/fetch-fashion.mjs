@@ -47,8 +47,15 @@ const PICKS = {
 const MODELS = {
   "fashion-model-men": "m/s/ms01-blue_main.jpg",
   "fashion-model-women": "w/s/ws03-red_main.jpg",
-  "mens-summer-tee": "m/s/ms04-red_main.jpg",
+  // three views of the same garment, which is why these two SKUs and not the
+  // red tee they replaced: the detail page has a thumbnail rail now, and it
+  // only shows one where there is genuinely more than one angle to show
+  "mens-summer-tee": "m/s/ms03-gray_main.jpg",
+  "mens-summer-tee-back": "m/s/ms03-gray_back.jpg",
+  "mens-summer-tee-detail": "m/s/ms03-gray_alt1.jpg",
   "womens-summer-tee": "w/s/ws05-black_main.jpg",
+  "womens-summer-tee-back": "w/s/ws05-black_back.jpg",
+  "womens-summer-tee-detail": "w/s/ws05-black_alt1.jpg",
 };
 
 function sniff(buf) {

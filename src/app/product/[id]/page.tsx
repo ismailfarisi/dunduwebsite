@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/icon";
 import { BuyBox } from "@/components/shop/buy-box";
+import { Gallery } from "@/components/shop/gallery";
 import { MobileBuyBar } from "@/components/shop/mobile-buy-bar";
+import { ProductTabs } from "@/components/shop/product-tabs";
 import { RailSection } from "@/components/shop/rail-section";
 import { SiteFooter } from "@/components/shop/site-footer";
 import { SiteHeader } from "@/components/shop/site-header";
@@ -46,6 +47,16 @@ export async function generateMetadata({
   };
 }
 
+/** A label / value row — the unit the specification table is built from. */
+function Spec({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex gap-4 border-b border-border py-2.5 text-[13px] last:border-0">
+      <dt className="w-[42%] shrink-0 text-fg-muted sm:w-[220px]">{label}</dt>
+      <dd className="min-w-0 flex-1 font-medium text-fg">{value}</dd>
+    </div>
+  );
+}
+
 export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const item = itemById(id);
@@ -56,25 +67,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
   const department = departmentOf(item);
   const highlights = highlightsOf(item);
   const related = relatedTo(item);
-
-  // stated as facts we hold, not as a spec sheet we don't
-  const details: { label: string; value: string }[] = [
-    ...(item.brand ? [{ label: "Brand", value: item.brand }] : []),
-    ...(item.condition ? [{ label: "Condition", value: item.condition }] : []),
-    { label: "Department", value: department },
-    {
-      label: "Delivery",
-      value:
-        item.price >= FREE_DELIVERY_MIN
-          ? `Free${item.express ? ", arrives tomorrow" : ""}`
-          : `AED 15${item.express ? ", arrives tomorrow" : ""}`,
-    },
-    {
-      label: "Availability",
-      value: item.lowStock != null ? `Only ${item.lowStock} left` : "In stock",
-    },
-    { label: "Payment", value: "Card, cash on delivery, tabby & tamara" },
-  ];
+  const warranty = item.condition ? "12 months, OurShopee renewed warranty" : "Brand warranty, UAE";
 
   const assurances = [
     { icon: "Truck", title: "Fast delivery", sub: item.express ? "Tomorrow" : "2 to 3 days" },
@@ -85,6 +78,50 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       sub: item.condition ? "On renewed stock" : "Official UAE warranty",
     },
     { icon: "Banknote", title: "Cash on delivery", sub: "Pay when it arrives" },
+  ];
+
+  /* Everything the catalogue actually holds about this listing, in the place
+     a marketplace reader goes looking for it. Nothing here is invented: the
+     SKU is the catalogue id, the specifications are the listing title, and
+     the policies are the ones the rest of the site states. */
+  const specs = [
+    { label: "SKU", value: item.id.toUpperCase() },
+    ...(item.brand ? [{ label: "Brand", value: item.brand }] : []),
+    { label: "Department", value: department },
+    ...(item.condition ? [{ label: "Condition", value: item.condition }] : []),
+    ...highlights.map((h, i) => ({ label: i === 0 ? "Specifications" : "", value: h })),
+    { label: "Warranty", value: warranty },
+    { label: "Sold by", value: "OurShopee" },
+    { label: "Ships from", value: "United Arab Emirates" },
+  ];
+
+  const delivery = [
+    {
+      icon: "Truck",
+      title: item.price >= FREE_DELIVERY_MIN ? "Free delivery" : "Delivery AED 15",
+      body:
+        item.price >= FREE_DELIVERY_MIN
+          ? `This order clears the AED ${FREE_DELIVERY_MIN} free delivery threshold.`
+          : `Orders over AED ${FREE_DELIVERY_MIN} ship free — this one is AED ${money(
+              FREE_DELIVERY_MIN - item.price,
+            )} short.`,
+    },
+    {
+      icon: "Zap",
+      title: item.express ? "Arrives tomorrow" : "Arrives in 2 to 3 days",
+      body: "Delivered across all seven emirates, tracked from dispatch.",
+    },
+    {
+      icon: "Banknote",
+      title: "Cash on delivery",
+      body: "Pay the driver on arrival, or by card, tabby or tamara at checkout.",
+    },
+    {
+      icon: "RotateCcw",
+      title: "7-day returns",
+      body: "Return anything unused within 7 days of delivery. Collection is free.",
+    },
+    { icon: "ShieldCheck", title: "Warranty", body: warranty },
   ];
 
   return (
@@ -123,72 +160,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         </nav>
 
         <div className="grid gap-3 lg:grid-cols-[minmax(0,460px)_minmax(0,1fr)]">
-          {/* The catalogue has one shot per listing, so there is no thumbnail
-              strip: a row of the same image four times is a lie about how much
-              you get to see before buying. */}
-          {/* self-start: the buy box is the taller column, and a gallery card
-              stretched to match it is 150px of empty white under the photo.
-              Sticky from `lg`, below the header's own height, so the product
-              stays with you while the details scroll. */}
-          <div className="self-start rounded-xl border border-border bg-surface p-3 sm:p-4 lg:sticky lg:top-[152px]">
-            {/* A lit backdrop rather than flat white. Every shot in the
-                catalogue is cut out on white, so a white tile leaves the
-                product floating in a void with nothing to sit on — the radial
-                gives it a floor and a light source, and stays light in dark
-                mode because the cutouts demand it. */}
-            <div
-              className="group relative aspect-square w-full overflow-hidden rounded-lg"
-              style={{
-                backgroundImage:
-                  "radial-gradient(115% 115% at 50% 12%, #ffffff 0%, #f4f5f7 52%, #e7e9ee 100%)",
-              }}
-            >
-              <Image
-                src={item.img}
-                alt={item.title}
-                fill
-                sizes="(max-width: 1024px) 92vw, 460px"
-                preload
-                /* mix-blend-multiply drops the shot's own white background
-                   into the backdrop: every image here is a cutout on white, so
-                   without it the photo lands as a visible white rectangle on
-                   the gradient — the exact seam the hero disc was built to
-                   avoid. Multiply keeps every darker pixel untouched. */
-                className="object-contain p-6 mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-[1.07]"
-              />
-
-              <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
-                {off > 0 && (
-                  <>
-                    <span className="rounded-lg bg-sale px-2.5 py-1.5 text-[15px] font-extrabold leading-none text-sale-fg shadow-card tnum">
-                      -{off}%
-                    </span>
-                    {saved >= 100 && (
-                      <span className="rounded-md bg-sale-soft px-2 py-1 text-[10.5px] font-bold uppercase leading-none tracking-wide text-sale tnum">
-                        Save AED {money(saved)}
-                      </span>
-                    )}
-                  </>
-                )}
-                {item.isNew && (
-                  <span className="rounded-lg bg-brand px-2.5 py-1.5 text-[11px] font-bold uppercase leading-none text-brand-fg">
-                    New
-                  </span>
-                )}
-              </div>
-
-              {item.condition && (
-                <span className="absolute right-3 top-3 rounded-md bg-white/90 px-2 py-1 text-[10.5px] font-bold uppercase tracking-wide text-success backdrop-blur">
-                  {item.condition}
-                </span>
-              )}
-
-              <span className="pointer-events-none absolute bottom-3 right-3 hidden items-center gap-1.5 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold text-fg-muted opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 lg:flex">
-                <Icon name="Search" className="size-3.5" />
-                Hover to zoom
-              </span>
-            </div>
-          </div>
+          <Gallery item={item} />
 
           <div className="rounded-xl border border-border bg-surface p-3 sm:p-5">
             {item.brand && (
@@ -212,6 +184,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                   <span className="text-fg-muted tnum">{item.sold}+ bought this month</span>
                 )
               )}
+              <span className="text-fg-subtle tnum">SKU {item.id.toUpperCase()}</span>
               {item.condition && (
                 <span className="rounded bg-success-soft px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-success">
                   {item.condition}
@@ -280,53 +253,138 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                 </li>
               ))}
             </ul>
+
+            {/* who you're buying from, which a marketplace states and this
+                page previously left the reader to assume */}
+            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-border pt-3 text-[12px] text-fg-muted">
+              <span className="flex items-center gap-1.5">
+                <Icon name="Store" className="size-4 text-fg-subtle" />
+                Sold by <span className="font-semibold text-fg">OurShopee</span>
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Icon name="MapPin" className="size-4 text-fg-subtle" />
+                Ships from UAE
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Icon name="ShieldCheck" className="size-4 text-fg-subtle" />
+                {warranty}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* One card or two, depending on whether the listing title actually
-            carries specs. An empty "What you're buying" card is a hole in the
-            page; the details table simply takes the full width instead. */}
-        <div className={`mt-3 grid gap-3 ${highlights.length > 0 ? "lg:grid-cols-2" : ""}`}>
-          {highlights.length > 0 && (
-            <section className="flex flex-col rounded-xl border border-border bg-surface p-3 sm:p-4">
-              <h2 className="flex items-center gap-2 text-[15px] font-extrabold tracking-tight text-fg">
-                <Icon name="BadgeCheck" className="size-[18px] text-brand" />
-                What you&apos;re buying
-              </h2>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-                {highlights.map((h) => (
-                  <li
-                    key={h}
-                    className="flex items-start gap-2 rounded-lg bg-surface-2 px-2.5 py-2 text-[12.5px] text-fg"
-                  >
-                    <Icon name="BadgeCheck" className="mt-px size-4 shrink-0 text-brand" />
-                    {h}
-                  </li>
-                ))}
-              </ul>
-              {/* said out loud rather than dressed up as a spec sheet */}
-              <p className="mt-auto pt-4 text-[11.5px] leading-relaxed text-fg-subtle">
-                Specifications are read from the listing title, which is everything the
-                supplier publishes about this item.
-              </p>
-            </section>
-          )}
+        <ProductTabs
+          tabs={[
+            {
+              id: "overview",
+              label: "Overview",
+              content: (
+                <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+                  <div className="min-w-0">
+                    <h2 className="text-[15px] font-extrabold tracking-tight text-fg">
+                      About this item
+                    </h2>
+                    <p className="mt-2 max-w-2xl text-[13.5px] leading-relaxed text-fg-muted">
+                      {item.brand ? `${item.brand} ` : ""}
+                      {item.title.split(/,|—/)[0].trim()}
+                      {item.condition ? `, ${item.condition.toLowerCase()},` : ","} sold and
+                      delivered by OurShopee across the UAE.{" "}
+                      {item.price >= FREE_DELIVERY_MIN
+                        ? "Delivery is free on this order"
+                        : "Delivery is AED 15 on this order"}
+                      {item.express ? " and it arrives tomorrow." : "."}
+                    </p>
 
-          <section className="rounded-xl border border-border bg-surface p-3 sm:p-4">
-            <h2 className="flex items-center gap-2 text-[15px] font-extrabold tracking-tight text-fg">
-              <Icon name="Package" className="size-[18px] text-brand" />
-              Details
-            </h2>
-            <dl className="mt-3 divide-y divide-border">
-              {details.map((d) => (
-                <div key={d.label} className="flex gap-4 py-2 text-[13px]">
-                  <dt className="w-[42%] shrink-0 text-fg-muted">{d.label}</dt>
-                  <dd className="min-w-0 flex-1 font-medium text-fg">{d.value}</dd>
+                    {highlights.length > 0 && (
+                      <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+                        {highlights.map((h) => (
+                          <li
+                            key={h}
+                            className="flex items-start gap-2 rounded-lg bg-surface-2 px-2.5 py-2 text-[12.5px] text-fg"
+                          >
+                            <Icon name="BadgeCheck" className="mt-px size-4 shrink-0 text-brand" />
+                            {h}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <p className="mt-4 text-[11.5px] leading-relaxed text-fg-subtle">
+                      Specifications are read from the listing title, which is everything the
+                      supplier publishes about this item.
+                    </p>
+                  </div>
+
+                  {/* the numbers, pulled out of the prose */}
+                  <dl className="h-fit rounded-xl bg-surface-2 p-4">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <dt className="text-[12.5px] text-fg-muted">Price</dt>
+                      <dd className="text-[17px] font-extrabold text-fg tnum">
+                        AED {money(item.price)}
+                      </dd>
+                    </div>
+                    {saved > 0 && (
+                      <div className="mt-2 flex items-baseline justify-between gap-3">
+                        <dt className="text-[12.5px] text-fg-muted">You save</dt>
+                        <dd className="text-[13px] font-bold text-sale tnum">
+                          AED {money(saved)} ({off}%)
+                        </dd>
+                      </div>
+                    )}
+                    {item.price >= TABBY_MIN && (
+                      <div className="mt-2 flex items-baseline justify-between gap-3">
+                        <dt className="text-[12.5px] text-fg-muted">Per instalment</dt>
+                        <dd className="text-[13px] font-semibold text-fg tnum">
+                          AED {money(Math.round(item.price / 4))} × 4
+                        </dd>
+                      </div>
+                    )}
+                    <div className="mt-2 flex items-baseline justify-between gap-3">
+                      <dt className="text-[12.5px] text-fg-muted">Availability</dt>
+                      <dd
+                        className={`text-[13px] font-semibold tnum ${
+                          item.lowStock != null ? "text-sale" : "text-success"
+                        }`}
+                      >
+                        {item.lowStock != null ? `Only ${item.lowStock} left` : "In stock"}
+                      </dd>
+                    </div>
+                  </dl>
                 </div>
-              ))}
-            </dl>
-          </section>
-        </div>
+              ),
+            },
+            {
+              id: "specs",
+              label: "Specifications",
+              content: (
+                <dl className="max-w-3xl">
+                  {specs.map((sp, i) => (
+                    <Spec key={`${sp.label}-${i}`} label={sp.label} value={sp.value} />
+                  ))}
+                </dl>
+              ),
+            },
+            {
+              id: "delivery",
+              label: "Delivery & returns",
+              content: (
+                <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {delivery.map((d) => (
+                    <li key={d.title} className="rounded-xl border border-border p-3.5">
+                      <span className="flex items-center gap-2">
+                        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-brand-soft">
+                          <Icon name={d.icon} className="size-4 text-brand-soft-fg" />
+                        </span>
+                        <span className="text-[13px] font-bold text-fg">{d.title}</span>
+                      </span>
+                      <p className="mt-2 text-[12.5px] leading-relaxed text-fg-muted">{d.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              ),
+            },
+          ]}
+        />
 
         {related.length > 0 && (
           <RailSection
