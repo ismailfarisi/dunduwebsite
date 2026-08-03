@@ -77,6 +77,23 @@ export const navLinks = [
  * off the catalogue. `tint` is the bloom behind the product — each category
  * gets its own, so five slides don't read as one slide with new words.
  */
+/**
+ * The banner runs one campaign across six departments: it is August in the UAE,
+ * and every slide is set in that heat.
+ *
+ * `photo` is the slide — a real outdoor summer photograph filling the frame,
+ * with the copy over a scrim on the right. Nobody in these frames is holding a
+ * product, so the picture only ever claims the weather; the department, the
+ * listing and the price it quotes all come from the catalogue below.
+ *
+ * `pos` is the crop. Every shot in the set puts its subject in the left third,
+ * so the x value keeps that subject on screen once a phone crops the frame to
+ * roughly half its width, and the y value picks the band a wide desktop panel
+ * keeps. Provenance for the files is in scripts/fetch-banners.mjs.
+ *
+ * `img` is still the product cutout, now a chip beside the price rather than
+ * the subject of the slide.
+ */
 export const heroSlides = [
   {
     id: "h1",
@@ -86,6 +103,8 @@ export const heroSlides = [
     line2: "cooler than outside.",
     sub: "Every department marked down while the heat lasts — renewed phones lead at more than half off.",
     cta: "Shop the sale",
+    photo: "/banners/summer-calm.jpg",
+    pos: "30% 50%",
     img: "/products/iphone-15-pro-max.webp",
     alt: "Apple iPhone 15 Pro Max, renewed",
     itemId: "b1",
@@ -99,6 +118,9 @@ export const heroSlides = [
     line2: "70 inches inside.",
     sub: "QLED, 4K and Dolby Atmos — the summer plan that doesn't involve going out.",
     cta: "Shop TV & Audio",
+    /* the hazy midday beach is the "outside" the headline is arguing with */
+    photo: "/banners/summer-heat.jpg",
+    pos: "26% 50%",
     img: "/products/jvc-70-qled.webp",
     alt: "JVC 70 inch QLED 4K smart TV",
     itemId: "f2",
@@ -112,6 +134,8 @@ export const heroSlides = [
     line2: "Chill it. Repeat.",
     sub: "Blenders, cookware and everything else that makes August indoors bearable.",
     cta: "Shop home & kitchen",
+    photo: "/banners/summer-dusk.jpg",
+    pos: "24% 45%",
     img: "/products/xiaomi-blender.webp",
     alt: "Xiaomi smart touch blender",
     itemId: "f4",
@@ -125,15 +149,11 @@ export const heroSlides = [
     line2: "Womenswear.",
     sub: "Short sleeves for both, in cotton and jersey — plus the trainers and the bag.",
     cta: "Shop fashion",
+    /* the one shot in the set that reads as an outfit rather than a workout */
+    photo: "/banners/summer-dunes.jpg",
+    pos: "22% 40%",
     img: "/products/fashion-model-women.jpg",
-    alt: "Models wearing a navy t-shirt and a red top",
-    /**
-     * Clothing is the one department a cutout can't sell — a flat garment on
-     * white is a listing, not a look. `portraits` swaps the slide's single
-     * product disc for two overlapping ones, cropped to the models, which is
-     * also the only way one slide says menswear *and* womenswear at once.
-     */
-    portraits: ["/products/fashion-model-men.jpg", "/products/fashion-model-women.jpg"],
+    alt: "Model wearing a red top",
     /** the department's floor price, which is what "From" means on a category slide */
     itemId: "w3",
     tint: "255,150,190",
@@ -146,6 +166,8 @@ export const heroSlides = [
     line2: "survives August.",
     sub: "Fresh florals and light orientals in 100ml — Lattafa, Armaf, Givenchy and Valentino.",
     cta: "Shop fragrance",
+    photo: "/banners/summer-sunrise.jpg",
+    pos: "28% 45%",
     img: "/products/lattafa-fakhar-gold.webp",
     alt: "Lattafa Fakhar Gold eau de parfum",
     itemId: "n4",
@@ -159,6 +181,8 @@ export const heroSlides = [
     line2: "Summer price.",
     sub: "200MP, 120Hz and a 6.9-inch AMOLED — new, renewed and everything between.",
     cta: "Shop mobiles",
+    photo: "/banners/summer-shore.jpg",
+    pos: "26% 50%",
     img: "/products/galaxy-s26-ultra.webp",
     alt: "Samsung Galaxy S26 Ultra",
     itemId: "b2",

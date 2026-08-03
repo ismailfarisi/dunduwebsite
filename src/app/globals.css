@@ -291,11 +291,12 @@ body {
     transform: translate3d(calc(var(--dir, 1) * 18px), 10px, 0);
   }
 }
-@keyframes hero-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.93);
-  }
+/* Insurance the scrim can't give on its own: six photographs means six
+   different things under the same words, and one of them ends in bright sand.
+   A shadow this soft is invisible over the dark side of the scrim and is the
+   difference between readable and not over the light one. */
+.hero-copy {
+  text-shadow: 0 1px 12px rgb(0 0 0 / 0.55);
 }
 /* Staggered rather than one block: eyebrow, headline, sub, price and CTA
    arrive in the order you'd read them, which is what makes a slide change
@@ -315,13 +316,16 @@ body {
 .hero-copy > *:nth-child(5) {
   animation-delay: 280ms;
 }
-.hero-art {
-  animation: hero-pop 520ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
-}
-/* the wash cross-fades on a slide change, so the category tint arrives with
-   the product rather than switching a frame early */
-.hero-wash {
-  animation: hero-fade 700ms ease-out both;
+/* The department's colour, kept off the photograph.
+   It only paints from `sm`, and only into the right-hand panel the scrim has
+   already darkened — laid along the floor of a phone instead it tinted the
+   sand, and lime sand is the exact look this rebuild is getting rid of. It
+   cross-fades so the colour arrives with the copy rather than a frame early. */
+@media (min-width: 40rem) {
+  .hero-tint {
+    background-image: linear-gradient(to left, rgba(var(--tint), 0.13), transparent 46%);
+    animation: hero-fade 700ms ease-out both;
+  }
 }
 @keyframes hero-fade {
   from {
@@ -329,37 +333,58 @@ body {
   }
 }
 
-/* The product never sits perfectly still. 5.5s and 10px of travel is slow
-   enough to read as breathing rather than as movement. */
-@keyframes hero-float {
-  from {
-    transform: translateY(-4px);
-  }
-  to {
-    transform: translateY(6px);
-  }
+/* The scrim the copy is read against.
+   Built from --ink rather than a literal black so the banner keeps the same
+   dark in either theme, and stopped short of the far edge on purpose: a scrim
+   that reaches all the way across is a dark rectangle with a photograph
+   hidden underneath it.
+
+   Bottom-to-top on a phone. Every shot in the set frames its subject in the
+   left third, and a phone crops that frame to about half its width — there is
+   no empty side left to put words on, so they go on the floor. */
+.hero-scrim {
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--ink) 96%, transparent) 0%,
+    color-mix(in srgb, var(--ink) 90%, transparent) 30%,
+    color-mix(in srgb, var(--ink) 62%, transparent) 52%,
+    color-mix(in srgb, var(--ink) 14%, transparent) 78%,
+    transparent 100%
+  );
 }
-.hero-float {
-  animation: hero-float 5.5s ease-in-out infinite alternate;
+/* Right-to-left from `sm`, where the open half of the frame is. The second
+   layer is a light floor wash that keeps the dots legible over bright sand. */
+@media (min-width: 40rem) {
+  .hero-scrim {
+    background-image:
+      linear-gradient(
+        to left,
+        color-mix(in srgb, var(--ink) 94%, transparent) 0%,
+        color-mix(in srgb, var(--ink) 90%, transparent) 26%,
+        /* the copy column starts here, and on the two slides that end in
+           bright sand a softer stop left the sub sitting on daylight */
+        color-mix(in srgb, var(--ink) 74%, transparent) 46%,
+        color-mix(in srgb, var(--ink) 32%, transparent) 68%,
+        transparent 92%
+      ),
+      linear-gradient(to top, color-mix(in srgb, var(--ink) 45%, transparent), transparent 45%);
+  }
 }
 
-/* Two slow blooms behind the copy. A banner that only moves when it changes
-   slide is a still image for five and a half of every six seconds. */
-@keyframes hero-aurora-a {
-  50% {
-    transform: translate3d(7%, -5%, 0) scale(1.14);
+/* The photograph never sits perfectly still: 14s of a 4% push in, which is
+   slower than the six-second slide it belongs to, so the frame is still
+   opening when it hands over. A banner that only moves when it changes slide
+   is a still image for five and a half of every six seconds. */
+@keyframes hero-pan {
+  from {
+    transform: scale(1.005);
+  }
+  to {
+    transform: scale(1.045);
   }
 }
-@keyframes hero-aurora-b {
-  50% {
-    transform: translate3d(-6%, 6%, 0) scale(0.9);
-  }
-}
-.hero-aurora-a {
-  animation: hero-aurora-a 18s ease-in-out infinite;
-}
-.hero-aurora-b {
-  animation: hero-aurora-b 22s ease-in-out infinite;
+.hero-pan {
+  animation: hero-pan 14s ease-out both;
 }
 
 /* a gloss crossing the CTA every few seconds, which is the one element on the
@@ -477,9 +502,7 @@ body {
      hero's dot fill is a one-shot, but at 0.01ms it would read as a dot that
      is always full, so it holds still at full instead. */
   .marquee-track,
-  .hero-float,
-  .hero-aurora-a,
-  .hero-aurora-b,
+  .hero-pan,
   .hero-shine::after {
     animation: none !important;
     transform: none !important;
