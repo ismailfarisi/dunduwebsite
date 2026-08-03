@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Window air conditioner">
+  <defs><linearGradient id="a2" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fbfdff"/><stop offset="1" stop-color="#d7dfe8"/></linearGradient></defs>
+  <rect x="76" y="132" width="248" height="146" rx="12" fill="url(#a2)" stroke="#a8b3bf" stroke-width="2"/>
+  <rect x="96" y="152" width="128" height="106" rx="8" fill="#e7edf3" stroke="#bcc6d1" stroke-width="1.5"/>
+  <g fill="#c6d0da">
+    <rect x="106" y="164" width="108" height="6" rx="3"/><rect x="106" y="180" width="108" height="6" rx="3"/>
+    <rect x="106" y="196" width="108" height="6" rx="3"/><rect x="106" y="212" width="108" height="6" rx="3"/>
+    <rect x="106" y="228" width="108" height="6" rx="3"/>
+  </g>
+  <rect x="240" y="152" width="64" height="30" rx="6" fill="#333c47"/>
+  <circle cx="252" cy="167" r="4" fill="#5ad6a0"/>
+  <rect x="240" y="198" width="64" height="60" rx="8" fill="#e7edf3" stroke="#bcc6d1" stroke-width="1.5"/>
+  <circle cx="272" cy="228" r="15" fill="#aeb9c5"/><circle cx="272" cy="228" r="6" fill="#7d8996"/>
+</svg>

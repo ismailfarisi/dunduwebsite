@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Portable air conditioner">
+  <defs><linearGradient id="a3" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#cfd8e2"/><stop offset=".25" stop-color="#f6f9fc"/>
+    <stop offset="1" stop-color="#c6d0db"/></linearGradient></defs>
+  <path d="M300 96c26 8 40 26 40 44s-16 26-30 24" fill="none" stroke="#b9c3cf" stroke-width="13" stroke-linecap="round"/>
+  <path d="M300 96c26 8 40 26 40 44s-16 26-30 24" fill="none" stroke="#dae2ea" stroke-width="7" stroke-linecap="round"/>
+  <rect x="132" y="88" width="132" height="252" rx="18" fill="url(#a3)" stroke="#a8b3bf" stroke-width="2"/>
+  <rect x="152" y="112" width="92" height="34" rx="8" fill="#333c47"/>
+  <circle cx="166" cy="129" r="4" fill="#5ad6a0"/>
+  <g fill="#d3dce6">
+    <rect x="152" y="168" width="92" height="7" rx="3.5"/><rect x="152" y="184" width="92" height="7" rx="3.5"/>
+    <rect x="152" y="200" width="92" height="7" rx="3.5"/><rect x="152" y="216" width="92" height="7" rx="3.5"/>
+    <rect x="152" y="232" width="92" height="7" rx="3.5"/>
+  </g>
+  <rect x="152" y="266" width="92" height="46" rx="10" fill="#e6ecf3" stroke="#bcc6d1" stroke-width="1.5"/>
+  <circle cx="198" cy="289" r="13" fill="#aeb9c5"/><circle cx="198" cy="289" r="5" fill="#7d8996"/>
+  <rect x="144" y="340" width="14" height="10" rx="4" fill="#59636e"/>
+  <rect x="238" y="340" width="14" height="10" rx="4" fill="#59636e"/>
+</svg>

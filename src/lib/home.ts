@@ -34,6 +34,8 @@ export type Item = {
   lowStock?: number;
   /** social proof for items the source listing had no rating for */
   sold?: number;
+  /** not a scraped listing: drawn artwork and demo pricing — see `cooling` */
+  demo?: boolean;
 };
 
 /** Order value that clears delivery. Stated in the utility strip and on cards. */
@@ -64,10 +66,11 @@ export const navLinks = [
 ];
 
 /**
- * Seven slides, one per department, chosen for a UAE August rather than for
+ * Nine slides, one per department, chosen for a UAE August rather than for
  * variety: the season is 45°C outside, which is why the banner leads with the
- * sale, then the categories people buy to stay indoors comfortably, then the
- * phone, the wardrobe, the training kit and the fragrance.
+ * sale, then the two departments that exist to fight it, then the categories
+ * people buy to stay indoors comfortably, then the wardrobe, the training kit,
+ * the fragrance and the phone.
  *
  * Gaming, Toys and Pre-Owned are strong categories with no listings behind
  * them, and a slide that can't quote a real price is a slide that shouts an
@@ -75,6 +78,9 @@ export const navLinks = [
  * the performance tees are real and priced, and there is no bicycle in the
  * catalogue — so the slide is named as the nav names it and its copy sells the
  * shoes.
+ *
+ * Fridges and Air Conditioners are the two whose products had to be drawn
+ * rather than scraped — see `cooling` for why, and for what to replace.
  *
  * A banner slide sells a department, so the department has to be what you see.
  *
@@ -132,6 +138,35 @@ export const heroSlides = [
     itemId: "f4",
     picks: ["f3", "f7", "k1"],
     tint: "125,232,190",
+  },
+  {
+    id: "h8",
+    category: "Fridges & Freezers",
+    eyebrow: "Fridges & Freezers",
+    line1: "Cold in,",
+    line2: "August out.",
+    sub: "French door, top mount and chest freezers — inverter compressors that hold temperature through a 45° afternoon.",
+    cta: "Shop fridges",
+    img: "/products/fridge-french-door.svg",
+    alt: "French door refrigerator",
+    itemId: "cl1",
+    picks: ["cl2", "cl3"],
+    tint: "150,225,255",
+  },
+  {
+    id: "h9",
+    category: "Air Conditioners",
+    eyebrow: "Air Conditioners",
+    line1: "45° out there.",
+    line2: "22° in here.",
+    sub: "Split, window and portable — inverter units that get a room down and then stop working so hard.",
+    cta: "Shop air conditioners",
+    img: "/products/ac-split.svg",
+    alt: "Split air conditioner indoor unit",
+    itemId: "cl4",
+    picks: ["cl5", "cl6"],
+    /* the one warm tint in the set, for the department that fights the heat */
+    tint: "255,150,85",
   },
   {
     id: "h4",
@@ -809,6 +844,89 @@ const strays: Item[] = [
 ];
 
 /**
+ * Cooling — and the one part of this file that is not a real ourshopee listing.
+ *
+ * Everything else here is scraped: real titles, real prices, ratings only where
+ * the source had one. There is no refrigerator and no air conditioner anywhere
+ * in that scrape, and ourshopee itself is unreachable from this environment —
+ * the egress policy answers 403 to a CONNECT for both www. and cdn. — so these
+ * six could not be pulled the way the other forty were. The artwork is drawn
+ * (public/products/*.svg) and the prices are demo figures at plausible UAE
+ * levels. No ratings, because inventing social proof is a different order of
+ * fiction from drawing a box.
+ *
+ * They are marked `demo: true` so anything that cares can tell. Replace the six
+ * SVGs with real photography and the six prices with real numbers and nothing
+ * else has to change.
+ */
+export const cooling: Item[] = [
+  {
+    id: "cl1",
+    title: "French Door Refrigerator, 550L, Inverter Compressor, Water & Ice Dispenser",
+    brand: "Demo",
+    img: "/products/fridge-french-door.svg",
+    price: 2899,
+    was: 3999,
+    express: true,
+    sold: 120,
+    demo: true,
+  },
+  {
+    id: "cl2",
+    title: "Top Mount Refrigerator, 320L, Frost Free, Energy Class A+",
+    brand: "Demo",
+    img: "/products/fridge-top-mount.svg",
+    price: 1199,
+    was: 1599,
+    express: true,
+    sold: 210,
+    demo: true,
+  },
+  {
+    id: "cl3",
+    title: "Chest Freezer, 200L, Fast Freeze, Lockable Lid",
+    brand: "Demo",
+    img: "/products/freezer-chest.svg",
+    price: 899,
+    was: 1199,
+    lowStock: 7,
+    demo: true,
+  },
+  {
+    id: "cl4",
+    title: "Split Air Conditioner, 1.5 Ton, Inverter, Rotary Compressor",
+    brand: "Demo",
+    img: "/products/ac-split.svg",
+    price: 1499,
+    was: 1999,
+    express: true,
+    sold: 340,
+    demo: true,
+  },
+  {
+    id: "cl5",
+    title: "Window Air Conditioner, 1.5 Ton, Auto Restart, Remote Control",
+    brand: "Demo",
+    img: "/products/ac-window.svg",
+    price: 999,
+    was: 1349,
+    express: true,
+    sold: 180,
+    demo: true,
+  },
+  {
+    id: "cl6",
+    title: "Portable Air Conditioner, 1 Ton, Self-Evaporating, Castor Wheels",
+    brand: "Demo",
+    img: "/products/ac-portable.svg",
+    price: 1249,
+    was: 1699,
+    lowStock: 9,
+    demo: true,
+  },
+];
+
+/**
  * Everything in the catalogue, deduplicated — SKUs sit in several sections.
  *
  * The school picks go in as themselves rather than as copies: a bag that only
@@ -825,6 +943,7 @@ export const allItems: Item[] = [
       ...backToSchool.picks.map((p) => p.item),
       ...fashion.groups.flatMap((g) => g.items),
       ...footwear,
+      ...cooling,
       ...strays,
     ].map((i) => [i.id, i]),
   ).values(),
@@ -886,6 +1005,7 @@ export function itemById(id: string): Item | undefined {
 const departments: { label: string; items: Item[] }[] = [
   { label: "Footwear", items: footwear },
   { label: "Fashion", items: fashion.groups.flatMap((g) => g.items) },
+  { label: "Cooling", items: cooling },
   { label: "Home & Kitchen", items: homeKitchen },
   { label: "Back to School", items: backToSchool.picks.map((p) => p.item) },
   { label: "New Arrivals", items: newArrivals },

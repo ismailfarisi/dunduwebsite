@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Chest freezer">
+  <defs><linearGradient id="s3" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f4f7fa"/><stop offset="1" stop-color="#cdd6e0"/></linearGradient></defs>
+  <rect x="62" y="150" width="276" height="150" rx="12" fill="url(#s3)" stroke="#a3aeba" stroke-width="2"/>
+  <rect x="62" y="132" width="276" height="34" rx="10" fill="#e6ecf2" stroke="#a3aeba" stroke-width="2"/>
+  <rect x="168" y="112" width="64" height="12" rx="6" fill="#8b98a6"/>
+  <rect x="88" y="196" width="58" height="8" rx="4" fill="#b7c1cc"/>
+  <circle cx="300" cy="200" r="9" fill="#4d5967"/>
+  <rect x="78" y="300" width="16" height="14" rx="3" fill="#59636e"/>
+  <rect x="306" y="300" width="16" height="14" rx="3" fill="#59636e"/>
+</svg>
