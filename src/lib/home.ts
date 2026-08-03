@@ -64,73 +64,92 @@ export const navLinks = [
 ];
 
 /**
- * `itemId` is the listing the slide is actually showing, so the banner can
- * price itself off the catalogue instead of shouting an adjective. A slide
- * whose art isn't a listing (the foldable is the Deal of the Day, not a
- * catalogue row) simply carries no id and the banner drops the price line.
+ * Five slides, one per category, chosen for a UAE August rather than for
+ * variety: the season is 45°C outside, which is why the banner leads with the
+ * sale, then the two categories people buy to stay indoors comfortably, then
+ * the phone and the wardrobe.
+ *
+ * Gaming, Toys, Sports and Pre-Owned are strong categories but the catalogue
+ * holds no listings behind three of them, and a slide that can't quote a real
+ * price is a slide that shouts an adjective.
+ *
+ * `itemId` is the listing the slide is showing, so the banner prices itself
+ * off the catalogue. `tint` is the bloom behind the product — each category
+ * gets its own, so five slides don't read as one slide with new words.
  */
 export const heroSlides = [
   {
     id: "h1",
-    eyebrow: "Mega deals",
-    line1: "Big Brands.",
-    line2: "Bigger Savings.",
-    sub: "The best offers on electronics, fashion, beauty, home & more.",
-    cta: "Shop Now",
-    img: "/products/galaxy-s26-ultra.webp",
-    alt: "Samsung Galaxy S26 Ultra",
-    itemId: "b2",
+    category: "Summer Sale",
+    eyebrow: "Summer Sale — live now",
+    line1: "The whole store,",
+    line2: "cooler than outside.",
+    sub: "Every department marked down while the heat lasts — renewed phones lead at more than half off.",
+    cta: "Shop the sale",
+    img: "/products/iphone-15-pro-max.webp",
+    alt: "Apple iPhone 15 Pro Max, renewed",
+    itemId: "b1",
+    tint: "213,232,79",
   },
   {
     id: "h2",
-    eyebrow: "Summer sale",
-    line1: "Up to 45% off",
-    line2: "Home & Kitchen.",
-    sub: "Cookware sets, blenders, microwaves and everyday essentials.",
-    cta: "See Offers",
-    img: "/products/farberware-cookware.webp",
-    alt: "Farberware 20-piece cookware set",
-    itemId: "f3",
+    category: "TV & Audio",
+    eyebrow: "TV & Audio",
+    line1: "45° outside.",
+    line2: "70 inches inside.",
+    sub: "QLED, 4K and Dolby Atmos — the summer plan that doesn't involve going out.",
+    cta: "Shop TV & Audio",
+    img: "/products/jvc-70-qled.webp",
+    alt: "JVC 70 inch QLED 4K smart TV",
+    itemId: "f2",
+    tint: "120,180,255",
   },
   {
-    id: "h5",
+    id: "h3",
+    category: "Home & Kitchen",
+    eyebrow: "Home & Kitchen",
+    line1: "Blend it.",
+    line2: "Chill it. Repeat.",
+    sub: "Blenders, cookware and everything else that makes August indoors bearable.",
+    cta: "Shop home & kitchen",
+    img: "/products/xiaomi-blender.webp",
+    alt: "Xiaomi smart touch blender",
+    itemId: "f4",
+    tint: "125,232,190",
+  },
+  {
+    id: "h4",
+    category: "Fashion",
     eyebrow: "Summer fashion",
     line1: "Menswear.",
     line2: "Womenswear.",
     sub: "Short sleeves for both, in cotton and jersey — plus the trainers and the bag.",
-    cta: "Shop Fashion",
+    cta: "Shop fashion",
     img: "/products/fashion-model-women.jpg",
     alt: "Models wearing a navy t-shirt and a red top",
     /**
-     * Clothing is the one department a cutout can't sell — a flat black jacket
-     * on white is a listing, not a look. `portraits` swaps the slide's single
+     * Clothing is the one department a cutout can't sell — a flat garment on
+     * white is a listing, not a look. `portraits` swaps the slide's single
      * product disc for two overlapping ones, cropped to the models, which is
-     * also the only way one slide can say menswear *and* womenswear at once.
+     * also the only way one slide says menswear *and* womenswear at once.
      */
     portraits: ["/products/fashion-model-men.jpg", "/products/fashion-model-women.jpg"],
     /** the department's floor price, which is what "From" means on a category slide */
     itemId: "w3",
+    tint: "255,150,190",
   },
   {
-    id: "h3",
-    eyebrow: "Certified refurbished",
-    line1: "Like new.",
-    line2: "Half the price.",
-    sub: "12-month warranty, free shipping, fully tested devices.",
-    cta: "Shop Pre-Owned",
-    img: "/products/iphone-15-pro-max.webp",
-    alt: "Apple iPhone 15 Pro Max, renewed",
-    itemId: "b1",
-  },
-  {
-    id: "h4",
-    eyebrow: "New arrivals",
-    line1: "Just landed.",
-    line2: "Straight to you.",
-    sub: "The latest foldables, laptops and fragrances in stock now.",
-    cta: "Explore",
-    img: "/products/honor-magic-v5.webp",
-    alt: "Honor Magic V5 foldable smartphone",
+    id: "h5",
+    category: "Mobiles & Tablets",
+    eyebrow: "Mobiles & Tablets",
+    line1: "Flagship camera.",
+    line2: "Summer price.",
+    sub: "200MP, 120Hz and a 6.9-inch AMOLED — new, renewed and everything between.",
+    cta: "Shop mobiles",
+    img: "/products/galaxy-s26-ultra.webp",
+    alt: "Samsung Galaxy S26 Ultra",
+    itemId: "b2",
+    tint: "183,155,247",
   },
 ];
 

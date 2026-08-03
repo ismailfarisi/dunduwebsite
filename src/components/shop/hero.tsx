@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/icon";
 import { DealOfDay } from "@/components/shop/deal-of-day";
@@ -10,19 +10,34 @@ function money(n: number) {
   return n.toLocaleString("en-AE", { maximumFractionDigits: 2 });
 }
 
+/** one slide, and the fill on the active dot, run to the same clock */
+const SLIDE_MS = 6000;
+
 export function Hero() {
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
+  const touchX = useRef<number | null>(null);
 
   useEffect(() => {
     if (paused) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = window.setInterval(() => setI((v) => (v + 1) % heroSlides.length), 6000);
+    const t = window.setInterval(() => setI((v) => (v + 1) % heroSlides.length), SLIDE_MS);
     return () => window.clearInterval(t);
   }, [paused]);
 
   const s = heroSlides[i];
   const go = (d: 1 | -1) => setI((v) => (v + d + heroSlides.length) % heroSlides.length);
+
+  // a banner on a phone has no arrows, so the gesture has to be the control
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.changedTouches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+  };
 
   // the listing the slide is showing, so the banner can quote a real price
   const item = s.itemId ? allItems.find((it) => it.id === s.itemId) : undefined;
@@ -37,6 +52,8 @@ export function Hero() {
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         {/* Three layers rather than one: a cool highlight top-right behind the
             product, brand purple rising from the bottom-left under the copy, and
@@ -44,12 +61,13 @@ export function Hero() {
             unloaded image. */}
         <div
           aria-hidden
-          className="absolute inset-0 -z-10"
+          key={s.id}
+          className="hero-wash absolute inset-0 -z-10"
           style={{
             backgroundImage: [
               "radial-gradient(75% 95% at 80% 26%, rgba(255,255,255,.20) 0%, transparent 58%)",
               "radial-gradient(58% 78% at 2% 102%, rgba(97,39,201,.42) 0%, transparent 58%)",
-              "radial-gradient(40% 55% at 58% 100%, rgba(213,232,79,.14) 0%, transparent 62%)",
+              `radial-gradient(40% 55% at 58% 100%, rgba(${s.tint},.16) 0%, transparent 62%)`,
             ].join(","),
           }}
         />
@@ -113,7 +131,7 @@ export function Hero() {
               person you can't see. */}
           <div
             aria-hidden
-            className={`relative flex shrink-0 items-center justify-center self-center ${
+            className={`hero-float relative flex shrink-0 items-center justify-center self-center ${
               s.portraits
                 ? "aspect-[8/5] w-[46%] max-w-[168px] sm:max-w-[290px] lg:max-w-[350px]"
                 : "aspect-square w-[32%] max-w-[118px] sm:w-[36%] sm:max-w-[200px] lg:max-w-[228px]"
@@ -122,8 +140,7 @@ export function Hero() {
             <span
               className="absolute inset-[-26%] rounded-full blur-2xl"
               style={{
-                backgroundImage:
-                  "radial-gradient(closest-side, rgba(213,232,79,.55) 30%, rgba(213,232,79,.22) 62%, transparent 78%)",
+                backgroundImage: `radial-gradient(closest-side, rgba(${s.tint},.55) 30%, rgba(${s.tint},.22) 62%, transparent 78%)`,
               }}
             />
 
@@ -176,17 +193,33 @@ export function Hero() {
           <Icon name="ChevronRight" className="size-4" />
         </button>
 
+        {/* the active dot runs the slide's own clock, so the banner shows how
+            long you have rather than changing under you */}
         <div className="absolute bottom-4 left-5 flex gap-2 sm:bottom-5 sm:left-14">
           {heroSlides.map((sl, idx) => (
             <button
               key={sl.id}
               onClick={() => setI(idx)}
-              aria-label={`Go to slide ${idx + 1}: ${sl.line1}`}
+              aria-label={`Go to ${sl.category}`}
               aria-current={idx === i}
-              className={`h-2 rounded-full transition-all ${
-                idx === i ? "w-5 bg-accent" : "w-2 bg-white/35 hover:bg-white/60"
+              className={`h-2 overflow-hidden rounded-full transition-all ${
+                idx === i ? "w-8 bg-white/30" : "w-2 bg-white/35 hover:bg-white/60"
               }`}
-            />
+            >
+              {idx === i && (
+                <span
+                  key={sl.id}
+                  className="hero-progress block h-full w-full origin-left rounded-full bg-accent"
+                  /* paused freezes the fill where it is. Dropping the class
+                     instead would snap the bar to full — which reads as "this
+                     slide is about to change" at the exact moment it can't. */
+                  style={{
+                    animationDuration: `${SLIDE_MS}ms`,
+                    animationPlayState: paused ? "paused" : "running",
+                  }}
+                />
+              )}
+            </button>
           ))}
         </div>
       </div>
