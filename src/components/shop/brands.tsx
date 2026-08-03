@@ -37,23 +37,13 @@ function Tile({ name, logo }: { name: string; logo?: string }) {
   );
 }
 
-function Row({ hidden = false }: { hidden?: boolean }) {
-  return (
-    <div aria-hidden={hidden} className="flex shrink-0 gap-2.5 pr-2.5">
-      {brands.map((b) => (
-        <Tile key={b.name} name={b.name} logo={b.logo} />
-      ))}
-    </div>
-  );
-}
-
 /**
- * Every department's brands, drifting right to left.
+ * Every department's brands, in one scrollable strip.
  *
- * A grid of ten was a fifth of the list and all of it electronics. Moving,
- * the row carries forty-one across mobiles, laptops, audio, kitchen, fashion,
- * footwear, fragrance and watches in the same strip of page — and the same
- * two-copy track as the category circles, so the loop has no seam.
+ * A grid of ten was a fifth of the list and all of it electronics. A rail
+ * carries all forty-one — mobiles, laptops, audio, kitchen, fashion,
+ * footwear, fragrance, watches — in the same strip of page, and it moves only
+ * when you move it.
  */
 export function Brands() {
   return (
@@ -71,11 +61,10 @@ export function Brands() {
         </a>
       </div>
 
-      <div className="marquee -mx-3 mt-4 px-3 sm:mx-0 sm:px-0">
-        <div className="marquee-track marquee-left marquee-slower flex w-max">
-          <Row />
-          <Row hidden />
-        </div>
+      <div className="rail -mx-3 mt-4 flex gap-2.5 overflow-x-auto px-3 pb-1 scroll-pl-3 sm:-mx-1 sm:px-1 sm:scroll-pl-1">
+        {brands.map((b) => (
+          <Tile key={b.name} name={b.name} logo={b.logo} />
+        ))}
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ function Circle({ label, img }: { label: string; img: string }) {
   return (
     <a
       href="#"
-      className="group flex w-[92px] shrink-0 flex-col items-center gap-2 px-1 text-center sm:w-[112px]"
+      className="group flex w-[86px] shrink-0 flex-col items-center gap-2 px-1 text-center lg:w-auto"
     >
       {/* circle stays light in both themes — the source art is shot on white */}
       <span className="relative size-[62px] overflow-hidden rounded-full bg-white ring-1 ring-border transition-all group-hover:ring-brand sm:size-[68px]">
@@ -25,34 +25,22 @@ function Circle({ label, img }: { label: string; img: string }) {
   );
 }
 
-function Row({ hidden = false }: { hidden?: boolean }) {
-  return (
-    <div aria-hidden={hidden} className="flex shrink-0 items-start">
-      {quickLinks.map((c) => (
-        <Circle key={c.label} label={c.label} img={c.img} />
-      ))}
-    </div>
-  );
-}
-
 /**
- * The circular category row under the hero, drifting right to left.
+ * The circular category row under the hero.
  *
- * It runs at every width now. On a phone that costs the swipe — a transform
- * animation and a scroll container can't share one element — but a 70s lap
- * moves about four pixels a second, so nothing is hard to tap, and every
- * category comes past on its own rather than waiting to be found.
+ * A swipe rail below `lg`, an even twelve-up grid above it — the row holds
+ * still either way, and the hero next to it is the only thing on the page
+ * that moves on its own.
  */
 export function QuickCircles() {
   return (
     <section className="mt-3 rounded-xl bg-surface py-4 shadow-card sm:py-5">
       <h2 className="sr-only">Shop by category</h2>
 
-      <div className="marquee px-2">
-        <div className="marquee-track marquee-left marquee-slow flex w-max items-start">
-          <Row />
-          <Row hidden />
-        </div>
+      <div className="rail flex gap-1 overflow-x-auto px-3 scroll-pl-3 sm:px-4 sm:scroll-pl-4 lg:grid lg:grid-cols-12 lg:gap-0 lg:overflow-visible">
+        {quickLinks.map((c) => (
+          <Circle key={c.label} label={c.label} img={c.img} />
+        ))}
       </div>
     </section>
   );

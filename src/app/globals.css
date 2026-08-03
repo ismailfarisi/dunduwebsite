@@ -331,61 +331,6 @@ body {
   animation: hero-progress linear forwards;
 }
 
-/* Top strip: the points travel left to right on a loop.
-   The track holds two copies of the list and slides from -50% to 0, so the
-   frame where it snaps back is identical to the one before it — no seam. The
-   mask fades both ends so points arrive and leave rather than popping. */
-@keyframes marquee-right {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-@keyframes marquee-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-.marquee {
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 3%,
-    #000 97%,
-    transparent
-  );
-  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent);
-}
-.marquee-track {
-  animation: marquee-right 45s linear infinite;
-}
-/* direction and pace are modifiers: the strip runs right, the category row
-   runs left, and a row of 68px circles needs longer per lap than a line of
-   text to read as a drift rather than a conveyor */
-.marquee-track.marquee-left {
-  animation-name: marquee-left;
-}
-.marquee-track.marquee-slow {
-  animation-duration: 70s;
-}
-/* the brand row is twice the length of the category row, so it needs twice
-   the lap to travel at the same speed */
-.marquee-track.marquee-slower {
-  animation-duration: 140s;
-}
-/* a point that catches the eye can be read, and clicked-through links stay
-   reachable while the pointer is on them */
-.marquee:hover .marquee-track,
-.marquee:focus-within .marquee-track {
-  animation-play-state: paused;
-}
-
 /* visible focus everywhere, without the default double ring */
 :where(a, button, input, select, [tabindex]):focus-visible {
   outline: 2px solid var(--brand);
@@ -404,10 +349,9 @@ body {
     transition-duration: 0.01ms !important;
   }
   /* The rule above ends a one-shot animation instantly, but an infinite loop
-     at 0.01ms strobes rather than stops — those have to be turned off. The
-     hero's dot fill is a one-shot, but at 0.01ms it would read as a dot that
-     is always full, so it holds still at full instead. */
-  .marquee-track,
+     at 0.01ms strobes rather than stops — the hero's float has to be turned
+     off. Its dot fill is a one-shot, but at 0.01ms it would read as a dot
+     that is always full, so it holds still at full instead. */
   .hero-float {
     animation: none !important;
     transform: none !important;
