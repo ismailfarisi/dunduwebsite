@@ -16,17 +16,45 @@ const SLIDE_MS = 6000;
 export function Hero() {
   const [i, setI] = useState(0);
   const [paused, setPaused] = useState(false);
+  /** which way the last change went, so the copy enters from that side */
+  const [dir, setDir] = useState(1);
+  /** pointer offset, -1..1, for the parallax on the product */
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const touchX = useRef<number | null>(null);
 
   useEffect(() => {
     if (paused) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = window.setInterval(() => setI((v) => (v + 1) % heroSlides.length), SLIDE_MS);
+    // the timer always moves forward, so the copy enters from the right
+    const t = window.setInterval(() => {
+      setDir(1);
+      setI((v) => (v + 1) % heroSlides.length);
+    }, SLIDE_MS);
     return () => window.clearInterval(t);
   }, [paused]);
 
   const s = heroSlides[i];
-  const go = (d: 1 | -1) => setI((v) => (v + d + heroSlides.length) % heroSlides.length);
+  const go = (d: 1 | -1) => {
+    setDir(d);
+    setI((v) => (v + d + heroSlides.length) % heroSlides.length);
+  };
+  const jump = (to: number) => {
+    setDir(to > i ? 1 : -1);
+    setI(to);
+  };
+
+  /* The product leans a little towards the pointer. Fine pointers only — on a
+     touch screen there is nothing to follow — and off entirely under reduced
+     motion, where the float is off too. */
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    setTilt({
+      x: ((e.clientX - r.left) / r.width - 0.5) * 2,
+      y: ((e.clientY - r.top) / r.height - 0.5) * 2,
+    });
+  };
 
   // a banner on a phone has no arrows, so the gesture has to be the control
   const onTouchStart = (e: React.TouchEvent) => {
@@ -47,13 +75,15 @@ export function Hero() {
     <section className="grid gap-3 lg:grid-cols-[1fr_310px]">
       {/* banner — rendered on the server too, so it is never an empty box */}
       <div
-        className="relative isolate overflow-hidden rounded-xl bg-ink"
+        className="relative isolate -mx-4 overflow-hidden rounded-none bg-ink sm:mx-0 sm:rounded-xl"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        onPointerMove={onPointerMove}
+        onPointerLeave={() => setTilt({ x: 0, y: 0 })}
       >
         {/* Three layers rather than one: a cool highlight top-right behind the
             product, brand purple rising from the bottom-left under the copy, and
@@ -72,6 +102,20 @@ export function Hero() {
           }}
         />
 
+        {/* Two slow blooms in the slide's own colour, drifting on 18s and 22s.
+            A banner that only moves when it changes slide is a still image for
+            five and a half of every six seconds. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+          <span
+            className="hero-aurora-a absolute -left-[10%] top-[-30%] size-[55%] rounded-full blur-3xl"
+            style={{ background: `radial-gradient(closest-side, rgba(${s.tint},.30), transparent)` }}
+          />
+          <span
+            className="hero-aurora-b absolute -bottom-[35%] left-[35%] size-[60%] rounded-full blur-3xl"
+            style={{ background: "radial-gradient(closest-side, rgba(97,39,201,.45), transparent)" }}
+          />
+        </div>
+
         {/* The minimum is the tallest slide, measured, not a round number.
             Slides differ by a line of copy — 321px to 363px at desktop — and
             without a floor the whole page below the hero moved every six
@@ -85,7 +129,11 @@ export function Hero() {
             controls that aren't there, and the headline wrapping to four lines
             because of it. */}
         <div className="relative flex min-h-[352px] items-center gap-3 px-4 pb-10 pt-6 sm:min-h-[363px] sm:gap-6 sm:px-14 sm:pb-11 sm:pr-16">
-          <div key={s.id} className="hero-copy min-w-0 flex-1">
+          <div
+            key={s.id}
+            className="hero-copy min-w-0 flex-1"
+            style={{ "--dir": dir } as React.CSSProperties}
+          >
             <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
               {s.eyebrow}
             </span>
@@ -115,7 +163,7 @@ export function Hero() {
 
             <a
               href="#"
-              className="mt-5 inline-block w-fit rounded-full bg-accent px-6 py-2.5 text-[13.5px] font-bold text-accent-fg transition-transform hover:bg-accent-hover hover:-translate-y-0.5 sm:mt-6 sm:px-7 sm:py-3 sm:text-[14px]"
+              className="hero-shine relative mt-5 inline-block w-fit overflow-hidden rounded-full bg-accent px-6 py-2.5 text-[13.5px] font-bold text-accent-fg transition-transform hover:-translate-y-0.5 hover:bg-accent-hover sm:mt-6 sm:px-7 sm:py-3 sm:text-[14px]"
             >
               {s.cta}
             </a>
@@ -135,7 +183,8 @@ export function Hero() {
               person you can't see. */}
           <div
             aria-hidden
-            className={`hero-float relative flex shrink-0 items-center justify-center self-center ${
+            style={{ transform: `translate3d(${tilt.x * 10}px, ${tilt.y * 8}px, 0)` }}
+            className={`hero-float relative flex shrink-0 items-center justify-center self-center transition-transform duration-500 ease-out ${
               s.portraits
                 ? "aspect-[8/5] w-[46%] max-w-[168px] sm:max-w-[290px] lg:max-w-[350px]"
                 : "aspect-square w-[32%] max-w-[118px] sm:w-[36%] sm:max-w-[200px] lg:max-w-[228px]"
@@ -203,7 +252,7 @@ export function Hero() {
           {heroSlides.map((sl, idx) => (
             <button
               key={sl.id}
-              onClick={() => setI(idx)}
+              onClick={() => jump(idx)}
               aria-label={`Go to ${sl.category}`}
               aria-current={idx === i}
               className={`h-2 overflow-hidden rounded-full transition-all ${
@@ -233,7 +282,7 @@ export function Hero() {
       {/* The six USP rows that used to hold this rail said the same four things
           as the utility strip above and the trust row above the footer. The
           strip is desktop-only, so mobile keeps one 28px line of it. */}
-      <div className="flex items-center justify-between gap-2 rounded-xl bg-surface px-3 py-2 lg:hidden">
+      <div className="flex items-center justify-between gap-2 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface px-3 py-2 lg:hidden">
         {usps.slice(0, 3).map((u) => (
           <span
             key={u.title}

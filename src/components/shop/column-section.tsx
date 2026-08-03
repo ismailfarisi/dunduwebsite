@@ -15,7 +15,7 @@ export function ColumnSection({ title, items }: { title: string; items: Item[] }
   return (
     // min-w-0: as a grid item this defaults to min-width:auto and would refuse
     // to shrink below the width of its (scrolling) card row
-    <section className="min-w-0 rounded-xl bg-surface p-3 sm:p-4">
+    <section className="min-w-0 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
           {title}

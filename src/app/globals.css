@@ -288,7 +288,7 @@ body {
 @keyframes hero-rise {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translate3d(calc(var(--dir, 1) * 18px), 10px, 0);
   }
 }
 @keyframes hero-pop {
@@ -341,6 +341,50 @@ body {
 }
 .hero-float {
   animation: hero-float 5.5s ease-in-out infinite alternate;
+}
+
+/* Two slow blooms behind the copy. A banner that only moves when it changes
+   slide is a still image for five and a half of every six seconds. */
+@keyframes hero-aurora-a {
+  50% {
+    transform: translate3d(7%, -5%, 0) scale(1.14);
+  }
+}
+@keyframes hero-aurora-b {
+  50% {
+    transform: translate3d(-6%, 6%, 0) scale(0.9);
+  }
+}
+.hero-aurora-a {
+  animation: hero-aurora-a 18s ease-in-out infinite;
+}
+.hero-aurora-b {
+  animation: hero-aurora-b 22s ease-in-out infinite;
+}
+
+/* a gloss crossing the CTA every few seconds, which is the one element on the
+   banner allowed to ask for a click */
+@keyframes hero-shine {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  55%,
+  100% {
+    transform: translateX(240%) skewX(-18deg);
+  }
+}
+.hero-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 35%,
+    rgb(255 255 255 / 0.55) 50%,
+    transparent 65%
+  );
+  animation: hero-shine 3.8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* the fill on the active dot, running the slide's own duration */
@@ -433,9 +477,16 @@ body {
      hero's dot fill is a one-shot, but at 0.01ms it would read as a dot that
      is always full, so it holds still at full instead. */
   .marquee-track,
-  .hero-float {
+  .hero-float,
+  .hero-aurora-a,
+  .hero-aurora-b,
+  .hero-shine::after {
     animation: none !important;
     transform: none !important;
+  }
+  /* the gloss would sit parked across the button rather than sweeping it */
+  .hero-shine::after {
+    display: none;
   }
   .hero-progress {
     animation: none !important;

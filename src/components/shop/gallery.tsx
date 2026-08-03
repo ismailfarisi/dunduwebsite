@@ -27,7 +27,7 @@ export function Gallery({ item }: { item: Item }) {
   const saved = item.was ? item.was - item.price : 0;
 
   return (
-    <div className="self-start rounded-xl bg-surface p-3 sm:p-4 lg:sticky lg:top-[152px]">
+    <div className="self-start -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4 lg:sticky lg:top-[152px]">
       <div
         className="group relative aspect-square w-full overflow-hidden rounded-lg"
         style={{

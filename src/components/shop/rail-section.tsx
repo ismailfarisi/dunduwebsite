@@ -26,7 +26,7 @@ export function RailSection({
   const { ref, atStart, atEnd, sync, nudge } = useRailScroll();
 
   return (
-    <section className="relative mt-3 rounded-xl bg-surface p-3 sm:p-4">
+    <section className="relative mt-3 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-end justify-between gap-3">
         <div className="min-w-0">
           {eyebrow && (

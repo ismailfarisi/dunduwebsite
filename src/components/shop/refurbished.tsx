@@ -17,7 +17,7 @@ export function Refurbished() {
   );
 
   return (
-    <section className="mt-3 overflow-hidden rounded-xl bg-ink">
+    <section className="mt-3 overflow-hidden -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-ink">
       <div className="grid gap-4 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-6">
         <div className="min-w-0">
           <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">

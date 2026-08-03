@@ -56,7 +56,7 @@ export function DealOfDay() {
   const pct = Math.round((claimed / d.unitsTotal) * 100);
 
   return (
-    <aside className="flex flex-col overflow-hidden rounded-xl bg-surface shadow-card">
+    <aside className="-mx-4 flex flex-col overflow-hidden rounded-none bg-surface shadow-card sm:mx-0 sm:rounded-xl">
       <header className="flex items-center justify-between gap-2 bg-ink px-3 py-2">
         <h2 className="flex items-center gap-1.5 text-[12px] font-extrabold uppercase tracking-wide text-ink-fg">
           <Icon name="Flame" className="size-4 fill-accent text-accent" strokeWidth={0} />
