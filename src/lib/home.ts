@@ -901,18 +901,60 @@ export function searchItems(q: string, limit = 4): Item[] {
     .slice(0, limit);
 }
 
-/** Logos are Simple Icons (CC0) — see scripts/fetch-brands.mjs. */
-export const brands = [
+/**
+ * The brand row, across every department rather than just the electronics
+ * ten it used to carry.
+ *
+ * Logos are Simple Icons (CC0) — see scripts/fetch-brands.mjs. Where a brand
+ * the catalogue actually sells has no CC0 mark (Armaf, Casio, Geepas and the
+ * rest are not in Simple Icons), it appears as a wordmark instead. A drawn
+ * approximation of someone's logo would be worse than their name set in type.
+ *
+ * Order interleaves departments on purpose: the row moves, and nine phone
+ * brands in a block followed by six laptop brands reads as a stall.
+ */
+export const brands: { name: string; logo?: string }[] = [
   { name: "Apple", logo: "/brands/apple.svg" },
-  { name: "Samsung", logo: "/brands/samsung.svg" },
+  { name: "Adidas", logo: "/brands/adidas.svg" },
   { name: "Sony", logo: "/brands/sony.svg" },
-  { name: "Xiaomi", logo: "/brands/xiaomi.svg" },
-  { name: "Lenovo", logo: "/brands/lenovo.svg" },
-  { name: "ASUS", logo: "/brands/asus.svg" },
+  { name: "Armaf" },
+  { name: "Bosch", logo: "/brands/bosch.svg" },
+  { name: "Samsung", logo: "/brands/samsung.svg" },
+  { name: "Nike", logo: "/brands/nike.svg" },
+  { name: "Casio" },
   { name: "LG", logo: "/brands/lg.svg" },
-  { name: "HP", logo: "/brands/hp.svg" },
-  { name: "Dell", logo: "/brands/dell.svg" },
+  { name: "Lattafa" },
+  { name: "Lenovo", logo: "/brands/lenovo.svg" },
+  { name: "Puma", logo: "/brands/puma.svg" },
+  { name: "Panasonic", logo: "/brands/panasonic.svg" },
+  { name: "Farberware" },
   { name: "HONOR", logo: "/brands/honor.svg" },
+  { name: "Zara", logo: "/brands/zara.svg" },
+  { name: "Seiko" },
+  { name: "JBL", logo: "/brands/jbl.svg" },
+  { name: "Prestige" },
+  { name: "ASUS", logo: "/brands/asus.svg" },
+  { name: "New Balance", logo: "/brands/newbalance.svg" },
+  { name: "Xiaomi", logo: "/brands/xiaomi.svg" },
+  { name: "Givenchy" },
+  { name: "Siemens", logo: "/brands/siemens.svg" },
+  { name: "Huawei", logo: "/brands/huawei.svg" },
+  { name: "Uniqlo", logo: "/brands/uniqlo.svg" },
+  { name: "Geepas" },
+  { name: "HP", logo: "/brands/hp.svg" },
+  { name: "Reebok", logo: "/brands/reebok.svg" },
+  { name: "Bose", logo: "/brands/bose.svg" },
+  { name: "Valentino" },
+  { name: "Dell", logo: "/brands/dell.svg" },
+  { name: "Under Armour", logo: "/brands/underarmour.svg" },
+  { name: "Delcasa" },
+  { name: "OPPO", logo: "/brands/oppo.svg" },
+  { name: "Fjällräven" },
+  { name: "Acer", logo: "/brands/acer.svg" },
+  { name: "Motorola", logo: "/brands/motorola.svg" },
+  { name: "MSI", logo: "/brands/msi.svg" },
+  { name: "OnePlus", logo: "/brands/oneplus.svg" },
+  { name: "Nokia", logo: "/brands/nokia.svg" },
 ];
 
 export const trustPoints = [

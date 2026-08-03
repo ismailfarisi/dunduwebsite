@@ -322,6 +322,11 @@ body {
 .marquee-track.marquee-slow {
   animation-duration: 70s;
 }
+/* the brand row is twice the length of the category row, so it needs twice
+   the lap to travel at the same speed */
+.marquee-track.marquee-slower {
+  animation-duration: 140s;
+}
 /* a point that catches the eye can be read, and clicked-through links stay
    reachable while the pointer is on them */
 .marquee:hover .marquee-track,

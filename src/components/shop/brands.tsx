@@ -2,6 +2,59 @@ import Image from "next/image";
 import { Icon } from "@/components/icon";
 import { brands } from "@/lib/home";
 
+function Tile({ name, logo }: { name: string; logo?: string }) {
+  return (
+    <a
+      href="#"
+      aria-label={name}
+      title={name}
+      /* tile stays light in both themes so the brand-coloured marks — several
+         of which are near-black — never disappear */
+      className="group grid h-[70px] w-[112px] shrink-0 place-items-center rounded-lg border border-border bg-white px-4 transition-colors hover:border-border-strong"
+    >
+      {logo ? (
+        <span className="relative h-9 w-full">
+          <Image
+            src={logo}
+            alt=""
+            fill
+            unoptimized
+            /* eager: these are ~1KB SVGs, and the row is a moving track —
+               lazy loading a tile that slides into view is a blank tile for
+               however long the request takes */
+            loading="eager"
+            className="object-contain opacity-80 transition-opacity group-hover:opacity-100"
+          />
+        </span>
+      ) : (
+        /* no CC0 mark exists for this one, so its name is the mark. Set in the
+           page's own type rather than approximated as a logo. */
+        <span className="w-full truncate text-center text-[12.5px] font-extrabold uppercase tracking-[0.08em] text-[#101215] opacity-75 transition-opacity group-hover:opacity-100">
+          {name}
+        </span>
+      )}
+    </a>
+  );
+}
+
+function Row({ hidden = false }: { hidden?: boolean }) {
+  return (
+    <div aria-hidden={hidden} className="flex shrink-0 gap-2.5 pr-2.5">
+      {brands.map((b) => (
+        <Tile key={b.name} name={b.name} logo={b.logo} />
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Every department's brands, drifting right to left.
+ *
+ * A grid of ten was a fifth of the list and all of it electronics. Moving,
+ * the row carries forty-one across mobiles, laptops, audio, kitchen, fashion,
+ * footwear, fragrance and watches in the same strip of page — and the same
+ * two-copy track as the category circles, so the loop has no seam.
+ */
 export function Brands() {
   return (
     <section className="mt-3 rounded-xl border border-border bg-surface p-3 sm:p-4">
@@ -18,28 +71,11 @@ export function Brands() {
         </a>
       </div>
 
-      <div className="rail -mx-3 mt-4 flex gap-2.5 overflow-x-auto px-3 pb-1 scroll-pl-3 sm:mx-0 sm:grid sm:grid-cols-5 sm:overflow-visible sm:px-0 lg:grid-cols-10">
-        {brands.map((b) => (
-          <a
-            key={b.name}
-            href="#"
-            aria-label={b.name}
-            title={b.name}
-            /* tile stays light in both themes so the brand-coloured marks —
-               several of which are near-black — never disappear */
-            className="group grid h-[70px] w-[112px] shrink-0 place-items-center rounded-lg border border-border bg-white px-4 transition-colors hover:border-border-strong sm:w-auto"
-          >
-            <span className="relative h-9 w-full">
-              <Image
-                src={b.logo}
-                alt=""
-                fill
-                unoptimized
-                className="object-contain opacity-80 transition-opacity group-hover:opacity-100"
-              />
-            </span>
-          </a>
-        ))}
+      <div className="marquee -mx-3 mt-4 px-3 sm:mx-0 sm:px-0">
+        <div className="marquee-track marquee-left marquee-slower flex w-max">
+          <Row />
+          <Row hidden />
+        </div>
       </div>
     </section>
   );
