@@ -34,7 +34,7 @@ function MiniItem({ item }: { item: Item }) {
       <span className="line-clamp-2 text-[11.5px] leading-snug text-fg">{item.title}</span>
       <span className="mt-1 flex items-baseline gap-1.5">
         <span className="text-[12.5px] font-bold text-fg tnum">AED {money(item.price)}</span>
-        {off > 0 && <span className="text-[11px] font-bold text-sale tnum">-{off}%</span>}
+        {off > 0 && <span className="text-[11px] font-bold text-success tnum">{off}% OFF</span>}
       </span>
     </Link>
   );

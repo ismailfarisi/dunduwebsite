@@ -53,7 +53,7 @@ function Hit({ item }: { item: Item }) {
               AED {money(item.was)}
             </span>
           )}
-          {off > 0 && <span className="text-[11px] font-bold text-sale tnum">-{off}%</span>}
+          {off > 0 && <span className="text-[11px] font-bold text-success tnum">{off}% OFF</span>}
         </span>
       </span>
     </Link>

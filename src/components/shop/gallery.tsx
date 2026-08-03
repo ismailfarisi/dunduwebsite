@@ -48,11 +48,11 @@ export function Gallery({ item }: { item: Item }) {
         <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
           {off > 0 && (
             <>
-              <span className="rounded-lg bg-sale px-2.5 py-1.5 text-[15px] font-extrabold leading-none text-sale-fg shadow-card tnum">
-                -{off}%
+              <span className="rounded-lg bg-success px-2.5 py-1.5 text-[15px] font-extrabold leading-none text-success-fg shadow-card tnum">
+                {off}% OFF
               </span>
               {saved >= 100 && (
-                <span className="rounded-md bg-sale-soft px-2 py-1 text-[10.5px] font-bold uppercase leading-none tracking-wide text-sale tnum">
+                <span className="rounded-md bg-success-soft px-2 py-1 text-[10.5px] font-bold uppercase leading-none tracking-wide text-success tnum">
                   Save AED {money(saved)}
                 </span>
               )}

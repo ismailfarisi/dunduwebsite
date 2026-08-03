@@ -72,6 +72,10 @@
   --sale-fg: #ffffff;
   --sale-soft: #fdecea;
   --success: #16794c;
+  /* a solid --success badge needs its own foreground for the same reason
+     --sale does: dark mode lifts the green to a light mint that white text
+     cannot sit on */
+  --success-fg: #ffffff;
   --success-soft: #e6f4ec;
   --star: #f5a623;
 
@@ -143,6 +147,7 @@
     --sale-fg: #2b0a06;
     --sale-soft: #331512;
     --success: #4fd1a0;
+    --success-fg: #06251a;
     --success-soft: #0f2620;
     --star: #f5b942;
 
@@ -198,6 +203,7 @@
   --sale-fg: #2b0a06;
   --sale-soft: #331512;
   --success: #4fd1a0;
+  --success-fg: #06251a;
   --success-soft: #0f2620;
   --star: #f5b942;
 
@@ -255,6 +261,7 @@
   --color-sale-fg: var(--sale-fg);
   --color-sale-soft: var(--sale-soft);
   --color-success: var(--success);
+  --color-success-fg: var(--success-fg);
   --color-success-soft: var(--success-soft);
   --color-star: var(--star);
 

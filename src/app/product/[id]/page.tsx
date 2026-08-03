@@ -206,7 +206,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                   </span>
                 )}
                 {saved > 0 && (
-                  <span className="rounded-full bg-sale px-2.5 py-1 text-[11.5px] font-bold leading-none text-sale-fg tnum">
+                  <span className="rounded-full bg-success px-2.5 py-1 text-[11.5px] font-bold leading-none text-success-fg tnum">
                     Save AED {money(saved)}
                   </span>
                 )}
@@ -331,7 +331,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                     {saved > 0 && (
                       <div className="mt-2 flex items-baseline justify-between gap-3">
                         <dt className="text-[12.5px] text-fg-muted">You save</dt>
-                        <dd className="text-[13px] font-bold text-sale tnum">
+                        <dd className="text-[13px] font-bold text-success tnum">
                           AED {money(saved)} ({off}%)
                         </dd>
                       </div>

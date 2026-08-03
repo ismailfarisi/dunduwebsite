@@ -35,7 +35,7 @@ export function MobileBuyBar({ item }: { item: Item }) {
             )}
           </span>
           {off > 0 && (
-            <span className="mt-0.5 block text-[11.5px] font-bold text-sale tnum">
+            <span className="mt-0.5 block text-[11.5px] font-bold text-success tnum">
               Save AED {money(item.was! - item.price)} ({off}%)
             </span>
           )}

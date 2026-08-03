@@ -114,8 +114,8 @@ export function DealOfDay() {
               priority
               className="object-contain p-2"
             />
-            <span className="absolute left-1.5 top-1.5 rounded-md bg-sale px-1.5 py-0.5 text-[11.5px] font-extrabold leading-tight text-sale-fg tnum">
-              -{off}%
+            <span className="absolute left-1.5 top-1.5 rounded-md bg-success px-1.5 py-0.5 text-[11.5px] font-extrabold leading-tight text-success-fg tnum">
+              {off}% OFF
             </span>
           </div>
 
@@ -135,7 +135,7 @@ export function DealOfDay() {
                 AED {money(d.was)}
               </span>
             </div>
-            <p className="mt-1 text-[11.5px] font-bold text-sale tnum">
+            <p className="mt-1 text-[11.5px] font-bold text-success tnum">
               Save AED {money(d.was - d.price)}
             </p>
           </div>

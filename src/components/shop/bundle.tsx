@@ -76,7 +76,7 @@ export function Bundle() {
               AED {money(wasTotal)}
             </span>
           </p>
-          <p className="mt-1 text-[12px] font-bold text-sale tnum">
+          <p className="mt-1 text-[12px] font-bold text-success tnum">
             You save AED {money(saved)}
           </p>
           <button
