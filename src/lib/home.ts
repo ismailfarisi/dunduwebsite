@@ -756,7 +756,6 @@ export const fashion = {
  */
 export const backToSchool = {
   title: "The whole list, before term starts",
-  sub: "One of each: the laptop for lectures, the bag that has to survive a year of them, a watch for exam halls, trainers for PE and a shirt for the other five days.",
   picks: [
     { need: "For lectures", icon: "Laptop", item: asusTufGaming },
     { need: "For the walk in", icon: "Backpack", item: foldsackBackpack },

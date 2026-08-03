@@ -13,8 +13,14 @@ import { backToSchool } from "@/lib/home";
  *
  * The header claims a best-case percentage, not a basket total: these are five
  * separate decisions, and one of them (the laptop) isn't discounted at all.
+ *
+ * It used to carry a sentence explaining what each pick was for, which is what
+ * the label above each card already does, one word from the card it belongs to
+ * — and nobody needs back to school explained to them in August.
  */
 export function BackToSchool() {
+  /** the cheapest of the five, so the header states a price the row can meet */
+  const floor = Math.min(...backToSchool.picks.map((p) => p.item.price));
   const best = backToSchool.picks.reduce(
     (acc, p) =>
       p.item.was
@@ -37,6 +43,11 @@ export function BackToSchool() {
           <h2 className="mt-1 text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
             {backToSchool.title}
           </h2>
+          {/* what the paragraph under here used to say, as two facts instead of
+              a sentence: nobody needs back to school explained to them */}
+          <p className="mt-0.5 text-[12px] text-fg-muted tnum">
+            {backToSchool.picks.length} picks · from AED {floor.toLocaleString("en-AE")}
+          </p>
         </div>
 
         {/* their own row below the title on mobile — sharing it forces the
@@ -56,20 +67,20 @@ export function BackToSchool() {
       </div>
 
       <div className="p-3 sm:p-4">
-        <p className="max-w-2xl text-[12.5px] leading-relaxed text-fg-muted">
-          {backToSchool.sub}
-        </p>
-
         {/* rail on mobile, grid above it — five across at 1320px leaves ~250px
             a card, well clear of the ~175px the instalment line needs */}
-        <div className="rail -mx-3 mt-4 flex gap-2.5 overflow-x-auto px-3 pb-1 scroll-pl-3 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 lg:grid-cols-5">
+        <div className="rail -mx-3 flex gap-2.5 overflow-x-auto px-3 pb-1 scroll-pl-3 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:px-0 lg:grid-cols-5">
           {backToSchool.picks.map((p) => (
             <div
               key={p.item.id}
               className="flex w-[46vw] max-w-[220px] shrink-0 flex-col sm:w-auto sm:max-w-none"
             >
-              <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-fg-subtle">
-                <Icon name={p.icon} className="size-3.5 shrink-0 text-brand" />
+              {/* a chip, not a grey caption. The occasion is the whole idea of
+                  this section — it is what makes five unrelated markdowns a
+                  list — so it gets the band's own colour rather than the
+                  smallest, faintest type on the row. */}
+              <p className="mb-2 flex w-fit max-w-full items-center gap-1.5 rounded-full bg-brand-soft px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.08em] text-brand-soft-fg">
+                <Icon name={p.icon} className="size-3.5 shrink-0" />
                 <span className="truncate">{p.need}</span>
               </p>
               {/* flex-1 so the cards, which are h-full, still bottom-align
