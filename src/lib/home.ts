@@ -803,6 +803,25 @@ export function itemsUnder(max: number, limit = 3): Item[] {
     .slice(0, limit);
 }
 
+/**
+ * How many listings sit behind a price door, counted off the catalogue.
+ *
+ * The door shows this and not "from AED x" or "up to x% off": the bands are
+ * cumulative, so the cheapest listing and the deepest discount in the shop sit
+ * under every one of them, and all four doors printed the same number. The
+ * count is the figure that actually differs — 8, 17, 24, 26.
+ */
+export function bandStats(max: number): { count: number; maxOff: number } {
+  const inBand = allItems.filter((i) => i.price < max);
+  return {
+    count: inBand.length,
+    maxOff: inBand.reduce(
+      (best, i) => (i.was ? Math.max(best, Math.round(((i.was - i.price) / i.was) * 100)) : best),
+      0,
+    ),
+  };
+}
+
 function pick(...ids: string[]): Item[] {
   return ids
     .map((id) => allItems.find((i) => i.id === id))
