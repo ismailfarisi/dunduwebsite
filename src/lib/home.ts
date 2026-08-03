@@ -64,14 +64,17 @@ export const navLinks = [
 ];
 
 /**
- * Six slides, one per department, chosen for a UAE August rather than for
+ * Seven slides, one per department, chosen for a UAE August rather than for
  * variety: the season is 45°C outside, which is why the banner leads with the
  * sale, then the categories people buy to stay indoors comfortably, then the
- * phone, the wardrobe and the fragrance.
+ * phone, the wardrobe, the training kit and the fragrance.
  *
- * Gaming, Toys, Sports and Pre-Owned are strong categories but the catalogue
- * holds no listings behind three of them, and a slide that can't quote a real
- * price is a slide that shouts an adjective.
+ * Gaming, Toys and Pre-Owned are strong categories with no listings behind
+ * them, and a slide that can't quote a real price is a slide that shouts an
+ * adjective. Sports & Cycling is the one that half-qualifies: the trainers and
+ * the performance tees are real and priced, and there is no bicycle in the
+ * catalogue — so the slide is named as the nav names it and its copy sells the
+ * shoes.
  *
  * A banner slide sells a department, so the department has to be what you see.
  *
@@ -144,6 +147,23 @@ export const heroSlides = [
     itemId: "w3",
     picks: ["m2", "sh1", "s1"],
     tint: "255,150,190",
+  },
+  {
+    id: "h7",
+    category: "Sports & Cycling",
+    eyebrow: "Sports & Cycling",
+    line1: "Train at six.",
+    line2: "Beat the 45°.",
+    /* what the aisle actually holds. The category is named as the nav names
+       it, but the catalogue has no bicycle in it, so the line under the
+       headline promises shoes and tees and nothing with wheels. */
+    sub: "Training shoes, trail trainers and moisture-wicking tees — kit for the two hours a day it is bearable outside.",
+    cta: "Shop sports",
+    img: "/products/shoe-legend-essential.png",
+    alt: "Nike Legend Essential training shoe",
+    itemId: "sh2",
+    picks: ["s2", "sh5", "m1"],
+    tint: "94,212,235",
   },
   {
     id: "h6",
