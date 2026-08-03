@@ -80,13 +80,9 @@ export const navLinks = [
  * turns "here is a television" into "here is the television aisle" — and every
  * one of them is a real id out of the catalogue below, priced and linked.
  *
- * `photo` is no longer the slide, it is the light in the room. A sharp
- * photograph of a woman on a beach behind a blender was a picture that had
- * nothing to do with what was being sold; blurred back to colour and warmth it
- * gives the panel real daylight instead of a flat gradient, and keeps the
- * campaign — it is August in the UAE, and every shot is that heat. `pos` is
- * the crop that keeps the brightest part of the frame behind the product.
- * Provenance for the files is in scripts/fetch-banners.mjs.
+ * `tint` is the department's colour. The panel is one flat step of it — no
+ * photograph, no gradient — which is what lets the product cutouts sit on the
+ * banner with nothing drawn around them.
  */
 export const heroSlides = [
   {
@@ -97,8 +93,6 @@ export const heroSlides = [
     line2: "cooler than outside.",
     sub: "Every department marked down while the heat lasts — renewed phones lead at more than half off.",
     cta: "Shop the sale",
-    photo: "/banners/summer-calm.jpg",
-    pos: "30% 50%",
     img: "/products/iphone-15-pro-max.webp",
     alt: "Apple iPhone 15 Pro Max, renewed",
     itemId: "b1",
@@ -114,9 +108,6 @@ export const heroSlides = [
     line2: "70 inches inside.",
     sub: "QLED, 4K and Dolby Atmos — the summer plan that doesn't involve going out.",
     cta: "Shop TV & Audio",
-    /* the hazy midday beach is the "outside" the headline is arguing with */
-    photo: "/banners/summer-heat.jpg",
-    pos: "26% 50%",
     img: "/products/jvc-70-qled.webp",
     alt: "JVC 70 inch QLED 4K smart TV",
     itemId: "f2",
@@ -133,8 +124,6 @@ export const heroSlides = [
     line2: "Chill it. Repeat.",
     sub: "Blenders, cookware and everything else that makes August indoors bearable.",
     cta: "Shop home & kitchen",
-    photo: "/banners/summer-dusk.jpg",
-    pos: "24% 45%",
     img: "/products/xiaomi-blender.webp",
     alt: "Xiaomi smart touch blender",
     itemId: "f4",
@@ -149,9 +138,6 @@ export const heroSlides = [
     line2: "Womenswear.",
     sub: "Short sleeves for both, in cotton and jersey — plus the trainers and the bag.",
     cta: "Shop fashion",
-    /* the one shot in the set that reads as an outfit rather than a workout */
-    photo: "/banners/summer-dunes.jpg",
-    pos: "22% 40%",
     img: "/products/fashion-model-women.jpg",
     alt: "Model wearing a red top",
     /** the department's floor price, which is what "From" means on a category slide */
@@ -167,8 +153,6 @@ export const heroSlides = [
     line2: "survives August.",
     sub: "Fresh florals and light orientals in 100ml — Lattafa, Armaf, Givenchy and Valentino.",
     cta: "Shop fragrance",
-    photo: "/banners/summer-sunrise.jpg",
-    pos: "28% 45%",
     img: "/products/lattafa-fakhar-gold.webp",
     alt: "Lattafa Fakhar Gold eau de parfum",
     itemId: "n4",
@@ -183,8 +167,6 @@ export const heroSlides = [
     line2: "Summer price.",
     sub: "200MP, 120Hz and a 6.9-inch AMOLED — new, renewed and everything between.",
     cta: "Shop mobiles",
-    photo: "/banners/summer-shore.jpg",
-    pos: "26% 50%",
     img: "/products/galaxy-s26-ultra.webp",
     alt: "Samsung Galaxy S26 Ultra",
     itemId: "b2",
