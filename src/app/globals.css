@@ -433,6 +433,12 @@ body {
 .marquee-track.marquee-slower {
   animation-duration: 140s;
 }
+/* the deal ribbon is a 310px window, not a page-wide strip: at the 45s default
+   a lockup took seven seconds to cross it, which reads as stuck rather than as
+   moving */
+.marquee-track.marquee-ribbon {
+  animation-duration: 22s;
+}
 /* a point that catches the eye can be read, and clicked-through links stay
    reachable while the pointer is on them */
 .marquee:hover .marquee-track,

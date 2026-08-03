@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Icon } from "@/components/icon";
+import { Wordmark } from "@/components/shop/wordmark";
 import { dealOfDay, TABBY_MIN } from "@/lib/home";
 
 function money(n: number) {
@@ -64,6 +65,30 @@ export function DealOfDay() {
         </h2>
         <ToMidnight />
       </header>
+
+      {/* The brand ribbon, travelling left to right under the clock.
+          Two identical copies of the run, sliding -50% → 0, so the frame where
+          it snaps back is the frame before it and there is no seam; the mask on
+          .marquee fades both ends so a lockup arrives and leaves rather than
+          popping. It pauses on hover with every other marquee on the page, and
+          the reduced-motion block stops it dead.
+
+          aria-hidden: it is the shop's own name repeated eight times, which is
+          decoration to look at and noise to listen to. */}
+      <div aria-hidden className="marquee bg-logo py-[5px]">
+        <div className="marquee-track marquee-ribbon flex w-max items-center">
+          {[0, 1].map((copy) => (
+            <span key={copy} className="flex items-center">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <span key={i} className="flex items-center gap-2.5 pr-2.5">
+                  <Wordmark plain className="text-[12px]" />
+                  <Icon name="Flame" className="size-2.5 fill-accent text-accent" strokeWidth={0} />
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* Side by side at every width now, not stacked in the desktop rail.
           This panel is the taller half of the hero row, so it decides where
