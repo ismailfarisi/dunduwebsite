@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/icon";
 import { BuyBox } from "@/components/shop/buy-box";
+import { MobileBuyBar } from "@/components/shop/mobile-buy-bar";
 import { RailSection } from "@/components/shop/rail-section";
 import { SiteFooter } from "@/components/shop/site-footer";
 import { SiteHeader } from "@/components/shop/site-header";
@@ -97,7 +98,8 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
       <SiteHeader />
 
-      <main id="main" className="mx-auto w-full max-w-[1320px] px-4 pb-4 pt-3">
+      {/* pb clears the pinned mobile buy bar */}
+      <main id="main" className="mx-auto w-full max-w-[1320px] px-4 pb-24 pt-3 lg:pb-4">
         <nav aria-label="Breadcrumb" className="mb-3">
           <ol className="flex flex-wrap items-center gap-1 text-[12.5px] text-fg-muted">
             <li>
@@ -125,29 +127,66 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               strip: a row of the same image four times is a lie about how much
               you get to see before buying. */}
           {/* self-start: the buy box is the taller column, and a gallery card
-              stretched to match it is 150px of empty white under the photo */}
-          <div className="self-start rounded-xl border border-border bg-surface p-3 sm:p-4">
-            <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white">
+              stretched to match it is 150px of empty white under the photo.
+              Sticky from `lg`, below the header's own height, so the product
+              stays with you while the details scroll. */}
+          <div className="self-start rounded-xl border border-border bg-surface p-3 sm:p-4 lg:sticky lg:top-[152px]">
+            {/* A lit backdrop rather than flat white. Every shot in the
+                catalogue is cut out on white, so a white tile leaves the
+                product floating in a void with nothing to sit on — the radial
+                gives it a floor and a light source, and stays light in dark
+                mode because the cutouts demand it. */}
+            <div
+              className="group relative aspect-square w-full overflow-hidden rounded-lg"
+              style={{
+                backgroundImage:
+                  "radial-gradient(115% 115% at 50% 12%, #ffffff 0%, #f4f5f7 52%, #e7e9ee 100%)",
+              }}
+            >
               <Image
                 src={item.img}
                 alt={item.title}
                 fill
                 sizes="(max-width: 1024px) 92vw, 460px"
                 preload
-                className="object-contain p-6"
+                /* mix-blend-multiply drops the shot's own white background
+                   into the backdrop: every image here is a cutout on white, so
+                   without it the photo lands as a visible white rectangle on
+                   the gradient — the exact seam the hero disc was built to
+                   avoid. Multiply keeps every darker pixel untouched. */
+                className="object-contain p-6 mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-[1.07]"
               />
-              <div className="absolute left-2 top-2 flex flex-col items-start gap-1.5">
+
+              <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
                 {off > 0 && (
-                  <span className="rounded-md bg-sale px-2 py-1 text-[13px] font-extrabold leading-none text-sale-fg tnum">
-                    -{off}%
-                  </span>
+                  <>
+                    <span className="rounded-lg bg-sale px-2.5 py-1.5 text-[15px] font-extrabold leading-none text-sale-fg shadow-card tnum">
+                      -{off}%
+                    </span>
+                    {saved >= 100 && (
+                      <span className="rounded-md bg-sale-soft px-2 py-1 text-[10.5px] font-bold uppercase leading-none tracking-wide text-sale tnum">
+                        Save AED {money(saved)}
+                      </span>
+                    )}
+                  </>
                 )}
                 {item.isNew && (
-                  <span className="rounded-md bg-brand px-2 py-1 text-[11px] font-bold uppercase leading-none text-brand-fg">
+                  <span className="rounded-lg bg-brand px-2.5 py-1.5 text-[11px] font-bold uppercase leading-none text-brand-fg">
                     New
                   </span>
                 )}
               </div>
+
+              {item.condition && (
+                <span className="absolute right-3 top-3 rounded-md bg-white/90 px-2 py-1 text-[10.5px] font-bold uppercase tracking-wide text-success backdrop-blur">
+                  {item.condition}
+                </span>
+              )}
+
+              <span className="pointer-events-none absolute bottom-3 right-3 hidden items-center gap-1.5 rounded-full bg-white/85 px-2.5 py-1 text-[11px] font-semibold text-fg-muted opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 lg:flex">
+                <Icon name="Search" className="size-3.5" />
+                Hover to zoom
+              </span>
             </div>
           </div>
 
@@ -180,9 +219,12 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               )}
             </div>
 
-            <div className="mt-4 border-y border-border py-4">
+            {/* The price gets its own panel. It was four lines of grey text
+                between two rules, which is how you present a footnote, not the
+                number the whole page exists to state. */}
+            <div className="mt-4 rounded-xl bg-surface-2 p-3.5 sm:p-4">
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="text-[30px] font-extrabold leading-none text-fg tnum sm:text-[34px]">
+                <span className="text-[32px] font-extrabold leading-none text-fg tnum sm:text-[38px]">
                   AED {money(item.price)}
                 </span>
                 {item.was && (
@@ -190,38 +232,50 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                     AED {money(item.was)}
                   </span>
                 )}
+                {saved > 0 && (
+                  <span className="rounded-full bg-sale px-2.5 py-1 text-[11.5px] font-bold leading-none text-sale-fg tnum">
+                    Save AED {money(saved)}
+                  </span>
+                )}
               </div>
-              {saved > 0 && (
-                <p className="mt-2 text-[13px] font-bold text-sale tnum">
-                  You save AED {money(saved)} ({off}%)
-                </p>
-              )}
-              {item.price >= TABBY_MIN && (
-                <p className="mt-2 text-[12.5px] text-fg-muted tnum">
-                  or 4 interest-free payments of AED {money(Math.round(item.price / 4))} with{" "}
-                  <span className="font-bold text-fg">tabby</span>
-                </p>
-              )}
-              <p className="mt-2 flex items-center gap-1.5 text-[12.5px] text-fg-muted">
-                <Icon name="Truck" className="size-4 shrink-0 text-fg" />
-                {item.price >= FREE_DELIVERY_MIN
-                  ? "Free delivery on this order"
-                  : `Add AED ${money(FREE_DELIVERY_MIN - item.price)} more for free delivery`}
-                {item.express && <span className="font-semibold text-brand">· Tomorrow</span>}
-              </p>
+
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12.5px]">
+                {item.price >= TABBY_MIN && (
+                  <span className="flex items-center gap-1.5 rounded-lg bg-surface px-2.5 py-1.5 text-fg-muted tnum">
+                    4 × AED {money(Math.round(item.price / 4))} with{" "}
+                    <span className="font-bold text-fg">tabby</span>
+                  </span>
+                )}
+                <span className="flex items-center gap-1.5 text-fg-muted">
+                  <Icon name="Truck" className="size-4 shrink-0 text-brand" />
+                  {item.price >= FREE_DELIVERY_MIN
+                    ? "Free delivery"
+                    : `AED ${money(FREE_DELIVERY_MIN - item.price)} more for free delivery`}
+                  {item.express && (
+                    <span className="font-semibold text-brand">· arrives tomorrow</span>
+                  )}
+                </span>
+              </div>
             </div>
 
             <BuyBox item={item} />
 
-            <ul className="mt-5 grid grid-cols-2 gap-3 border-t border-border pt-4">
+            <ul className="mt-5 grid grid-cols-2 gap-2">
               {assurances.map((a) => (
-                <li key={a.title} className="flex items-start gap-2">
-                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-surface-2">
-                    <Icon name={a.icon} className="size-4 text-fg" />
+                <li
+                  key={a.title}
+                  className="flex items-center gap-2.5 rounded-lg border border-border p-2.5"
+                >
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brand-soft">
+                    <Icon name={a.icon} className="size-[17px] text-brand-soft-fg" />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-[12.5px] font-semibold text-fg">{a.title}</span>
-                    <span className="block truncate text-[11.5px] text-fg-muted">{a.sub}</span>
+                    <span className="block text-[12.5px] font-bold leading-tight text-fg">
+                      {a.title}
+                    </span>
+                    <span className="mt-0.5 block truncate text-[11.5px] text-fg-muted">
+                      {a.sub}
+                    </span>
                   </span>
                 </li>
               ))}
@@ -229,35 +283,40 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           </div>
         </div>
 
-        <div className="mt-3 grid gap-3 lg:grid-cols-2">
-          <section className="flex flex-col rounded-xl border border-border bg-surface p-3 sm:p-4">
-            <h2 className="text-[15px] font-extrabold tracking-tight text-fg">
-              What you&apos;re buying
-            </h2>
-            {highlights.length > 0 ? (
-              <ul className="mt-3 space-y-2">
+        {/* One card or two, depending on whether the listing title actually
+            carries specs. An empty "What you're buying" card is a hole in the
+            page; the details table simply takes the full width instead. */}
+        <div className={`mt-3 grid gap-3 ${highlights.length > 0 ? "lg:grid-cols-2" : ""}`}>
+          {highlights.length > 0 && (
+            <section className="flex flex-col rounded-xl border border-border bg-surface p-3 sm:p-4">
+              <h2 className="flex items-center gap-2 text-[15px] font-extrabold tracking-tight text-fg">
+                <Icon name="BadgeCheck" className="size-[18px] text-brand" />
+                What you&apos;re buying
+              </h2>
+              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                 {highlights.map((h) => (
-                  <li key={h} className="flex items-start gap-2 text-[13px] text-fg-muted">
-                    <Icon name="ShieldCheck" className="mt-0.5 size-4 shrink-0 text-brand" />
+                  <li
+                    key={h}
+                    className="flex items-start gap-2 rounded-lg bg-surface-2 px-2.5 py-2 text-[12.5px] text-fg"
+                  >
+                    <Icon name="BadgeCheck" className="mt-px size-4 shrink-0 text-brand" />
                     {h}
                   </li>
                 ))}
               </ul>
-            ) : (
-              <p className="mt-3 text-[13px] text-fg-muted">
-                {item.brand ? `${item.brand}. ` : ""}
-                {item.title}.
+              {/* said out loud rather than dressed up as a spec sheet */}
+              <p className="mt-auto pt-4 text-[11.5px] leading-relaxed text-fg-subtle">
+                Specifications are read from the listing title, which is everything the
+                supplier publishes about this item.
               </p>
-            )}
-            {/* said out loud rather than dressed up as a spec sheet */}
-            <p className="mt-auto border-t border-border pt-3 text-[11.5px] leading-relaxed text-fg-subtle">
-              Specifications are read from the listing title, which is everything the
-              supplier publishes about this item.
-            </p>
-          </section>
+            </section>
+          )}
 
           <section className="rounded-xl border border-border bg-surface p-3 sm:p-4">
-            <h2 className="text-[15px] font-extrabold tracking-tight text-fg">Details</h2>
+            <h2 className="flex items-center gap-2 text-[15px] font-extrabold tracking-tight text-fg">
+              <Icon name="Package" className="size-[18px] text-brand" />
+              Details
+            </h2>
             <dl className="mt-3 divide-y divide-border">
               {details.map((d) => (
                 <div key={d.label} className="flex gap-4 py-2 text-[13px]">
@@ -280,6 +339,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <TrustRow />
       </main>
 
+      <MobileBuyBar item={item} />
       <SiteFooter />
     </>
   );

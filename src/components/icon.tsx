@@ -1,6 +1,7 @@
 import {
   Backpack,
   Baby,
+  BadgeCheck,
   BadgePercent,
   Banknote,
   Bike,
@@ -53,6 +54,7 @@ import {
 const map: Record<string, LucideIcon> = {
   Backpack,
   Baby,
+  BadgeCheck,
   BadgePercent,
   Banknote,
   Bike,
