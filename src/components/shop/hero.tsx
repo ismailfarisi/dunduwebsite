@@ -95,9 +95,7 @@ export function Hero() {
            tint of one. `isolate` is also what the products blend against: it
            makes this panel the isolation group, so `mix-blend-multiply` on a
            product finds these layers and nothing on the page under them. */
-        style={{
-          backgroundColor: `color-mix(in srgb, rgb(${s.tint}) 50%, var(--banner-base))`,
-        }}
+        style={{ backgroundColor: "var(--banner-deep)" }}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
@@ -113,13 +111,13 @@ export function Hero() {
           aria-hidden
           className="hero-dots absolute inset-0 -z-10"
           style={{
-            backgroundImage: `radial-gradient(circle, rgba(${s.tint},.75) 1.4px, transparent 1.5px)`,
+            backgroundImage: `radial-gradient(circle, rgba(255,255,255,.16) 1.4px, transparent 1.5px)`,
           }}
         />
         <div
           aria-hidden
           className="absolute -bottom-[38%] -left-[12%] -z-10 size-[62%] rotate-[18deg] rounded-[28%]"
-          style={{ backgroundColor: `rgba(${s.tint},.28)` }}
+          style={{ backgroundColor: `rgba(${s.tint},.16)` }}
         />
 
         {/* The minimum is the tallest slide, measured, not a round number —
@@ -142,11 +140,11 @@ export function Hero() {
           >
             {/* named, not implied. An uppercase eyebrow reads as decoration;
                 a pill reads as the aisle you are standing in. */}
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-banner-fg ring-1 ring-black/5 sm:px-3 sm:text-[11px]">
-              <span className="size-1.5 rounded-full bg-logo" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-banner-fg ring-1 ring-white/25 backdrop-blur sm:px-3 sm:text-[11px]">
+              <span className="size-1.5 rounded-full" style={{ backgroundColor: `rgb(${s.tint})` }} />
               {s.category}
             </span>
-            <h1 className="mt-2.5 text-[20px] font-extrabold leading-[1.06] tracking-tight text-banner-fg min-[400px]:text-[22px] sm:mt-3 sm:text-[30px] xl:text-[38px]">
+            <h1 className="mt-2.5 text-[20px] font-extrabold leading-[1.06] tracking-tight text-banner-fg min-[400px]:text-[22px] sm:mt-3 sm:text-[31px] xl:text-[42px]">
               {s.line1}
               <br />
               {s.line2}
@@ -162,21 +160,15 @@ export function Hero() {
                 <span className="text-[19px] font-extrabold leading-none text-banner-fg tnum xl:text-[22px]">
                   AED {money(item.price)}
                 </span>
-                {off > 0 && (
-                  <span className="rounded-full bg-sale px-2 py-0.5 text-[11px] font-bold text-sale-fg tnum">
-                    -{off}%
-                  </span>
-                )}
               </p>
             )}
 
-            {/* the logo purple, not the lime: the lime CTA vanishes into the
-                Summer Sale panel, whose own colour is that lime. --logo holds
-                its value in both themes and is dark enough to carry white text
-                on all six panels. */}
+            {/* the lime, and it can be the lime again: the field is the shop's
+                purple on every slide now, not the department's own colour, so
+                there is no longer a panel for a lime pill to disappear into */}
             <a
               href="#"
-              className="hero-shine relative mt-3.5 inline-block w-fit overflow-hidden rounded-full bg-logo px-5 py-2.5 text-[13px] font-bold text-logo-fg transition-transform hover:-translate-y-0.5 sm:mt-4 xl:px-6 xl:text-[14px]"
+              className="hero-shine relative mt-3.5 inline-block w-fit overflow-hidden rounded-full bg-accent px-5 py-2.5 text-[13px] font-bold text-accent-fg transition-transform hover:-translate-y-0.5 sm:mt-4 xl:px-6 xl:text-[14px]"
             >
               {s.cta}
             </a>
@@ -193,18 +185,24 @@ export function Hero() {
             {/* The lit disc, sized to clear the whole group — lead plus aisle
                 row — with about 20px to spare at every breakpoint, and never
                 taller than the 363px floor. */}
+            {/* the department's colour, as the halo the stage stands in */}
+            <span
+              aria-hidden
+              className="absolute left-1/2 top-1/2 -z-10 size-[248px] -translate-x-1/2 -translate-y-1/2 rounded-full sm:size-[338px] xl:size-[372px]"
+              style={{ backgroundColor: `rgba(${s.tint},.22)` }}
+            />
             <span
               aria-hidden
               className="absolute left-1/2 top-1/2 -z-10 size-[212px] -translate-x-1/2 -translate-y-1/2 rounded-full sm:size-[300px] xl:size-[336px]"
               style={{
-                backgroundColor: `color-mix(in srgb, rgb(${s.tint}) 7%, #fff)`,
-                boxShadow: "0 16px 44px rgb(0 0 0 / 0.10)",
+                backgroundColor: `color-mix(in srgb, rgb(${s.tint}) 7%, var(--banner-base))`,
+                boxShadow: "0 22px 60px rgb(0 0 0 / 0.45)",
               }}
             />
             <span
               aria-hidden
-              className="hero-orbit absolute left-1/2 top-1/2 -z-10 size-[238px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-dashed sm:size-[328px] xl:size-[362px]"
-              style={{ borderColor: `rgba(${s.tint},.75)` }}
+              className="hero-orbit absolute left-1/2 top-1/2 -z-10 size-[262px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[1.5px] border-dashed sm:size-[356px] xl:size-[392px]"
+              style={{ borderColor: `rgba(${s.tint},.6)` }}
             />
             <Link
               href={item ? `/product/${item.id}` : "#"}
@@ -230,6 +228,18 @@ export function Hero() {
                 }`}
               />
             </Link>
+
+            {/* The saving, at the size a saving deserves. It used to be an
+                11px chip at the end of the price line, which is where you put
+                a number you don't want read. Overlapping the stage is also
+                what stops the group reading as a circle with things in it. */}
+            {off > 0 && (
+              <span className="hero-burst z-10 grid size-[54px] place-items-center rounded-full bg-accent text-accent-fg shadow-[0_8px_22px_rgb(0_0_0/0.35)] sm:size-[72px] xl:size-[80px]">
+                <span className="text-center text-[15px] font-extrabold leading-none tnum sm:text-[20px] xl:text-[22px]">
+                  -{off}%
+                </span>
+              </span>
+            )}
 
             <div className="flex items-center gap-2 sm:gap-3">
               {picks.map((p) => (
@@ -262,14 +272,14 @@ export function Hero() {
         <button
           onClick={() => go(-1)}
           aria-label="Previous slide"
-          className="absolute left-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-black/10 text-banner-fg transition-colors hover:bg-black/20 sm:grid"
+          className="absolute left-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-banner-fg transition-colors hover:bg-white/30 sm:grid"
         >
           <Icon name="ChevronLeft" className="size-4" />
         </button>
         <button
           onClick={() => go(1)}
           aria-label="Next slide"
-          className="absolute right-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-black/10 text-banner-fg transition-colors hover:bg-black/20 sm:grid"
+          className="absolute right-2 top-1/2 hidden size-8 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-banner-fg transition-colors hover:bg-white/30 sm:grid"
         >
           <Icon name="ChevronRight" className="size-4" />
         </button>
@@ -284,13 +294,13 @@ export function Hero() {
               aria-label={`Go to ${sl.category}`}
               aria-current={idx === i}
               className={`h-2 overflow-hidden rounded-full transition-all ${
-                idx === i ? "w-8 bg-black/10" : "w-2 bg-black/25 hover:bg-black/45"
+                idx === i ? "w-8 bg-white/25" : "w-2 bg-white/40 hover:bg-white/70"
               }`}
             >
               {idx === i && (
                 <span
                   key={sl.id}
-                  className="hero-progress block h-full w-full origin-left rounded-full bg-logo"
+                  className="hero-progress block h-full w-full origin-left rounded-full bg-accent"
                   /* paused freezes the fill where it is. Dropping the class
                      instead would snap the bar to full — which reads as "this
                      slide is about to change" at the exact moment it can't. */

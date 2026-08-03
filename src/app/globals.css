@@ -46,15 +46,17 @@
   --ink-fg: #f4f5f6;
   --ink-fg-muted: #a2a7ae;
 
-  /* The banner is a lit panel, and it holds its own colours in both themes.
-     Catalogue shots are cut out on white, so the surface under them has to
-     stay light for `mix-blend-multiply` to drop those white rectangles — a
-     dark panel would need every product boxed in a white tile again, which is
-     the look this is getting away from. Its text is fixed for the same
-     reason: --fg flips to near-white in dark mode, on a panel that doesn't. */
+  /* The banner holds its own colours in both themes: a deep purple field with
+     a lit stage standing on it. The field is the shop's own purple, so the
+     banner reads as the brand rather than as a coloured rectangle; the stage
+     has to stay light because catalogue shots are cut out on white and
+     `mix-blend-multiply` turns that white into whatever is behind it. The text
+     colours are fixed for the same reason --logo is: --fg flips to near-white
+     in dark mode, on a panel that never changes. */
+  --banner-deep: #2b0e66;
   --banner-base: #ffffff;
-  --banner-fg: #17131f;
-  --banner-fg-muted: #56505f;
+  --banner-fg: #ffffff;
+  --banner-fg-muted: #c6b6e8;
 
   /* The dark chrome — the utility strip and the footer — in the logo's purple
      rather than near-black. Deep enough that the lime CTA still carries and
@@ -124,9 +126,10 @@
     --ink-fg: #f1f2f4;
     --ink-fg-muted: #a3a9b2;
 
-    /* toned off pure white so a lit panel doesn't glare beside dark chrome,
-       still light enough for the products to multiply onto it */
-    --banner-base: #e6e5ec;
+    /* the stage stays light in both themes — the products multiply onto it —
+       and the field stays the same deep purple, so the banner is one object
+       whichever way the page is set */
+    --banner-base: #f4f2fa;
 
     /* a shade deeper against a dark page, so the chrome still separates */
     --chrome: #1c0942;
@@ -184,7 +187,7 @@
   --ink-fg: #f1f2f4;
   --ink-fg-muted: #a3a9b2;
 
-  --banner-base: #e6e5ec;
+  --banner-base: #f4f2fa;
 
   --chrome: #1c0942;
   --chrome-2: #2b1160;
@@ -238,6 +241,7 @@
   --color-ink-fg: var(--ink-fg);
   --color-ink-fg-muted: var(--ink-fg-muted);
 
+  --color-banner-deep: var(--banner-deep);
   --color-banner-base: var(--banner-base);
   --color-banner-fg: var(--banner-fg);
   --color-banner-fg-muted: var(--banner-fg-muted);
@@ -358,6 +362,29 @@ body {
   background-size: 22px 22px;
   -webkit-mask-image: linear-gradient(105deg, #000 0 26%, rgb(0 0 0 / 0.25) 54%, transparent 72%);
   mask-image: linear-gradient(105deg, #000 0 26%, rgb(0 0 0 / 0.25) 54%, transparent 72%);
+}
+
+/* The saving sits on the rim of the stage, not in the corner of the column.
+   Pinned to the column it landed wherever the column's edge happened to be —
+   which on a phone, where the stage is wider than the column, was across the
+   model's face. Off the stage's own centre by a measured amount instead, so it
+   straddles the edge at every size: the stage is 212 / 300 / 336 across, and
+   these offsets put the badge's middle just inside each of those radii. */
+.hero-burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% - 70px), calc(-50% - 62px)) rotate(-8deg);
+}
+@media (min-width: 40rem) {
+  .hero-burst {
+    transform: translate(calc(-50% - 100px), calc(-50% - 88px)) rotate(-8deg);
+  }
+}
+@media (min-width: 80rem) {
+  .hero-burst {
+    transform: translate(calc(-50% - 112px), calc(-50% - 98px)) rotate(-8deg);
+  }
 }
 
 /* The ring turns once a minute. Slow enough that you never catch it moving and
