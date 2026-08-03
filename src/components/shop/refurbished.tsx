@@ -10,9 +10,21 @@ import { refurbished } from "@/lib/home";
  * category. The proposition panel leads with the warranty, because the
  * objection to buying renewed is never the price.
  */
+function money(n: number) {
+  return n.toLocaleString("en-AE", { maximumFractionDigits: 0 });
+}
+
 export function Refurbished() {
   const best = refurbished.items.reduce(
     (acc, i) => (i.was ? Math.max(acc, Math.round(((i.was - i.price) / i.was) * 100)) : acc),
+    0,
+  );
+  /* the same story in dirhams. A percentage is the headline and an abstraction;
+     AED 2,659 is what you actually keep, and above about AED 300 the absolute
+     figure is the one that moves a decision. Both come off the listings in the
+     row, so neither can promise more than the two cards beside them. */
+  const saving = refurbished.items.reduce(
+    (acc, i) => (i.was ? Math.max(acc, i.was - i.price) : acc),
     0,
   );
 
@@ -20,31 +32,51 @@ export function Refurbished() {
     <section className="mt-3 overflow-hidden -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-ink">
       <div className="grid gap-4 p-4 sm:p-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-6">
         <div className="min-w-0">
-          <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-accent/15 px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.16em] text-accent ring-1 ring-accent/25">
+            <Icon name="ShieldCheck" className="size-3.5" />
             Certified Refurbished
           </span>
-          <h2 className="mt-2 text-[24px] font-extrabold leading-tight tracking-tight text-ink-fg sm:text-[28px]">
-            Like new. Up to {best}% less.
+          <h2 className="mt-3 text-[24px] font-extrabold leading-tight tracking-tight text-ink-fg sm:text-[30px]">
+            Like new.
+            <br />
+            Up to {best}% less.
           </h2>
-          <p className="mt-2 max-w-md text-[13.5px] leading-relaxed text-ink-fg-muted">
+          <p className="mt-2.5 max-w-md text-[13.5px] leading-relaxed text-ink-fg-muted">
             Every renewed device is inspected, cleaned and fully tested before it ships
             — and it carries the same warranty as new stock.
           </p>
 
-          <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5">
+          {/* the figure the percentage stands for, said out loud */}
+          <p className="mt-4 flex w-fit items-baseline gap-2 rounded-lg bg-accent/12 px-3.5 py-2 ring-1 ring-accent/25">
+            <span className="text-[11.5px] font-semibold text-ink-fg-muted">Biggest saving</span>
+            <span className="text-[17px] font-extrabold leading-none text-accent tnum">
+              AED {money(saving)}
+            </span>
+          </p>
+
+          {/* Tiles, not a bullet list. The panel's height is set by two product
+              cards beside it, and four one-line bullets left most of it as
+              black — the same four points as blocks fill it with the answer to
+              the only real objection to buying renewed. */}
+          <ul className="mt-4 grid grid-cols-2 gap-2.5">
             {refurbished.points.map((p) => (
-              <li key={p.label} className="flex items-center gap-2 text-[12.5px] text-ink-fg">
-                <span className="grid size-6 shrink-0 place-items-center rounded-full bg-white/10">
-                  <Icon name={p.icon} className="size-3.5 text-accent" />
+              <li
+                key={p.label}
+                className="flex items-start gap-2.5 rounded-lg bg-white/[0.06] p-3 ring-1 ring-white/10"
+              >
+                <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent/15">
+                  <Icon name={p.icon} className="size-4 text-accent" />
                 </span>
-                {p.label}
+                <span className="min-w-0 text-[12.5px] font-semibold leading-snug text-ink-fg">
+                  {p.label}
+                </span>
               </li>
             ))}
           </ul>
 
           <a
             href="#"
-            className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-accent px-6 py-2.5 text-[13.5px] font-bold text-accent-fg transition-colors hover:bg-accent-hover"
+            className="mt-5 inline-flex w-fit items-center gap-1.5 rounded-full bg-accent px-6 py-2.5 text-[13.5px] font-bold text-accent-fg transition-transform hover:-translate-y-0.5 hover:bg-accent-hover"
           >
             Shop all renewed
             <Icon name="ChevronRight" className="size-4" />
