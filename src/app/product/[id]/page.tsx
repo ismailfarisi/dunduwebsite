@@ -393,6 +393,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
         {related.length > 0 && (
           <RailSection
+            icon="Users"
             eyebrow={item.brand ? `More from ${item.brand}` : department}
             title="Customers also looked at"
             items={related}

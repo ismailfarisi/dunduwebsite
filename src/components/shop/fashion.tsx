@@ -1,4 +1,5 @@
 import { Icon } from "@/components/icon";
+import { SectionIcon } from "@/components/shop/section-icon";
 import { ItemCard } from "@/components/shop/item-card";
 import { fashion } from "@/lib/home";
 
@@ -17,13 +18,16 @@ export function Fashion() {
   return (
     <section className="mt-3 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-end justify-between gap-3">
-        <div className="min-w-0">
-          <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-brand">
-            Fashion
-          </span>
-          <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
-            {fashion.title}
-          </h2>
+        <div className="flex min-w-0 items-center gap-2.5">
+          <SectionIcon name="Shirt" />
+          <div className="min-w-0">
+            <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-brand">
+              Fashion
+            </span>
+            <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
+              {fashion.title}
+            </h2>
+          </div>
         </div>
         <a
           href="#"

@@ -1,4 +1,5 @@
 import { Icon } from "@/components/icon";
+import { SectionIcon } from "@/components/shop/section-icon";
 import { ItemCard } from "@/components/shop/item-card";
 import type { Item } from "@/lib/home";
 
@@ -11,15 +12,26 @@ import type { Item } from "@/lib/home";
  * every one of those lines truncated. 2×2 gives ~300px and a product photo
  * twice the size, which is the point of the section.
  */
-export function ColumnSection({ title, items }: { title: string; items: Item[] }) {
+export function ColumnSection({
+  icon,
+  title,
+  items,
+}: {
+  icon: string;
+  title: string;
+  items: Item[];
+}) {
   return (
     // min-w-0: as a grid item this defaults to min-width:auto and would refuse
     // to shrink below the width of its (scrolling) card row
     <section className="min-w-0 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
-          {title}
-        </h2>
+        <span className="flex min-w-0 items-center gap-2.5">
+          <SectionIcon name={icon} />
+          <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
+            {title}
+          </h2>
+        </span>
         <a
           href="#"
           className="tap flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"

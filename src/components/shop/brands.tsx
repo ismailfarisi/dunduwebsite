@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Icon } from "@/components/icon";
+import { SectionIcon } from "@/components/shop/section-icon";
 import { brands } from "@/lib/home";
 
 function Tile({ name, logo }: { name: string; logo?: string }) {
@@ -59,9 +60,12 @@ export function Brands() {
   return (
     <section className="mt-3 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
-          Shop Top Brands
-        </h2>
+        <span className="flex min-w-0 items-center gap-2.5">
+          <SectionIcon name="BadgeCheck" />
+          <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
+            Shop Top Brands
+          </h2>
+        </span>
         <a
           href="#"
           className="tap flex shrink-0 items-center gap-1 text-[13px] font-semibold text-brand hover:underline"

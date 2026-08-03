@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/icon";
+import { SectionIcon } from "@/components/shop/section-icon";
 import { ItemCard } from "@/components/shop/item-card";
 import { useRailScroll } from "@/hooks/use-rail-scroll";
 import { flashDeals } from "@/lib/home";
@@ -50,10 +51,12 @@ export function FlashDeals() {
   return (
     <section className="relative mt-3 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <h2 className="flex items-center gap-1.5 text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
-          <Icon name="Zap" className="size-[18px] fill-fg text-fg" strokeWidth={0} />
-          Flash Deals
-        </h2>
+        <span className="flex items-center gap-2.5">
+          <SectionIcon name="Zap" />
+          <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
+            Flash Deals
+          </h2>
+        </span>
         <Countdown />
         <a
           href="#"

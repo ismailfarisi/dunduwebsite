@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Icon } from "@/components/icon";
+import { SectionIcon } from "@/components/shop/section-icon";
 import { bandStats, budgetBands, itemsUnder } from "@/lib/home";
 
 /**
@@ -19,13 +20,16 @@ export function BudgetDoors() {
   return (
     <section className="mt-3">
       <div className="mb-3 flex items-end justify-between gap-3">
-        <div className="min-w-0">
-          <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-brand">
-            Shop by budget
-          </span>
-          <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
-            Pick a number, not a category
-          </h2>
+        <div className="flex min-w-0 items-center gap-2.5">
+          <SectionIcon name="Banknote" />
+          <div className="min-w-0">
+            <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-brand">
+              Shop by budget
+            </span>
+            <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
+              Pick a number, not a category
+            </h2>
+          </div>
         </div>
         <a
           href="#"

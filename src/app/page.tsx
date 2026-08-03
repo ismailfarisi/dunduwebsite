@@ -45,8 +45,8 @@ export default function Home() {
         <PromoTiles />
 
         <div className="mt-3 grid gap-3 lg:grid-cols-2">
-          <ColumnSection title="New Arrivals" items={newArrivals} />
-          <ColumnSection title="Best Sellers" items={bestSellers} />
+          <ColumnSection icon="Sparkles" title="New Arrivals" items={newArrivals} />
+          <ColumnSection icon="Star" title="Best Sellers" items={bestSellers} />
         </div>
 
         {/* Brands sits at the halfway mark rather than above the footer, where
@@ -59,11 +59,12 @@ export default function Home() {
             page turns from electronics to things you wear: it was a department
             with exactly one listing in it — the school trainers — while Fashion
             next door had six. */}
-        <RailSection eyebrow="Footwear" title="Trainers, six ways" items={footwear} />
+        <RailSection icon="Footprints" eyebrow="Footwear" title="Trainers, six ways" items={footwear} />
 
         <Refurbished />
         <Fashion />
         <RailSection
+          icon="CookingPot"
           eyebrow="Home & Kitchen"
           title="Everything for the kitchen"
           items={homeKitchen}

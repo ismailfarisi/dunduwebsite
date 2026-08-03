@@ -1,6 +1,7 @@
 "use client";
 
 import { Icon } from "@/components/icon";
+import { SectionIcon } from "@/components/shop/section-icon";
 import { ItemCard } from "@/components/shop/item-card";
 import { useRailScroll } from "@/hooks/use-rail-scroll";
 import type { Item } from "@/lib/home";
@@ -11,12 +12,14 @@ import type { Item } from "@/lib/home";
  * rail and gets scrolled past with the rest.
  */
 export function RailSection({
+  icon,
   eyebrow,
   title,
   href = "#",
   linkLabel = "View All",
   items,
 }: {
+  icon: string;
   eyebrow?: string;
   title: string;
   href?: string;
@@ -28,7 +31,9 @@ export function RailSection({
   return (
     <section className="relative mt-3 -mx-4 rounded-none sm:mx-0 sm:rounded-xl bg-surface p-3 sm:p-4">
       <div className="flex items-end justify-between gap-3">
-        <div className="min-w-0">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <SectionIcon name={icon} />
+          <div className="min-w-0">
           {eyebrow && (
             <span className="block text-[11px] font-bold uppercase tracking-[0.14em] text-brand">
               {eyebrow}
@@ -37,6 +42,7 @@ export function RailSection({
           <h2 className="text-[17px] font-extrabold tracking-tight text-fg sm:text-[19px]">
             {title}
           </h2>
+          </div>
         </div>
         <a
           href={href}
