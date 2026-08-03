@@ -1,17 +1,14 @@
 import { Icon } from "@/components/icon";
 import { topbarLeft, topbarRight, topbarStrip } from "@/lib/home";
 
-function Points() {
+function Points({ hidden = false }: { hidden?: boolean }) {
   return (
-    <ul className="flex w-max items-center gap-6 sm:gap-8">
+    <ul aria-hidden={hidden} className="flex shrink-0 items-center gap-6 sm:gap-8">
       {topbarStrip.map((t) => (
         <li key={t.title} className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
           <Icon name={t.icon} className="size-3.5 shrink-0 text-accent" />
           <span className="text-ink-fg">{t.title}</span>
-          {/* No evidence line here: it only fitted while the strip was moving,
-              and the strip is capped at 1320px, so a wider screen buys no extra
-              room — it just shows fewer points. The full claim-and-evidence
-              version still runs above the footer. */}
+          {t.sub && <span className="text-ink-fg-muted">{t.sub}</span>}
         </li>
       ))}
     </ul>
@@ -21,9 +18,17 @@ function Points() {
 /**
  * Thin dark utility strip above the header.
  *
- * Eight points on one thin line, scrollable rather than animated. The
- * location button and the help links are what don't fit on a phone, so those
- * are what drop below `lg`; the strip itself takes the full width there.
+ * The points travel left to right on a loop, which is how a strip this thin
+ * can carry eight of them instead of the four that fit standing still — and
+ * why it now runs on phones too, where four would never have fitted at all.
+ * The location button and the help links are the parts that don't fit there,
+ * so those are what drop below `lg`; the strip itself takes the full width.
+ *
+ * Two copies of the list, the second one `aria-hidden`: the track is animated
+ * from -50% to 0, so the moment the first copy leaves the right edge the
+ * second is exactly where it started and the loop has no seam. A screen
+ * reader gets one copy, and pausing on hover means a point that catches your
+ * eye can be read.
  */
 export function Topbar() {
   return (
@@ -36,12 +41,11 @@ export function Topbar() {
           <span className="font-semibold text-ink-fg">{topbarLeft.value}</span>
         </button>
 
-        {/* A rail, not a loop: the points scroll under your finger or your
-            trackpad and stay put otherwise. Eight of them still don't fit a
-            phone, so the ones past the edge are reachable rather than
-            timed. */}
-        <div className="rail min-w-0 flex-1 overflow-x-auto">
-          <Points />
+        <div className="marquee min-w-0 flex-1">
+          <div className="marquee-track flex w-max items-center gap-6 sm:gap-8">
+            <Points />
+            <Points hidden />
+          </div>
         </div>
 
         <div className="hidden shrink-0 items-center gap-5 text-ink-fg-muted lg:flex">
