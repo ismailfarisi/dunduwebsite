@@ -49,6 +49,12 @@ export default function Home() {
           <ColumnSection title="Best Sellers" items={bestSellers} />
         </div>
 
+        {/* Brands sits at the halfway mark rather than above the footer, where
+            it was at 90% of the page and nobody reached it. It also breaks the
+            longest stretch of product cards on the page — the two columns
+            above it run 1,100px — before the dark renewed panel restarts. */}
+        <Brands />
+
         <Refurbished />
         <Fashion />
         <RailSection
@@ -58,7 +64,6 @@ export default function Home() {
         />
         <Bundle />
 
-        <Brands />
         <TrustRow />
       </main>
 
