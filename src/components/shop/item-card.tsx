@@ -81,28 +81,14 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
           />
         </div>
 
-        {/* the save story, stacked: percent to catch the eye, dirhams to land
-            the point. Absolute savings beat a percentage above ~AED 300. */}
-        <div className="absolute left-1.5 top-1.5 flex flex-col items-start gap-1">
-          {item.isNew ? (
-            <span className="rounded-md bg-brand px-1.5 py-0.5 text-[10.5px] font-bold uppercase leading-tight text-brand-fg">
-              New
-            </span>
-          ) : (
-            off > 0 && (
-              <>
-                <span className="rounded-md bg-sale px-1.5 py-0.5 text-[11.5px] font-extrabold leading-tight text-sale-fg tnum">
-                  -{off}%
-                </span>
-                {saved >= 100 && (
-                  <span className="rounded bg-sale-soft px-1 py-0.5 text-[9.5px] font-bold uppercase leading-tight text-sale tnum">
-                    Save AED {money(saved)}
-                  </span>
-                )}
-              </>
-            )
-          )}
-        </div>
+        {/* Only "New" sits on the photograph now. The saving used to be two
+            badges over the top-left corner of the product; it says more, and
+            covers less, next to the price it is a discount off. */}
+        {item.isNew && (
+          <span className="absolute left-1.5 top-1.5 rounded-md bg-brand px-1.5 py-0.5 text-[10.5px] font-bold uppercase leading-tight text-brand-fg">
+            New
+          </span>
+        )}
 
         {/* z-10 clears the title's stretched link, which would otherwise paint
             over this button and swallow the click */}
@@ -147,13 +133,13 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
       <div className="mt-auto pt-2">
         {/* a rating where the listing had one, otherwise what other people did
             — an empty row here makes a product look worse than it is */}
-        <div className="flex h-4 items-center gap-1.5 text-[11px] text-fg-muted">
+        <div className="flex h-[18px] items-center text-[11px] text-fg-muted">
           {item.rating != null ? (
-            <>
-              <Icon name="Star" className="size-3.5 fill-star text-star" strokeWidth={0} />
-              <span className="font-semibold text-fg tnum">{item.rating.toFixed(1)}</span>
-              <span className="tnum">({item.reviews})</span>
-            </>
+            <span className="inline-flex items-center gap-1 rounded bg-surface-3 px-1.5 py-0.5">
+              <Icon name="Star" className="size-3 fill-star text-star" strokeWidth={0} />
+              <span className="font-bold text-fg tnum">{item.rating.toFixed(1)}</span>
+              <span className="text-fg-subtle tnum">({item.reviews})</span>
+            </span>
           ) : (
             item.sold != null && (
               <span className="truncate tnum">{item.sold}+ bought this month</span>
@@ -165,10 +151,30 @@ export function ItemCard({ item, priority = false }: { item: Item; priority?: bo
           AED {money(item.price)}
         </div>
 
-        {/* own line, reserved: two prices on one row wrap at four digits and
-            the wrap is what breaks alignment across a rail */}
-        <div className="mt-1 h-[15px] text-[11.5px] leading-[15px] text-fg-subtle">
+        {/* The old price and the percentage share a line, and what you keep
+            gets a line of its own under them. Green, not the sale red: red is
+            the shop shouting, green is money that stays in your pocket — and
+            saying it twice, as a rate and as an amount, is what the reference
+            for this card does and what makes AED 2,659 land.
+
+            Two full prices will not share a row at four digits in a 170px
+            card, which is why the new price is still on its own line above.
+            Both rows are reserved so price baselines line up across a rail
+            whatever a given listing carries. */}
+        <div className="mt-1 flex h-[17px] items-center gap-1.5 text-[11.5px] leading-[15px] text-fg-subtle">
           {item.was && <span className="line-through tnum">AED {money(item.was)}</span>}
+          {off > 0 && (
+            <span className="rounded bg-success-soft px-1.5 py-0.5 text-[10px] font-bold leading-none text-success tnum">
+              {off}% OFF
+            </span>
+          )}
+        </div>
+        <div className="mt-1 h-[18px]">
+          {saved > 0 && (
+            <span className="inline-block rounded bg-success-soft px-1.5 py-0.5 text-[10.5px] font-bold leading-[14px] text-success tnum">
+              You saved AED {money(saved)}
+            </span>
+          )}
         </div>
 
         {/* AED 2,340 reads as unaffordable; AED 585 reads as a decision */}
