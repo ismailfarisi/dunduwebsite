@@ -13,8 +13,9 @@ function money(n: number) {
  * pinned button with no price is a button you don't trust; the saving sits
  * under it in the same red as everywhere else.
  *
- * The detail page adds bottom padding to clear this, so nothing it covers is
- * content you needed.
+ * The detail page puts a spacer after the footer to clear this. It goes there
+ * and not on <main>: a fixed bar only permanently covers the last thing in the
+ * document, and that is the footer.
  */
 export function MobileBuyBar({ item }: { item: Item }) {
   const off = item.was ? Math.round(((item.was - item.price) / item.was) * 100) : 0;

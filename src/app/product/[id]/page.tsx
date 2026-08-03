@@ -136,7 +136,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
       <SiteHeader />
 
       {/* pb clears the pinned mobile buy bar */}
-      <main id="main" className="mx-auto w-full max-w-[1320px] px-4 pb-24 pt-3 lg:pb-4">
+      <main id="main" className="mx-auto w-full max-w-[1320px] px-4 pb-4 pt-3">
         <nav aria-label="Breadcrumb" className="mb-3">
           <ol className="flex flex-wrap items-center gap-1 text-[12.5px] text-fg-muted">
             <li>
@@ -404,6 +404,16 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
 
       <MobileBuyBar item={item} />
       <SiteFooter />
+
+      {/* The clearance for the pinned bar, and it belongs here rather than on
+          <main>. The bar is fixed, so anything it covers mid-page can be
+          scrolled out from under it — the only content that can't is the last
+          in the document, and that is the footer, which sits after main. With
+          the padding on main instead, the phone lost the final two rows of
+          footer links and the copyright line behind the bar, and gained 96px
+          of white above the footer that nothing needed. bg-chrome so it reads
+          as more footer rather than as a gap under it. */}
+      <div aria-hidden className="h-[70px] bg-chrome lg:hidden" />
     </>
   );
 }
