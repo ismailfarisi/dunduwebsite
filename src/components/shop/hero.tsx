@@ -80,17 +80,21 @@ export function Hero() {
             pb clears the dots. They are absolutely positioned, and once the
             banner got short enough the vertically centred copy reached them —
             the CTA and the dots were overlapping. */}
-        <div className="relative flex min-h-[352px] items-center gap-3 px-5 pb-10 pt-6 pr-11 sm:min-h-[363px] sm:gap-6 sm:px-14 sm:pb-11 sm:pr-16">
+        {/* No right padding on a phone: it was clearing the prev/next arrows,
+            which are `hidden sm:grid` — 44px of a 390px screen reserved for
+            controls that aren't there, and the headline wrapping to four lines
+            because of it. */}
+        <div className="relative flex min-h-[352px] items-center gap-3 px-4 pb-10 pt-6 sm:min-h-[363px] sm:gap-6 sm:px-14 sm:pb-11 sm:pr-16">
           <div key={s.id} className="hero-copy min-w-0 flex-1">
             <span className="w-fit text-[11px] font-bold uppercase tracking-[0.18em] text-accent">
               {s.eyebrow}
             </span>
-            <h1 className="mt-3 text-[24px] font-extrabold leading-[1.06] tracking-tight text-ink-fg sm:text-[42px]">
+            <h1 className="mt-3 text-[22px] font-extrabold leading-[1.08] tracking-tight text-ink-fg sm:text-[42px]">
               {s.line1}
               <br />
               {s.line2}
             </h1>
-            <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-ink-fg-muted sm:text-[14.5px]">
+            <p className="mt-3 line-clamp-2 max-w-sm text-[13px] leading-relaxed text-ink-fg-muted sm:line-clamp-none sm:text-[14.5px]">
               {s.sub}
             </p>
 

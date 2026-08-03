@@ -81,7 +81,7 @@ export const heroSlides = [
   {
     id: "h1",
     category: "Summer Sale",
-    eyebrow: "Summer Sale — live now",
+    eyebrow: "Summer Sale",
     line1: "The whole store,",
     line2: "cooler than outside.",
     sub: "Every department marked down while the heat lasts — renewed phones lead at more than half off.",
