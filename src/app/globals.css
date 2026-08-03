@@ -40,11 +40,20 @@
   --accent-hover: #c8dd3a;
   --accent-fg: #1b2400;
 
-  /* ink — hero panels, dark promo tiles, footer */
+  /* ink — hero panels, dark promo tiles */
   --ink: #101215;
   --ink-2: #1c1f24;
   --ink-fg: #f4f5f6;
   --ink-fg-muted: #a2a7ae;
+
+  /* The dark chrome — the utility strip and the footer — in the logo's purple
+     rather than near-black. Deep enough that the lime CTA still carries and
+     the muted text clears 7:1, close enough to --brand that the two read as
+     the same identity. */
+  --chrome: #240c52;
+  --chrome-2: #33176e;
+  --chrome-fg: #f4efff;
+  --chrome-fg-muted: #bcaae4;
 
   /* semantic */
   --sale: #d92d20;
@@ -105,6 +114,12 @@
     --ink-fg: #f1f2f4;
     --ink-fg-muted: #a3a9b2;
 
+    /* a shade deeper against a dark page, so the chrome still separates */
+    --chrome: #1c0942;
+    --chrome-2: #2b1160;
+    --chrome-fg: #f0eaff;
+    --chrome-fg-muted: #b3a1dd;
+
     --sale: #ff6b5e;
     /* the discount badge is a solid --sale fill; on the light salmon that dark
        mode needs, white text drops under 3:1 — so the foreground flips too */
@@ -155,6 +170,11 @@
   --ink-fg: #f1f2f4;
   --ink-fg-muted: #a3a9b2;
 
+  --chrome: #1c0942;
+  --chrome-2: #2b1160;
+  --chrome-fg: #f0eaff;
+  --chrome-fg-muted: #b3a1dd;
+
   --sale: #ff6b5e;
   --sale-fg: #2b0a06;
   --sale-soft: #331512;
@@ -201,6 +221,11 @@
   --color-ink-2: var(--ink-2);
   --color-ink-fg: var(--ink-fg);
   --color-ink-fg-muted: var(--ink-fg-muted);
+
+  --color-chrome: var(--chrome);
+  --color-chrome-2: var(--chrome-2);
+  --color-chrome-fg: var(--chrome-fg);
+  --color-chrome-fg-muted: var(--chrome-fg-muted);
 
   --color-sale: var(--sale);
   --color-sale-fg: var(--sale-fg);

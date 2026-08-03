@@ -7,7 +7,7 @@ function Points({ hidden = false }: { hidden?: boolean }) {
       {topbarStrip.map((t) => (
         <li key={t.title} className="flex shrink-0 items-center gap-1.5 whitespace-nowrap">
           <Icon name={t.icon} className="size-3.5 shrink-0 text-accent" />
-          <span className="text-ink-fg">{t.title}</span>
+          <span className="text-chrome-fg">{t.title}</span>
           {t.sub && <span className="text-ink-fg-muted">{t.sub}</span>}
         </li>
       ))}
@@ -32,13 +32,13 @@ function Points({ hidden = false }: { hidden?: boolean }) {
  */
 export function Topbar() {
   return (
-    <div className="bg-ink text-ink-fg">
+    <div className="bg-chrome text-chrome-fg">
       <div className="mx-auto flex h-8 w-full max-w-[1320px] items-center gap-4 px-3 text-[11.5px] sm:px-4 lg:gap-6">
-        <button className="hidden shrink-0 items-center gap-1.5 text-ink-fg-muted transition-colors hover:text-ink-fg lg:flex">
+        <button className="hidden shrink-0 items-center gap-1.5 text-chrome-fg-muted transition-colors hover:text-chrome-fg lg:flex">
           <Icon name="MapPin" className="size-3.5" />
           <span>{topbarLeft.label}</span>
           <span aria-hidden>{topbarLeft.flag}</span>
-          <span className="font-semibold text-ink-fg">{topbarLeft.value}</span>
+          <span className="font-semibold text-chrome-fg">{topbarLeft.value}</span>
         </button>
 
         <div className="marquee min-w-0 flex-1">
@@ -48,12 +48,12 @@ export function Topbar() {
           </div>
         </div>
 
-        <div className="hidden shrink-0 items-center gap-5 text-ink-fg-muted lg:flex">
+        <div className="hidden shrink-0 items-center gap-5 text-chrome-fg-muted lg:flex">
           {topbarRight.map((t) => (
             <a
               key={t.label}
               href="#"
-              className="flex items-center gap-1.5 whitespace-nowrap transition-colors hover:text-ink-fg"
+              className="flex items-center gap-1.5 whitespace-nowrap transition-colors hover:text-chrome-fg"
             >
               <Icon name={t.icon} className="size-3.5" />
               {t.label}
